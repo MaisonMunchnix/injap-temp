@@ -1,0 +1,196 @@
+<!-- Stored in resources/views/child.blade.php -->
+
+@extends('layouts.teller.master')
+
+@section('title', 'Product Codes')
+
+@section('stylesheets')
+
+@endsection
+
+@section('breadcrumbs')
+<div class="row align-items-center">
+	<div class="col-md-8 col-lg-8">
+		<h3 class="page-title">@yield('title')</h3>
+		<div class="breadcrumb-list">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="{!! url('teller-admin/'); !!}">Home</a></li>
+				<li class="breadcrumb-item active" aria-current="page">@yield('title')</li>
+			</ol>
+		</div>
+	</div>
+	<!--<div class="col-md-4 col-lg-4">
+		<div class="widgetbar">
+			<button class="btn btn-primary" data-toggle="modal" data-target="#add-modal"><i class='feather icon-plus'></i> Inventory</button>
+		</div>
+	</div>-->
+</div>
+@endsection
+
+@section('contents')
+
+<div class="card-header">
+	<h5 class="card-title">@yield('title')</h5>
+</div>
+<div class="card-body">
+	<ul class="nav nav-tabs nav-tabs-custom" role="tablist">
+		<li class="nav-item">
+			<a href="#products_today" class="nav-link active" data-toggle="tab" role="tab" aria-controls="tab-21" aria-selected="true">
+				<span class="nav-link__count">Codes Generated Today</span>
+			</a>
+		</li>
+		<li class="nav-item">
+			<a href="#all_products" class="nav-link" data-toggle="tab" role="tab" aria-selected="false">
+				<span class="nav-link__count">All Generated Codes</span>
+			</a>
+		</li>
+	</ul>
+	<div class="card">
+		<div class="card-body tab-content">
+			<div class="tab-pane active show fade" id="products_today">
+				<h3><strong class="headings-color float-left">Product Codes Today ({{ date('F d, Y') }})</strong></h3>
+				<form action="{{ route('print-codes') }}" method="post">
+					@csrf
+					<div class="table-responsive border-bottom" data-toggle="lists" data-lists-values='["js-lists-values-employee-name"]'>
+						<table class="table mb-0 thead-border-top-0" id="today_codes_table" style="width:100% !important">
+							<thead>
+								<tr>
+									<th><input type="checkbox" id="checkAl"> Select All</th>
+									<th>Code</th>
+									<th>Security Pin</th>
+									<th>Category</th>
+									<th>Status</th>
+									<th>Date</th>
+									<!--<th>Actions</th>-->
+								</tr>
+							</thead>
+						</table>
+					</div>
+					<button type="submit" class="btn btn-primary" name="print"><i class="material-icons">print</i> Print </button>
+				</form>
+			</div>
+			<div class="tab-pane fade" id="all_products">
+				<h3><strong class="headings-color float-left">All Product Codes</strong></h3>
+				<form action="{{ route('print-codes2') }}" method="post">
+					@csrf
+					<div class="table-responsive border-bottom" data-toggle="lists" data-lists-values='["js-lists-values-employee-name"]'>
+						<table class="table mb-0 thead-border-top-0" id="allcodes" style="width:100% !important">
+							<thead>
+								<tr>
+									<th><label><input type="checkbox" id="checkAll"> Select All</label></th>
+									<th>Code</th>
+									<th>Security Pin</th>
+									<th>Category</th>
+									<th>Status</th>
+									<th>Date</th>
+									<!--<th>Actions</th>-->
+								</tr>
+							</thead>
+						</table>
+					</div>
+					<button type="submit" class="btn btn-primary" name="print"><i class="material-icons">print</i> Print </button>
+				</form>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+@endsection
+
+@section('scripts')
+
+<script>
+	$(document).ready(function() {
+		$("#checkAl").click(function() {
+			$('.codes_today_id').not(this).prop('checked', this.checked);
+		});
+		$("#checkAll").click(function() {
+			$('.code_id').not(this).prop('checked', this.checked);
+		});
+
+		//$('#generated_codes_table').DataTable();
+		//$('#today_codes_table').DataTable();
+		$('#today_codes_table').DataTable({
+			"processing": true,
+			"serverSide": true,
+			"ajax": {
+				"url": "{{ route('all-codes') }}",
+				"dataType": "json",
+				"type": "POST",
+				"data": {
+					_token: token,
+					codes_today: true
+				}
+			},
+			"columns": [{
+					"data": "checkbox",
+					"searchable": false,
+					"orderable": false
+				},
+				{
+					"data": "code"
+				},
+				{
+					"data": "security_pin"
+				},
+				{
+					"data": "category"
+				},
+				{
+					"data": "status"
+				},
+				{
+					"data": "created_at"
+				}/*,
+				{
+					"data": "options",
+					"searchable": false,
+					"orderable": false
+				}*/
+			]
+		});
+
+		$('#allcodes').DataTable({
+			"processing": true,
+			"serverSide": true,
+			"ajax": {
+				"url": "{{ route('all-codes') }}",
+				"dataType": "json",
+				"type": "POST",
+				"data": {
+					_token: token
+				}
+			},
+			"columns": [{
+					"data": "checkbox",
+					"searchable": false,
+					"orderable": false
+				},
+				{
+					"data": "code"
+				},
+				{
+					"data": "security_pin"
+				},
+				{
+					"data": "category"
+				},
+				{
+					"data": "status"
+				},
+				{
+					"data": "created_at"
+				}/*,
+				{
+					"data": "options",
+					"searchable": false,
+					"orderable": false
+				}*/
+			]
+		});
+
+	});
+
+</script>
+@endsection

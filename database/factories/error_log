@@ -1,0 +1,8 @@
+[04-Apr-2020 06:41:46 UTC] PHP Fatal error:  Uncaught Error: Call to a member function define() on null in /home/purplelifeadmin/public_html/purple_life/database/factories/UniLevelFactory.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/purplelifeadmin/public_html/purple_life/database/factories/UniLevelFactory.php on line 8
+[04-Apr-2020 06:51:33 UTC] PHP Fatal error:  Uncaught Error: Call to a member function define() on null in /home/purplelifeadmin/public_html/purple_life/database/factories/UserFactory.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/purplelifeadmin/public_html/purple_life/database/factories/UserFactory.php on line 19

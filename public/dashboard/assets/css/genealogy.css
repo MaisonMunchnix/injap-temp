@@ -1,0 +1,264 @@
+.genealogy-container {
+	overflow-x: scroll;
+}
+.genealogy {
+    width: 950px;
+    clear: both;
+}
+
+.genealogy a {
+    text-decoration: none;
+}
+
+.genea-body { margin:30px 0 20px 40px; }
+
+
+/* DIVIDERS =========================================================================== */
+
+#genea-row {
+	float:left;
+	width:864px;
+	margin:0 auto;
+}
+
+#genea-devider1 {
+	float:left;
+	width:864px;
+	height:30px;
+	background-image: url(../images/node1.png);
+}
+
+#genea-devider2 {
+	float:left;
+	width:432px;
+	height:30px;
+	background:url(../images/node2.png) center top no-repeat;
+}
+#genea-devider3 {
+	float:left;
+	width:216px;
+	height:30px;
+	background:url(../images/node3.png) center top no-repeat;
+}
+#genea-devider4 {
+	float:left;
+	width:108px;
+	height:30px;
+	background:url(../images/node4.png) center top no-repeat;
+}
+
+/* END DIVIDER =========================================================================== */
+
+
+
+
+
+
+
+/* BINARY =========================================================================== */
+
+.port_binary1, .port_binary2, .port_binary3, .port_binary4  {
+	width:100px;
+	height:90px;
+	position:relative;
+	background: #fff top center no-repeat;
+	padding:5px 5px;
+	text-align: center;
+	float: left;
+	-moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+	
+	-moz-box-shadow: 0px 0px 5px #555;
+	-webkit-box-shadow: 0px 0px 5px #555;
+	box-shadow: 0px 0px 5px #555;
+	
+	}
+
+.port_binary1:hover, .port_binary2:hover, .port_binary3:hover, .port_binary4:hover {
+
+	-moz-box-shadow: 0px 0px 15px #484848;
+	-webkit-box-shadow: 0px 0px 15px #484848;
+	box-shadow: 0px 0px 15px #484848;
+
+	}
+
+
+.port_binary5  {
+	width:40px;
+	height:90px;
+	position:relative;
+	background: #fff top center no-repeat;
+	padding:5px 5px;
+	text-align: center;
+	float: left;
+	-moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+	
+	-moz-box-shadow: 0px 0px 5px #555;
+	-webkit-box-shadow: 0px 0px 5px #555;
+	box-shadow: 0px 0px 5px #555;
+	
+	}
+
+.port_binary5:hover {
+
+	-moz-box-shadow: 0px 0px 15px #484848;
+	-webkit-box-shadow: 0px 0px 15px #484848;
+	box-shadow: 0px 0px 15px #484848;
+
+	}
+
+
+.port_binary1 {
+	margin:10px 382px;
+}
+.port_binary2 {
+	margin:10px 166px;
+}
+.port_binary3 {
+	margin:10px 58px;
+}	
+.port_binary4 {
+	margin:10px 4px;
+}	
+.port_binary5 {
+	margin:10px 7px;
+}	
+
+.port_binary1 img, .port_binary2 img, .port_binary3 img, .port_binary4 img, .port_binary5 img  {
+	width:30px; height:30px;
+	
+	}
+
+
+
+/* END BINARY =========================================================================== */
+
+
+
+	
+.port_binary5.port h2 { display:none; }
+
+.port_binary5.port { height:60px; }
+.port_binary5.port a { 
+
+	padding:3px 0px;
+	font-size: 9px;
+	background-color: #ccc;
+	color: #2f0c4f;
+	bottom:1px;
+	position:absolute;
+	left:1px;
+	width: 38px;
+	height:20px;
+	line-height:20px; clear:both;
+
+	-moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+
+}
+	
+.port h2 {
+	margin:5px 0 0 5px ; line-height:25px; width:90px; height:20px;
+	font-size: 9px; text-align:center;
+	background:#333; color:#fff !important;
+	
+	position: absolute;
+	left:0px; bottom:28px;
+	text-shadow: 0px 1px 2px #000;
+
+	-moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+	
+
+
+	-webkit-box-shadow: inset 0px 2px 4px #000;
+	-moz-box-shadow: inset 0px 2px 4px #000;
+	box-shadow: inset 0px 2px 4px #000;	
+	
+}
+
+.port h2 a { color:#fff !important;
+}
+.port a {
+	padding:3px 0px;
+	margin:5px 0 0 0;
+	font-size: 10px; font-weight:bold;
+	background-color: #ccc;
+	color: #2f0c4f;
+	bottom:1px;
+	position:absolute;
+	left:1px;
+	width: 98px;
+	height:20px;
+	line-height:20px; clear:both;
+
+	-moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+	
+}
+
+.port a:hover { text-decoration:none; }
+
+.extension { position:absolute; top:-12px; left:-12px; }
+
+.premiere { position:absolute; top:-1px; right:0px; }
+
+
+/* =========================================================================== */
+
+
+.port h2 a { font-size:10px; width:90px; position:static; background:none !important; border:none !important; cursor: pointer; }
+
+.toolacct {
+	border-bottom: 1px dotted #000000;
+	color: #000000;
+	outline: none;
+	cursor: pointer;
+	text-decoration: none;
+	position: relative;
+}
+.toolacct span {
+	margin-left: -999em;
+	position: absolute;
+}
+.toolacct:hover span {
+	border-radius: 5px 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+
+	-webkit-box-shadow: 0px 2px 4px #000;
+	-moz-box-shadow: 0px 2px 4px #000;
+	box-shadow: 0px 2px 4px #000;	
+
+	position: absolute;
+	left: 1em;
+	top: 2em;
+	z-index: 99;
+	margin-left: 0;
+	width: 250px;
+	font-size:12px; padding:10px; text-align:left; color:#000;
+	text-shadow:none; font-weight:normal !important;
+}
+.toolacct:hover img {
+	border: 0;
+	margin: -10px 0 0 -55px;
+	float: left;
+	position: absolute;
+}
+.toolacct:hover em {
+	font-family: Candara, Tahoma, Geneva, sans-serif;
+	font-size: 1.2em;
+	font-weight: bold;
+	display: block;
+	padding: 0.2em 0 0.6em 0;
+}
+.classic {
+	background: #FFFFAA;
+	border: 1px solid #FFAD33;
+}

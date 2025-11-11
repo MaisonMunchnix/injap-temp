@@ -1,0 +1,60 @@
+[03-Apr-2020 21:58:05 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/purplelifeadmin/public_html/purple_life/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/purplelifeadmin/public_html/purple_life/config/app.php on line 16
+[03-Apr-2020 21:58:09 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/purplelifeadmin/public_html/purple_life/config/broadcasting.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/purplelifeadmin/public_html/purple_life/config/broadcasting.php on line 18
+[03-Apr-2020 21:58:12 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function resource_path() in /home/purplelifeadmin/public_html/purple_life/config/view.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/purplelifeadmin/public_html/purple_life/config/view.php on line 17
+[04-Apr-2020 06:21:59 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/purplelifeadmin/public_html/purple_life/config/broadcasting.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/purplelifeadmin/public_html/purple_life/config/broadcasting.php on line 18
+[04-Apr-2020 06:23:47 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/purplelifeadmin/public_html/purple_life/config/cache.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/purplelifeadmin/public_html/purple_life/config/cache.php on line 21
+[04-Apr-2020 06:24:11 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/purplelifeadmin/public_html/purple_life/config/logging.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/purplelifeadmin/public_html/purple_life/config/logging.php on line 19
+[04-Apr-2020 06:27:27 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/purplelifeadmin/public_html/purple_life/config/hashing.php:32
+Stack trace:
+#0 {main}
+  thrown in /home/purplelifeadmin/public_html/purple_life/config/hashing.php on line 32
+[04-Apr-2020 06:28:15 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/purplelifeadmin/public_html/purple_life/config/queue.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/purplelifeadmin/public_html/purple_life/config/queue.php on line 16
+[04-Apr-2020 06:30:34 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/purplelifeadmin/public_html/purple_life/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/purplelifeadmin/public_html/purple_life/config/app.php on line 16
+[04-Apr-2020 06:30:54 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function resource_path() in /home/purplelifeadmin/public_html/purple_life/config/view.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/purplelifeadmin/public_html/purple_life/config/view.php on line 17
+[04-Apr-2020 06:31:46 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/purplelifeadmin/public_html/purple_life/config/filesystems.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/purplelifeadmin/public_html/purple_life/config/filesystems.php on line 16
+[04-Apr-2020 06:31:57 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/purplelifeadmin/public_html/purple_life/config/session.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/purplelifeadmin/public_html/purple_life/config/session.php on line 21
+[04-Apr-2020 06:34:09 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/purplelifeadmin/public_html/purple_life/config/mail.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/purplelifeadmin/public_html/purple_life/config/mail.php on line 19
+[04-Apr-2020 06:37:46 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/purplelifeadmin/public_html/purple_life/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/purplelifeadmin/public_html/purple_life/config/services.php on line 18
+[04-Apr-2020 06:42:12 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/purplelifeadmin/public_html/purple_life/config/database.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/purplelifeadmin/public_html/purple_life/config/database.php on line 18

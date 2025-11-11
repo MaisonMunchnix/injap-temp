@@ -1,0 +1,4 @@
+[04-Apr-2020 06:27:37 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Migrations\Migration' not found in /home/purplelifeadmin/public_html/purple_life/database/migrations/2020_02_20_095931_create_package_products_table.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/purplelifeadmin/public_html/purple_life/database/migrations/2020_02_20_095931_create_package_products_table.php on line 7

@@ -1,0 +1,4 @@
+[04-Apr-2020 06:47:40 UTC] PHP Fatal error:  Uncaught Error: Class 'Tests\TestCase' not found in /home/purplelifeadmin/public_html/purple_life/tests/Unit/ExampleTest.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/purplelifeadmin/public_html/purple_life/tests/Unit/ExampleTest.php on line 8

@@ -1,0 +1,4 @@
+[04-Apr-2020 06:35:10 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Seeder' not found in /home/purplelifeadmin/public_html/purple_life/database/seeds/DatabaseSeeder.php:5
+Stack trace:
+#0 {main}
+  thrown in /home/purplelifeadmin/public_html/purple_life/database/seeds/DatabaseSeeder.php on line 5

@@ -1,0 +1,278 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Auth;
+use DB;
+
+class PairingComputation extends Model
+{
+
+    public function pairing_count(){
+       
+    // NETWORK
+   $auth_id =Auth::id();
+   $pair_count =  0;
+   $left_array = array();
+   $right_array = array();
+
+   $left_id = 0;
+   $right_id = 0;
+
+   $end = 0;
+   $level = 0;
+   $upline_id = $auth_id;
+   $data_net = DB::table("networks")
+   ->where("upline_placement_id", $upline_id)
+   ->where("sponsor_id", $upline_id)
+   ->get();
+
+   foreach($data_net as $network){
+       if($network->placement_position == 'left'){
+           $left_id = $network->user_id;
+           $left_trans_id = $network->id;
+       }
+
+       if($network->placement_position == 'right'){
+           $right_id = $network->user_id;
+           $right_trans_id = $network->id;
+       }
+   }   
+
+   $pair_data = array();
+   $total_amount = 0;
+   if($left_id >0 AND $right_id >0 ){
+           $left_array[1][$left_id] = $left_trans_id;
+           $right_array[1][$right_id] = $right_trans_id;
+           
+           $data_net = DB::table("networks")
+               ->where("sponsor_id", $upline_id)
+               ->where("user_id", "!=", $left_id)
+               ->where("user_id", "!=", $right_id)
+               ->get();
+               
+           foreach($data_net as $nxt_level){
+               $network_user_id = $nxt_level->user_id;
+               $network_sponsor_id = $upline_id;
+               $network_upline = $nxt_level->upline_placement_id;
+
+               $check =  DB::table("networks")
+                       ->where("sponsor_id", $upline_id)
+                       ->where("user_id", $network_user_id)
+                       ->first();
+               
+
+               $stop = 0;
+               $level_counter = 2;
+
+               do{
+                   
+                   if($check != null){
+                       if($check->upline_placement_id ==  $left_id){
+                           $left_array[$level_counter][$network_user_id] = $check->id;
+                           $stop = 1;
+                           
+                       }elseif($check->upline_placement_id == $right_id){
+                           $right_array[$level_counter][$network_user_id] = $check->id;
+                           $stop = 1;
+                       }else{
+                           $check =  DB::table("networks")
+                               ->where("sponsor_id", $upline_id)
+                               ->where("user_id", $check->upline_placement_id)
+                               ->first();
+                           
+                               $level_counter++;
+                       }
+                   }else{
+                       $stop = 1;
+                   }
+
+               }while($stop == 0);
+           }
+           
+        $column_index = 0;
+
+       foreach($left_array as $key=> $left_count){
+        // KEY here is level
+           if(isset($right_array[$key])) {
+               if(count($right_array[$key]) > count($left_array[$key]) ){
+                    $array_basis = $left_array[$key];
+                    // $array_side = "left";
+               }else{
+                    $array_basis = $right_array[$key];
+                    // $array_side = "right";
+               }
+
+               $level_data = $key;
+               
+            // dd($array_basis);
+               foreach($array_basis as $key2 => $tbl_data){
+                    $trans_data = DB::table("networks")
+                        ->where("id", $tbl_data)
+                        ->first();
+                  
+                    $amount = DB::table("packages")
+                        ->where('id', $trans_data->package)
+                        ->value("pairing_amount");
+                    $total_amount += $amount;
+
+               }
+
+
+
+
+           }       
+       }
+
+
+      
+   }
+    return $total_amount;
+
+   }
+
+   public function pairing_data(){
+    // NETWORK
+   $auth_id =Auth::id();
+   $pair_count =  0;
+   $left_array = array();
+   $right_array = array();
+
+   $left_id = 0;
+   $right_id = 0;
+
+   $end = 0;
+   $level = 0;
+   $upline_id = $auth_id;
+   $data_net = DB::table("networks")
+   ->where("upline_placement_id", $upline_id)
+   ->where("sponsor_id", $upline_id)
+   ->get();
+
+   foreach($data_net as $network){
+       if($network->placement_position == 'left'){
+           $left_id = $network->user_id;
+           $left_trans_id = $network->id;
+       }
+
+       if($network->placement_position == 'right'){
+           $right_id = $network->user_id;
+           $right_trans_id = $network->id;
+       }
+   }   
+
+   $pair_data = array();
+
+   if($left_id >0 AND $right_id >0 ){
+           $left_array[1][$left_id] = $left_trans_id;
+           $right_array[1][$right_id] = $right_trans_id;
+           
+           $data_net = DB::table("networks")
+               ->where("sponsor_id", $upline_id)
+               ->where("user_id", "!=", $left_id)
+               ->where("user_id", "!=", $right_id)
+               ->get();
+               
+           foreach($data_net as $nxt_level){
+               $network_user_id = $nxt_level->user_id;
+               $network_sponsor_id = $upline_id;
+               $network_upline = $nxt_level->upline_placement_id;
+
+               $check =  DB::table("networks")
+                       ->where("sponsor_id", $upline_id)
+                       ->where("user_id", $network_user_id)
+                       ->first();
+               
+
+               $stop = 0;
+               $level_counter = 2;
+
+               do{
+                   
+                   if($check != null){
+                       if($check->upline_placement_id ==  $left_id){
+                           $left_array[$level_counter][$network_user_id] = $check->id;
+                           $stop = 1;
+                           
+                       }elseif($check->upline_placement_id == $right_id){
+                           $right_array[$level_counter][$network_user_id] = $check->id;
+                           $stop = 1;
+                       }else{
+                           $check =  DB::table("networks")
+                               ->where("sponsor_id", $upline_id)
+                               ->where("user_id", $check->upline_placement_id)
+                               ->first();
+                           
+                               $level_counter++;
+                       }
+                   }else{
+                       $stop = 1;
+                   }
+
+               }while($stop == 0);
+           }
+           
+        $column_index = 0;
+
+       foreach($left_array as $key=> $left_count){
+        // KEY here is level
+           if(isset($right_array[$key])) {
+               if(count($right_array[$key]) > count($left_array[$key]) ){
+                    $array_basis = $left_array[$key];
+                    // $array_side = "left";
+               }else{
+                    $array_basis = $right_array[$key];
+                    // $array_side = "right";
+               }
+
+               $level_data = $key;
+               
+            // dd($array_basis);
+               foreach($array_basis as $key2 => $tbl_data){
+                    $trans_data = DB::table("networks")
+                        ->where("id", $tbl_data)
+                        ->first();
+                  
+                    
+                    $user_info = DB::table("user_infos")
+                        ->where("user_id", $key2)
+                        ->first();
+                    $full_name = $user_info->first_name." ".$user_info->last_name;
+
+                    $amount = DB::table("packages")
+                        ->where('id', $trans_data->package)
+                        ->value("pairing_amount");
+                    
+                    $column_index++;
+                    array_push($pair_data,array(
+                        "count" => $column_index,
+                        "trans_id" => $tbl_data,
+                        "trans_date" => $trans_data->updated_at,
+                        "trans_type" => "Salesmatch Bonus",
+                        "source" => $full_name,
+                        "amount" => number_format($amount, 2)
+                    ));
+
+
+               }
+
+
+
+
+           }       
+       }
+
+
+       return $pair_data;
+   }
+
+
+
+
+   
+}
+
+
+}
