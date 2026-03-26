@@ -837,8 +837,63 @@ class ApplicationController extends Controller
             return redirect()->route('login');
         }
 
-        $codes = \App\ApplicationCode::with('user.info')->orderBy('created_at', 'desc')->paginate(50);
+        $codes = \App\ApplicationCode::with('user.info')->orderBy('created_at', 'desc')->get();
         return view('admin.applications.codes', compact('codes'));
+    }
+
+    /**
+     * Export application codes to CSV
+     * @param string $type  'first10' | 'all'
+     */
+    public function exportCodes($type)
+    {
+        if (!Auth::check() || !in_array(Auth::user()->userType, ['admin', 'staff'])) {
+            return redirect()->route('login');
+        }
+
+        $query = \App\ApplicationCode::with('user.info')->orderBy('created_at', 'desc');
+
+        if ($type === 'first10') {
+            $codes = $query->limit(10)->get();
+            $filename = 'product_codes_latest10_' . now()->format('Ymd_His') . '.csv';
+        } else {
+            $codes = $query->get();
+            $filename = 'product_codes_all_' . now()->format('Ymd_His') . '.csv';
+        }
+
+        $headers = [
+            'Content-Type'        => 'text/csv',
+            'Content-Disposition' => "attachment; filename=\"{$filename}\"",
+            'Pragma'              => 'no-cache',
+            'Cache-Control'       => 'must-revalidate, post-check=0, pre-check=0',
+            'Expires'             => '0',
+        ];
+
+        $callback = function () use ($codes) {
+            $handle = fopen('php://output', 'w');
+
+            // Header row
+            fputcsv($handle, ['#', 'Product Code', 'Status', 'Used By', 'Created At', 'Used At']);
+
+            foreach ($codes as $index => $code) {
+                $usedBy = $code->user
+                    ? (($code->user->info->first_name ?? '') . ' (' . $code->user->username . ')')
+                    : '-';
+
+                fputcsv($handle, [
+                    $index + 1,
+                    $code->code,
+                    $code->is_used ? 'Used' : 'Available',
+                    $usedBy,
+                    $code->created_at->format('Y-m-d H:i:s'),
+                    $code->is_used ? $code->updated_at->format('Y-m-d H:i:s') : '-',
+                ]);
+            }
+
+            fclose($handle);
+        };
+
+        return response()->stream($callback, 200, $headers);
     }
 
     /**

@@ -489,6 +489,7 @@ Route::group(['prefix' => 'staff',  'middleware' => 'adminMw'], function(){
     /* Application Product Codes */
     Route::get('applications/codes', 'ApplicationController@indexCodes')->name('applications.codes');
     Route::post('applications/generate-codes', 'ApplicationController@generateCodes')->name('applications.generate-codes');
+    Route::get('applications/export-codes/{type}', 'ApplicationController@exportCodes')->name('applications.export-codes');
 
     /************************************ Reports ************************************/
     
