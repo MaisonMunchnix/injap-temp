@@ -28,6 +28,7 @@ class ApplicationController extends Controller
         $validTypes = implode(',', $validPackageTypes);
         
         $validated = $request->validate([
+            'product_code' => 'required|string|max:100',
             'name' => 'required|string|max:255',
             'username' => 'required|string|max:50|unique:users,username',
             'email' => 'required|email',
@@ -40,6 +41,18 @@ class ApplicationController extends Controller
             'agreeTerms' => 'required|accepted',
             'proof_of_payment' => 'required|file|mimes:pdf,jpg,jpeg,png'
         ]);
+
+        // Validate Product Code
+        $appCode = \App\ApplicationCode::where('code', $validated['product_code'])
+            ->where('is_used', false)
+            ->first();
+
+        if (!$appCode) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid or already used Product Code. Please ensure you enter a valid 8-digit generated code.'
+            ], 422);
+        }
 
         // Validate that sponsor exists (only if sponsor_id is provided)
         if (!empty($validated['sponsor_id'])) {
@@ -122,12 +135,19 @@ class ApplicationController extends Controller
             // Store application details for admin review
             DB::table('user_applications')->insert([
                 'user_id' => $user->id,
+                'product_code' => $validated['product_code'],
                 'sponsor_id' => $generatedSponsorId,  // Store this user's generated Sponsor ID (same as affiliate_link)
                 'sponsor_input' => $validated['sponsor_id'] ?? null,  // Store what the user entered (username/email/affiliate_link)
                 'member_type' => $validated['member_type'],
                 'status' => 'pending',  // pending, approved, rejected
                 'created_at' => now(),
                 'updated_at' => now()
+            ]);
+
+            // Mark product code as used
+            $appCode->update([
+                'is_used' => true,
+                'user_id' => $user->id
             ]);
 
             DB::commit();
@@ -166,6 +186,7 @@ class ApplicationController extends Controller
                 'user_infos.mobile_no',
                 'user_infos.birthdate',
                 'user_infos.country_name',
+                'user_applications.product_code',
                 'user_applications.sponsor_id',
                 'user_applications.member_type',
                 'user_applications.created_at',
@@ -793,6 +814,46 @@ class ApplicationController extends Controller
                 'message' => 'Error: ' . $e->getMessage()
             ], 500);
         }
+    }
+
+    /**
+     * Display listing of application codes
+     */
+    public function indexCodes()
+    {
+        if (!Auth::check() || !in_array(Auth::user()->userType, ['admin', 'staff'])) {
+            return redirect()->route('login');
+        }
+
+        $codes = \App\ApplicationCode::with('user.info')->orderBy('created_at', 'desc')->paginate(50);
+        return view('admin.applications.codes', compact('codes'));
+    }
+
+    /**
+     * Generate 10 new application codes
+     */
+    public function generateCodes()
+    {
+        if (!Auth::check() || !in_array(Auth::user()->userType, ['admin', 'staff'])) {
+            return response()->json(['success' => false, 'message' => 'Unauthorized'], 403);
+        }
+
+        $generated = 0;
+        $codes = [];
+        
+        while ($generated < 10) {
+            $codeStr = str_pad(mt_rand(0, 99999999), 8, '0', STR_PAD_LEFT);
+            
+            // Ensure uniqueness
+            if (!\App\ApplicationCode::where('code', $codeStr)->exists()) {
+                $codes[] = ['code' => $codeStr, 'created_at' => now(), 'updated_at' => now()];
+                $generated++;
+            }
+        }
+
+        \App\ApplicationCode::insert($codes);
+
+        return redirect()->back()->with('success', '10 Product Codes generated successfully!');
     }
 
     private function getPlacementPosition($upline_id, $desired_position){

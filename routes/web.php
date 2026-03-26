@@ -486,6 +486,10 @@ Route::group(['prefix' => 'staff',  'middleware' => 'adminMw'], function(){
     Route::post('applications/approve/{user_id}', 'ApplicationController@approveApplication')->name('applications.approve');
     Route::post('applications/reject/{user_id}', 'ApplicationController@rejectApplication')->name('applications.reject');
 
+    /* Application Product Codes */
+    Route::get('applications/codes', 'ApplicationController@indexCodes')->name('applications.codes');
+    Route::post('applications/generate-codes', 'ApplicationController@generateCodes')->name('applications.generate-codes');
+
     /************************************ Reports ************************************/
     
     Route::get('sales-report', 'SaleController@salesReport')->name('sales-report');

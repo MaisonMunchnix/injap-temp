@@ -106,6 +106,12 @@
                         <form id="applicationForm" onsubmit="return false;">
                             @csrf
                             <div class="row">
+                                <div class="form-group col-md-12 mb-3">
+                                    <label for="product_code" class="form-placeholder">Product Code</label>
+                                    <input type="text" class="form-control" id="product_code" required>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+
                                 <div class="form-group col-md-6 mb-3">
 
                                        <label for="name" class="form-placeholder">Name</label>
@@ -185,10 +191,10 @@
                 </div>
 
                                 <div class="form-group col-md-12 mb-3">
-                    <label for="proofOfPayment" class="form-placeholder">Proof of Payment <span class="text-danger">*</span></label>
+                    <label for="proofOfPayment" class="form-placeholder">Proof of Payment <span class="text-danger"></span></label>
                     <small class="d-block text-muted mb-2">Upload a screenshot or document showing your payment (PDF, JPG, PNG)</small>
                     <div class="custom-file-upload">
-                        <input type="file" class="form-control" id="proofOfPayment" accept=".pdf,.jpg,.jpeg,.png" required>
+                        <input type="file" class="form-control" id="proofOfPayment" accept=".pdf,.jpg,.jpeg,.png">
                         <div class="help-block with-errors"></div>
                     </div>
                     <div id="fileInfo" class="mt-2" style="display: none;">
@@ -245,6 +251,7 @@
                 e.preventDefault();
                 console.log('Submit button clicked');
                 
+                var product_code = $('#product_code').val();
                 var name = $('#name').val();
                 var username = $('#username').val();
                 var email = $('#email').val();
@@ -258,6 +265,7 @@
                 var proofOfPaymentFile = $('#proofOfPayment')[0].files[0];
 
                 console.log('Form data:', {
+                    product_code: product_code,
                     name: name,
                     username: username,
                     email: email,
@@ -271,7 +279,7 @@
                     proofOfPaymentFile: proofOfPaymentFile ? proofOfPaymentFile.name : 'none'
                 });
 
-                if (!name || !username || !email || !phone || !country || !birthday || !address || !member_type || !agreeTerms) {
+                if (!product_code || !name || !username || !email || !phone || !country || !birthday || !address || !member_type || !agreeTerms) {
                     alert("Please fill all required fields");
                     return;
                 }
@@ -287,6 +295,7 @@
                 // Use FormData to send file
                 var formData = new FormData();
                 formData.append('_token', '{{ csrf_token() }}');
+                formData.append('product_code', product_code);
                 formData.append('name', name);
                 formData.append('username', username);
                 formData.append('email', email);

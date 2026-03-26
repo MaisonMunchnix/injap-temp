@@ -9,6 +9,16 @@
                 </a>
             </li>
 
+            <!-- Applications - Always visible for staff -->
+            @if(auth()->user() && (auth()->user()->userType === 'staff' || auth()->user()->userType === 'applicationApprover'))
+            <li>
+                <a href="#" data-toggle="tooltip" data-placement="right" title="Applications"
+                    data-nav-target="#applications">
+                    <i data-feather="file-text"></i>
+                </a>
+            </li>
+            @endif
+
             <!-- Application Approver: Show Distributors List tab -->
             @if(auth()->user() && (auth()->user()->userType === 'staff' || auth()->user()->userType === 'applicationApprover'))
             <li>
@@ -83,16 +93,31 @@
                 </ul>
             </div>
 
+            <!-- Application System Section -->
+            @if(auth()->user() && (auth()->user()->userType === 'staff' || auth()->user()->userType === 'applicationApprover'))
+            <div id="applications">
+                <ul>
+                    <li class="navigation-divider d-flex align-items-center">
+                        <i class="mr-2" data-feather="file-text"></i> Applications
+                    </li>
+                    <li>
+                        <a class="{{ request()->is('staff/applications/pending') ? 'active' : '' }}"
+                            href="{{ route('applications.pending') }}">Pending Applications</a>
+                    </li>
+                    <li>
+                        <a class="{{ request()->is('staff/applications/codes') ? 'active' : '' }}"
+                            href="{{ route('applications.codes') }}">Product Codes</a>
+                    </li>
+                </ul>
+            </div>
+            @endif
+
             <!-- Application Approver Section - Pending Applications & Members -->
             @if(auth()->user() && (auth()->user()->userType === 'staff' || auth()->user()->userType === 'applicationApprover'))
             <div id="user">
                 <ul>
                     <li class="navigation-divider d-flex align-items-center">
                         <i class="mr-2" data-feather="users"></i> Distributors List
-                    </li>
-                    <li>
-                        <a class="{{ request()->is('staff/applications/pending') ? 'active' : '' }}"
-                            href="{{ route('applications.pending') }}">Pending Applications</a>
                     </li>
                     @if(auth()->user() && auth()->user()->userType === 'staff')
                     <li>

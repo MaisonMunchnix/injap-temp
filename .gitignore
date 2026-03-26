@@ -2,6 +2,9 @@
 node_modules/
 npm-debug.log
 yarn-error.log
+/tmp_extract/
+/tmp_extract_res/
+/tmp_extract_vendor/
 
 # Laravel 4 specific
 bootstrap/compiled.php

@@ -39,6 +39,28 @@
             <li class="has-sub-menu">
                 <a href="#">
                     <div class="icon-w">
+                        <div class="os-icon os-icon-file-text"></div>
+                    </div>
+                    <span>Applications</span>
+                </a>
+                <ul class="sub-menu">
+                    <li><a href="{{ route('applications.pending') }}">Pending List</a></li>
+                </ul>
+            </li>
+            <li class="has-sub-menu">
+                <a href="#">
+                    <div class="icon-w">
+                        <div class="os-icon os-icon-grid"></div>
+                    </div>
+                    <span>Product Codes</span>
+                </a>
+                <ul class="sub-menu">
+                    <li><a href="{{ route('applications.codes') }}">Code Generator</a></li>
+                </ul>
+            </li>
+            <li class="has-sub-menu">
+                <a href="#">
+                    <div class="icon-w">
                         <div class="os-icon os-icon-users"></div>
                     </div>
                     <span>Members Account</span>
@@ -224,6 +246,40 @@
 
         </li>
         <li class="sub-header"><span>Options</span></li>
+        <li class=" has-sub-menu">
+            <a href="#">
+                <div class="icon-w">
+                    <div class="os-icon os-icon-file-text"></div>
+                </div><span>Applications</span>
+            </a>
+            <div class="sub-menu-w">
+                <div class="sub-menu-header">Applications</div>
+                <div class="sub-menu-icon"><i class="os-icon os-icon-file-text"></i></div>
+                <div class="sub-menu-i">
+                    <ul class="sub-menu">
+                        <li><a href="{{ route('applications.pending') }}">Pending List</a></li>
+                    </ul>
+                </div>
+            </div>
+        </li>
+
+        <li class=" has-sub-menu">
+            <a href="#">
+                <div class="icon-w">
+                    <div class="os-icon os-icon-grid"></div>
+                </div><span>Product Codes</span>
+            </a>
+            <div class="sub-menu-w">
+                <div class="sub-menu-header">Product Codes</div>
+                <div class="sub-menu-icon"><i class="os-icon os-icon-grid"></i></div>
+                <div class="sub-menu-i">
+                    <ul class="sub-menu">
+                        <li><a href="{{ route('applications.codes') }}">Code Generator</a></li>
+                    </ul>
+                </div>
+            </div>
+        </li>
+
         <li class=" has-sub-menu">
             <a href="#">
                 <div class="icon-w">
