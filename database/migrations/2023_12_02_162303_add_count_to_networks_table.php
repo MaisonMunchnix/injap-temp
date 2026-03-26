@@ -13,9 +13,11 @@ class AddCountToNetworksTable extends Migration
      */
     public function up()
     {
-        Schema::table('networks', function (Blueprint $table) {
-            $table->tinyInteger('count')->after('placement_position')->default(1);
-        });
+        if (!Schema::hasColumn('networks', 'count')) {
+            Schema::table('networks', function (Blueprint $table) {
+                $table->tinyInteger('count')->after('placement_position')->default(1);
+            });
+        }
     }
 
     /**
