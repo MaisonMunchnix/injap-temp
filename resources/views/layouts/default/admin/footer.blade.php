@@ -30,7 +30,6 @@
 
 
  <footer class="content-footer">
-     <div>© {{ date('Y') }} {{ env('APP_NAME') }} - <a href="https://intra-code.com/ target="_blank">Intracode IT
-             Solutions</a></div>
+     <div>© {{ date('Y') }} {{ env('APP_NAME') }} - All Right Reserve - Innovation Japan</div>
 
  </footer>

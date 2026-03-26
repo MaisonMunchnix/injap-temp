@@ -1,6 +1,6 @@
 @extends('layouts.default.admin.master')
-@section('title','Fifth Pair Encashment Voucher')
-@section('page-title','Fifth Pair Encashment Voucher')
+@section('title','Fifth Pair Reimbursement Voucher')
+@section('page-title','Fifth Pair Reimbursement Voucher')
 @section('stylesheets')
 <style>
     @media print {

@@ -8,8 +8,8 @@
         </div>
         <div class="header-logo">
             <a href='#'>
-                <img class="logo img-fluid" src="{{ asset('images/logo.png') }}" alt="logo">
-                <img class="logo-light img-fluid" src="{{ asset('images/logo.png') }}}" alt="light logo">
+                <img class="logo img-fluid" src="{{ asset('new_landing/images/logs.png') }}" width="50px" height="50px" alt="logo">
+                <img class="logo-light img-fluid" src="{{ asset('new_landing/images/logs.png') }}}" width="50px" height="50px" alt="light logo">
             </a>
         </div>
     </div>

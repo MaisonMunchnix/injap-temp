@@ -76,11 +76,7 @@
                                                                 @endif @if (!empty($user_data->last_name))
                                                                     {{ $user_data->last_name }}
                                                                 @endif
-                                                                <br><span class="text-capitalize">
-                                                                    @if (!empty($global_package_type))
-                                                                        {{ $global_package_type }}
-                                                                    @endif
-                                                                </span>
+                                                               
                                                         </p>
                                                         <button class="btn btn-outline-primary mr-2" type="button"
                                                             data-toggle="modal" data-target="#change_picture_modal">Change
@@ -322,8 +318,7 @@
         </div>
         <!-- begin::footer -->
         <footer class="content-footer">
-            <div class="pull-right text-right">© {{ date('Y') }} {{ env('APP_NAME') }} - <a
-                    href="https://intra-code.com/" target="_blank">Intracode IT Solutions</a></div>
+            <div class="pull-right text-right">© {{ date('Y') }} {{ env('APP_NAME') }} - All Right Reserve - Innovation Japan</div>
         </footer>
         <!-- end::footer -->
     </div>

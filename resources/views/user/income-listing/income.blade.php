@@ -25,6 +25,7 @@
                                     <th>Transaction Type</th>
                                     <th>Source</th>
                                     <th>Value</th>
+                                    <th>Remarks</th>
                                 </tr>
                             </thead>
                             <tfoot>
@@ -34,6 +35,7 @@
                                     <th>Transaction Type</th>
                                     <th>Source</th>
                                     <th>Value</th>
+                                    <th>Remarks</th>
                                 </tr>
                             </tfoot>
                             <tbody>
@@ -47,6 +49,7 @@
                                             <td>{{$value['trans_type']}}</td>
                                             <td>{{$value['source']}}</td>
                                             <td>{!!$value['amount']!!}</td>
+                                            <td>{{ $value['remarks'] ?? 'N/A' }}</td>
                                         </tr>                                     
                                     @endforeach
                                 @endif

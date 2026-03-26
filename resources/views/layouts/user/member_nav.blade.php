@@ -38,7 +38,7 @@
                     <li><a href="{{route('income-listing','total-accumulated-income')}}">Total Accumulated Income</a></li>
                 </ul>
             </li>
-            <li class="has-sub-menu">
+            <!-- <li class="has-sub-menu">
                 <a href="#">
                     <div class="icon-w">
                         <div class="os-icon os-icon-package"></div>
@@ -51,7 +51,7 @@
                     <li><a href="{{route('view-geneology',$auth_id_crypt)}}">Binary Graphical</a></li>
                     <li><a href="{{route('view-binary-list')}}">Binary List</a></li>
                 </ul>
-            </li>
+            </li> -->
             <li class="has-sub-menu">
                 <a href="#">
                     <div class="icon-w">
@@ -182,7 +182,7 @@
         </li>
 
         <li class="sub-header"><span>Options</span></li>
-        <li class=" has-sub-menu">
+        <!-- <li class=" has-sub-menu">
             <a href="#">
                 <div class="icon-w">
                     <div class="os-icon os-icon-package"></div>
@@ -199,7 +199,7 @@
                     </ul>
                 </div>
             </div>
-        </li>
+        </li> -->
         <li class=" has-sub-menu">
             <a href="#">
                 <div class="icon-w">

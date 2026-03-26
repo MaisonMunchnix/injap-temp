@@ -23,60 +23,34 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <!-- <div class="col-md-4">
                             <div class="card shadow-none border mb-0">
                                 <div class="card-header">
-                                    ENCASHMENTS
+                                    Reimbursements
                                 </div>
                                 <div class="card-body">
-                                    <h5 class="card-title">Users Encashments</h5>
+                                    <h5 class="card-title">Users Reimbursements </h5>
                                     <a href="{{ route('encashment-view', 'all') }}" class="btn btn-primary">View Details</a>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card shadow-none border mb-0">
-                                <div class="card-header">
-                                    <form action="" method="post" id="filter-form" class="pull-right">
-                                        <div class="input-group">
-                                            <select name="type" class="form-control" required>
-                                                <option value="" selected disabled>Selet Type</option>
-                                                <option value="pair">Pair</option>
-                                                <option value="entry">Entry</option>
-                                            </select>
-                                            <input type="date" class="form-control" name="date_from"
-                                                placeholder="Date From" required>
-                                            <input type="date" class="form-control" name="date_to" placeholder="Date To"
-                                                required>
-                                            <div class="input-group-append">
-                                                <button type="submit" class="btn btn-primary"
-                                                    id="btn-filter">Filter</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="card-body">
-                                    <h1 class="text-center mb-4" id="count-text">{{ $pairs }} Pair</h1>
-                                </div>
-                            </div>
-                        </div>
+                        </div> -->
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                             <div class="card shadow-none border mb-0">
                                 <div class="card-header">
-                                    PRODUCTCODES
+                                    MEMBER CODES
                                 </div>
                                 <div class="card-body">
-                                    <h5 class="card-title">Users Product Codes</h5>
+                                    <h5 class="card-title">Member Codes</h5>
 
                                     <a href="{{ route('product-codes', 'members') }}" class="btn btn-primary">View
                                         Details</a>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
+                        </div> -->
+                        <!-- <div class="col-md-6">
                             <div class="card shadow-none border mb-0">
                                 <div class="card-header">
                                     RECOGNITION
@@ -87,7 +61,7 @@
                                     <a href="{{ route('top-earners') }}" class="btn btn-primary">View Details</a>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
 
                     <div class="row mt-5">
@@ -102,19 +76,19 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="">Buy</label>
+                                                    <label for="">Exchange Rate</label>
                                                     <input type="hidden" name="currency" value="yen" required>
                                                     <input type="number" name='buy' step="0.01" class="form-control"
                                                         placeholder="Buy" value="{{ $yen->buy ?? null }}" required>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <!-- <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="">Sell</label>
                                                     <input type="number" name='sell' step="0.01" class="form-control"
                                                         placeholder="Sell" value="{{ $yen->sell ?? null }}" required>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         </div>
                                         <button type="submit" class="btn btn-primary pull-right">Update</button>
                                     </form>
@@ -132,21 +106,21 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="">Buy</label>
+                                                    <label for="">Exchange Rate</label>
                                                     <input type="hidden" name="currency" value="hkd" required>
                                                     <input type="number" name='buy' step="0.01"
                                                         class="form-control" placeholder="Buy"
                                                         value="{{ $hkd->buy ?? null }}" required>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <!-- <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="">Sell</label>
                                                     <input type="number" name='sell' step="0.01"
                                                         class="form-control" placeholder="Sell"
                                                         value="{{ $hkd->sell ?? null }}" required>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         </div>
                                         <button type="submit" class="btn btn-primary pull-right">Update</button>
                                     </form>
@@ -164,21 +138,21 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="">Buy</label>
+                                                    <label for="">Exchange Rate</label>
                                                     <input type="hidden" name="currency" value="usd" required>
                                                     <input type="number" name='buy' step="0.01"
                                                         class="form-control" placeholder="Buy"
                                                         value="{{ $usd->buy ?? null }}" required>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <!-- <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="">Sell</label>
                                                     <input type="number" name='sell' step="0.01"
                                                         class="form-control" placeholder="Sell"
                                                         value="{{ $usd->sell ?? null }}" required>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         </div>
                                         <button type="submit" class="btn btn-primary pull-right">Update</button>
                                     </form>

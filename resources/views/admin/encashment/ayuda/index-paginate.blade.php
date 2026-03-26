@@ -1,8 +1,8 @@
 @extends('layouts.default.admin.master')
 
-@section('title', 'Ayuda Encashment List')
+@section('title', 'Ayuda Reimbursement List')
 
-@section('page-title', 'Ayuda Encashment List')
+@section('page-title', 'Ayuda Reimbursement List')
 
 @section('stylesheets')
     {{-- additional style here --}}
@@ -20,24 +20,24 @@
         <div class="content">
             <div class="card">
                 <div class="card-body">
-                    <!-- <h6 class="element-header text-center">Encashment List</h6><br> -->
+                    <!-- <h6 class="element-header text-center">Reimbursement List</h6><br> -->
                     <div class="">
                         <h5 class="form-header text-center text-capitalize" id="title-encash">
                             @if (!empty($type))
                                 {{ $type }}
-                            @endif Encashment
+                            @endif Reimbursement
                         </h5><br><br>
                         <div class="row">
                             <div class="col-md-3">
-                                <label>Encashment Filter</label><br>
+                                <label>Reimbursement Filter</label><br>
                                 <div class="btn-group mr-1 mb-1">
                                     <button aria-expanded="false" aria-haspopup="true"
                                         class="btn btn-primary dropdown-toggle" data-toggle="dropdown" id="view_by"
-                                        type="button">View encashment by</button>
+                                        type="button">View Reimbursement by</button>
                                     <div aria-labelledby="view_by" class="dropdown-menu">
                                         <a class="dropdown-item filter-by @if ($type == 'all') active @endif"
                                             href="{{ route('admin.ayuda.encashments', 'all') }}" data-type="all"> All
-                                            Encashment</a>
+                                            Reimbursement</a>
                                         <a class="dropdown-item filter-by @if ($type == 'pending') active @endif"
                                             href="{{ route('admin.ayuda.encashments', 'pending') }}" data-type="pending">
                                             Pending</a>
@@ -160,7 +160,7 @@
                                         </tr>
                                     @empty
                                         <tr class="text-center">
-                                            <td colspan="8">No Encashment/s</td>
+                                            <td colspan="8">No Reimbursements</td>
                                         </tr>
                                     @endforelse
                                 </tbody>

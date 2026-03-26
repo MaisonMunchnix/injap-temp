@@ -7,7 +7,7 @@
         </div>
         <div class="header-logo">
             <a href='#'>
-                <img class="logo img-fluid" src="{{ asset('images/logo.png') }}" alt="logo">
+                <img class="logo img-fluid" src="{{ asset('new_landing/images/logs.png') }}" width="50px" height="50px" alt="logo">
             </a>
         </div>
     </div>
@@ -23,13 +23,13 @@
 
                 <!-- end::settings -->
 
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a href="{{ route('products.cart') }}" class="nav-link">
                         <span class="mr-2 d-sm-inline d-none">
                             Cart <i class="fa fa-shopping-cart fa-lg"></i> {{ Cart::count() }}
                         </span>
                     </a>
-                </li>
+                </li> -->
                 <!-- begin::user menu -->
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link" title="User menu" data-sidebar-target="#user-menu">

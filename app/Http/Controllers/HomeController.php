@@ -1118,8 +1118,9 @@ class HomeController extends Controller
         $auth_sponsor_name = "No Sponsor";
         $auth_sponsor_placement = "No Placement";
         $auth_sponsor_position = "No Position";
+        $auth_member_type = isset($auth_user_data->member_type) ? $auth_user_data->member_type : 'No Data';
         $auth_reg_data = date('F d, Y',strtotime($auth_user_data->user_created ));
-        $arr_auth_sponsor = array('register_date'=>$auth_reg_data ,'sponsor'=>$auth_sponsor_name,'placement_id'=>$auth_sponsor_placement,'placement_position'=>$auth_sponsor_position);
+        $arr_auth_sponsor = array('register_date'=>$auth_reg_data ,'sponsor'=>$auth_sponsor_name,'placement_id'=>$auth_sponsor_placement,'placement_position'=>$auth_sponsor_position,'member_type'=>$auth_member_type);
         $auth_sponsor_position = $auth_sponsor->placement_position;
         if($auth_sponsor->placement_position == 'null' || $auth_sponsor->placement_position==''){
             $auth_sponsor_position = 'No Position';
@@ -1129,7 +1130,7 @@ class HomeController extends Controller
                 $auth_sponsor_name = $this->getMemberName($auth_sponsor->sponsor_id);
                 $auth_sponsor_placement = $this->getMemberName($auth_sponsor->upline_placement_id);
             }
-            $arr_auth_sponsor = array('register_date'=>$auth_reg_data ,'sponsor'=>$auth_sponsor_name,'placement_id'=>$auth_sponsor_placement,'placement_position'=>$auth_sponsor_position);
+            $arr_auth_sponsor = array('register_date'=>$auth_reg_data ,'sponsor'=>$auth_sponsor_name,'placement_id'=>$auth_sponsor_placement,'placement_position'=>$auth_sponsor_position,'member_type'=>$auth_member_type);
         }
        
         //referral bonus
@@ -1151,6 +1152,7 @@ class HomeController extends Controller
         //total accumulated income
         $total_accumulated = $referrals->where('reward_type','php')
           ->where("referral_type", "!=", "sales_match_bonus")
+          ->where("referral_type", "!=", "direct_referral_bonus")
           ->sum('amount');
       
       	$total_accumulated += $TPBunos;
@@ -1202,6 +1204,32 @@ class HomeController extends Controller
             ->whereBetween('created_at', [$weekStartDate, $weekEndDate])
             ->sum('amount');
 
+        $Total_Charity_Bonus = $referrals
+            ->where('referral_type','pairing_bonus')
+            ->sum('amount');
+
+        // Calculate Other Funds balance (net of all manual_adjustment amounts - includes transfers)
+        $total_added_income_positive = $referrals
+            ->where('referral_type','manual_adjustment')
+            ->where('amount', '>', 0)
+            ->sum('amount');
+        
+        $total_added_income_negative = $referrals
+            ->where('referral_type','manual_adjustment')
+            ->where('amount', '<', 0)
+            ->sum('amount');
+        
+        // Net balance = positive additions + negative deductions (which is negative)
+        $total_added_income = $total_added_income_positive + $total_added_income_negative;
+
+        // Calculate deductions (only referral bonus deductions, since manual_adjustment is now net)
+        $referral_bonus_deductions = $referrals
+            ->where('referral_type','direct_referral_bonus')
+            ->where('amount', '<', 0)
+            ->sum('amount');
+        
+        $total_deductions = abs($referral_bonus_deductions);
+
         $MynetworkData=[];
 
         return response()->json([
@@ -1210,8 +1238,8 @@ class HomeController extends Controller
             'total_referral' => $total_referral,
             'total_sales_match' => $total_sales_match,
             'total_pairing_points' => $total_pairing_points,
-            'total_accumulated' => number_format($total_accumulated,2),
-            'total_avail_bal' => number_format($total_avail_bal,2),
+            'total_accumulated' => $total_accumulated,
+            'total_avail_bal' => $total_avail_bal,
             'total_encashment' => $total_encashment,
             'weekly_income' => $weekly_income,
             'weekly_income_points' => $weekly_income_points - $redeemed_points,
@@ -1221,9 +1249,12 @@ class HomeController extends Controller
             'MynetworkData' =>  $MynetworkData,
             'Total_Direct_Referral' =>$Total_Direct_Referral,
             'Total_Weekly_Direct_Referral'  =>  $Total_Weekly_Direct_Referral,
+            'Total_Charity_Bonus' => $Total_Charity_Bonus,
             'TPBunos'   =>  $TPBunos,
             'TPRPoints' =>  $TPRPoints,
             'TPMatch'   =>  $TPMatch,
+            'total_added_income' => $total_added_income,
+            'total_deductions' => $total_deductions,
         ]);
     }
     
@@ -1569,6 +1600,74 @@ class HomeController extends Controller
             return 'No data';
         }
 
+    }
+
+    /**
+     * Get audit trail of add/deduct income adjustments
+     */
+    public function getAdjustmentHistory()
+    {
+        $auth_id = Auth::id();
+        
+        $adjustments = Referral::where('user_id', $auth_id)
+            ->where(function($query) {
+                $query->where('referral_type', 'manual_adjustment')
+                      ->orWhere('referral_type', 'direct_referral_bonus')
+                      ->orWhere('referral_type', 'pairing_bonus');
+            })
+            ->orderBy('created_at', 'DESC')
+            ->get();
+
+        $data = [];
+        foreach ($adjustments as $adjustment) {
+            $type = $adjustment->amount > 0 ? 'Added' : 'Deducted';
+            $amount = abs($adjustment->amount);
+            
+            // Extract recipient ID from remarks if it's a fund transfer
+            $recipientId = null;
+            $notes = '';
+            
+            // Check if this is a fund transfer (remarks contain "To:" or "From:")
+            if (strpos($adjustment->remarks, 'Fund transfer') !== false) {
+                // Extract "To: SPONSOR_ID" or "From: SPONSOR_ID"
+                if (preg_match('/To:\s*([A-Za-z0-9]+)/', $adjustment->remarks, $matches)) {
+                    $recipientId = $matches[1];
+                    $notes = 'Fund Transfer';
+                } elseif (preg_match('/From:\s*([A-Za-z0-9]+)/', $adjustment->remarks, $matches)) {
+                    $recipientId = $matches[1];
+                    $notes = 'Fund Transfer Received';
+                }
+            }
+            
+            // Determine the notes based on referral type and remarks
+            if (empty($notes)) {
+                if ($adjustment->referral_type === 'direct_referral_bonus') {
+                    $notes = $adjustment->remarks ?? 'Direct Referral Bonus';
+                } elseif ($adjustment->referral_type === 'pairing_bonus') {
+                    $notes = $adjustment->remarks ?? 'Pairing Bonus';
+                } else {
+                    $notes = $adjustment->remarks ?? 'Income Adjustment';
+                }
+            }
+            
+            $data[] = [
+                'date' => date('M d, Y', strtotime($adjustment->created_at)),
+                'type' => $type,
+                'amount' => number_format($amount, 2),
+                'notes' => $notes,
+                'recipient_id' => $recipientId
+            ];
+        }
+
+        // Sort all data by date descending
+        usort($data, function($a, $b) {
+            return strtotime($b['date']) - strtotime($a['date']);
+        });
+
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
     }
 
 }

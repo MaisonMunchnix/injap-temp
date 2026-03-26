@@ -286,6 +286,10 @@ Route::group(['prefix' => 'staff',  'middleware' => 'adminMw'], function(){
 	
     
 	Route::post('/filter-count', 'AdminDashboardController@filterCount')->name('admin.filter-count');
+
+	/************************************ Create User (Hidden) ************************************/
+	Route::get('create-user', 'UserController@createUserForm')->name('admin.users.create');
+	Route::post('create-user', 'UserController@createUser')->name('admin.users.store');
     
     /************************************ Branches ************************************/
 	Route::get('add-branch', 'AdminBranchController@addBranch')->name('add-branch');
@@ -309,8 +313,16 @@ Route::group(['prefix' => 'staff',  'middleware' => 'adminMw'], function(){
 	Route::get('edit-announcement/{id}', 'AnnouncementController@editAnnouncement')->name('edit-announcement');
 	Route::post('update-announcement', 'AnnouncementController@updateAnnouncement')->name('update-announcement');
 	Route::post('delete-announcement', 'AnnouncementController@deleteAnnouncement')->name('delete-announcement');
-	 
-	  
+
+	/************************************ Messages/Conversations ************************************/
+	Route::get('messages', 'StaffConversationController@index')->name('staff.messages.index');
+	Route::get('messages/create', 'StaffConversationController@create')->name('staff.messages.create');
+	Route::post('messages', 'StaffConversationController@store')->name('staff.messages.store');
+	Route::get('messages/{conversation}', 'StaffConversationController@show')->name('staff.messages.show');
+	Route::post('messages/{conversation}/reply', 'StaffConversationController@reply')->name('staff.messages.reply');
+	Route::delete('messages/{conversation}', 'StaffConversationController@destroy')->name('staff.messages.destroy');
+	Route::get('messages/{attachment}/download', 'StaffConversationController@downloadAttachment')->name('staff.messages.download');
+
 	/************************************ Products ************************************/
     Route::get('ewallet-purchases', 'ProductController@ewallet_purchases')->name('ewallet-purchases');
     Route::get('approve-purchase/{sale}', 'ProductController@approve_purchase')->name('order.approve-purchase');
@@ -325,6 +337,37 @@ Route::group(['prefix' => 'staff',  'middleware' => 'adminMw'], function(){
 	//Route::post('products/delete', ['as' => 'product-delete', 'uses' => 'ProductController@deleteProduct']);
 	Route::delete('products/{product}', 'ProductController@destroy')->name('product.destroy');
 
+	/************************************ Admin New Products ************************************/
+	Route::get('admin/products', 'AdminProductController@index')->name('admin.products');
+	Route::get('admin/products/create', 'AdminProductController@create')->name('admin.products.create');
+	Route::post('admin/products/store', 'AdminProductController@store')->name('admin.products.store');
+	Route::get('admin/products/list', 'AdminProductController@getList')->name('admin.products.list');
+	Route::get('admin/products/view/{id}', 'AdminProductController@view')->name('admin.products.view');
+	Route::get('admin/products/edit/{id}', 'AdminProductController@edit')->name('admin.products.edit');
+	Route::post('admin/products/update', 'AdminProductController@update')->name('admin.products.update');
+	Route::post('admin/products/delete/{id}', 'AdminProductController@delete')->name('admin.products.delete');
+	Route::get('admin/categories/list', 'AdminProductController@getCategoriesList')->name('admin.categories.list');
+
+	// Product Submissions
+	Route::get('admin/products/submissions/pending', 'AdminProductController@viewPendingSubmissions')->name('admin.products.pending-submissions');
+	Route::get('admin/products/submissions/list', 'AdminProductController@getPendingSubmissions')->name('admin.products.submissions-list');
+	Route::post('admin/products/submissions/approve', 'AdminProductController@approveSubmission')->name('admin.products.approve-submission');
+	Route::post('admin/products/submissions/reject', 'AdminProductController@rejectSubmission')->name('admin.products.reject-submission');
+
+	// Availed Products (Orders)
+	Route::get('admin/availed-products/pending', 'AdminAvailedProductController@viewPendingOrders')->name('admin.availed-products.pending');
+	Route::get('admin/availed-products/approved', 'AdminAvailedProductController@viewApprovedOrders')->name('admin.availed-products.approved');
+	Route::get('admin/availed-products/list', 'AdminAvailedProductController@getPendingOrders')->name('admin.availed-products.list');
+	Route::post('admin/availed-products/approve', 'AdminAvailedProductController@approveOrder')->name('admin.availed-products.approve');
+	Route::post('admin/availed-products/reject', 'AdminAvailedProductController@rejectOrder')->name('admin.availed-products.reject');
+	Route::post('admin/availed-products/attach', 'AdminAvailedProductController@attachDocument')->name('admin.availed-products.attach');
+
+	// Payment Uploads
+	Route::get('payments', 'admin\AdminPaymentUploadController@index')->name('admin.payments.index');
+	Route::get('payments/{id}', 'admin\AdminPaymentUploadController@show')->name('admin.payments.show');
+	Route::post('payments/{id}/approve', 'admin\AdminPaymentUploadController@approve')->name('admin.payments.approve');
+	Route::post('payments/{id}/reject', 'admin\AdminPaymentUploadController@reject')->name('admin.payments.reject');
+	Route::get('payments/{id}/download', 'admin\AdminPaymentUploadController@download')->name('admin.payments.download');
 
 
 	/************************************ Inventories ************************************/
@@ -395,12 +438,15 @@ Route::group(['prefix' => 'staff',  'middleware' => 'adminMw'], function(){
     
     Route::get('members/all', 'UserController@allMembersPaginate')->name('members-all');
     Route::post('members/all', 'UserController@allMembersPaginate')->name('members-all.post');
+    Route::get('members/export', 'UserController@exportMembers')->name('members.export');
     
 	Route::post('all-members', 'UserController@allMembers')->name('all-members'); //All Members Server Side
     
     Route::get('members/today', 'UserController@today_members')->name('members-today');
 	Route::post('today-members', 'UserController@todayMembers')->name('today-members'); //Today Members Server Side
     
+	Route::get('view-member-geneology/{user_id}', 'GeneologyController@viewMemberGeneology')->name('view-member-geneology');
+	Route::get('get-member-geneo-data/{uid}', 'GeneologyController@getGeneoData')->name('get-member-geneo-data');
 
 	//hidden routes
 	Route::get('members/all-adminzero', 'UserController@allMembersHidden')->name('members-all-adminzero');
@@ -426,6 +472,20 @@ Route::group(['prefix' => 'staff',  'middleware' => 'adminMw'], function(){
 
 	Route::post('members/password-update', ['as' => 'member-password-update', 'uses' => 'UserController@memberPasswordUpdate']);
 	Route::post('members/modify', ['as' => 'member-modify', 'uses' => 'UserController@modifyMember']);
+    
+    /*Income Management*/
+    Route::post('members/add-income', 'UserController@addIncome')->name('staff.add-income');
+    Route::post('members/deduct-income', 'UserController@deductIncome')->name('staff.deduct-income');
+    Route::get('members/added-incomes/{user_id}', 'UserController@getAddedIncomes')->name('staff.income-list');
+    Route::post('members/income-update/{id}', 'UserController@updateIncome')->name('staff.income-update');
+    Route::delete('members/income-delete/{id}', 'UserController@deleteIncome')->name('staff.income-delete');
+
+    /*Application Management*/
+    Route::get('applications/pending', 'ApplicationController@getPendingApplications')->name('applications.pending');
+    Route::get('applications/approve-form/{user_id}', 'ApplicationController@showApproveForm')->name('applications.show-approve-form');
+    Route::post('applications/approve/{user_id}', 'ApplicationController@approveApplication')->name('applications.approve');
+    Route::post('applications/reject/{user_id}', 'ApplicationController@rejectApplication')->name('applications.reject');
+
     /************************************ Reports ************************************/
     
     Route::get('sales-report', 'SaleController@salesReport')->name('sales-report');
@@ -445,6 +505,11 @@ Route::group(['prefix' => 'staff',  'middleware' => 'adminMw'], function(){
     Route::get('top-recruiters', 'SaleController@topRecruiters')->name('top-recuiters');
 	Route::post('top-recruiters', 'SaleController@topRecruiters')->name('search-top-recuiters');
     Route::post('view-top-recruiter', 'SaleController@viewTopRecruiter')->name('view-top-recruiter');
+    
+    //Top Pairing & Referral
+    Route::get('top-pairing-referral', 'SaleController@topPairingReferral')->name('top-pairing-referral');
+    Route::post('top-pairing-referral', 'SaleController@topPairingReferral')->name('search-top-pairing-referral');
+    Route::post('get-top-pairing-referral-data', 'SaleController@getTopPairingReferralData')->name('get-top-pairing-referral-data');
     
     //Product Codes
     //Route::get('product-codes', 'ProductCodeController@index')->name('product-codes');
@@ -597,6 +662,7 @@ Route::group(['prefix' => 'user',  'middleware' => 'userMw'], function(){
 	Route::get('get-network-data', 'HomeController@getUserHomeData')->name('network-downlines');
 	Route::get('get-my-network-count', 'HomeController@getMyNetworksCount')->name('get-my-network-count');
 	Route::get('get-network-downlines/{position?}', 'HomeController@getUserDownlines');
+	Route::get('get-adjustment-history', 'HomeController@getAdjustmentHistory')->name('get-adjustment-history');
 	//geneology
 	Route::get('get-geneo-data/{uid}', 'GeneologyController@getGeneoData')->name('get-geneo-data');
 	Route::get('view-binary-list', 'GeneologyController@viewBinaryList')->name('view-binary-list');
@@ -629,6 +695,12 @@ Route::group(['prefix' => 'user',  'middleware' => 'userMw'], function(){
 	Route::get('get-total-income', 'member\IncomeTransferController@totalIncome')->name('user.get-total-income');
 	Route::post('transfer-histories', 'member\IncomeTransferController@transferHistories')->name('user.get-transfer-histories');
 	Route::post('send-income/{user}', 'member\IncomeTransferController@transferIncome')->name('user.income-transfer.store');
+
+	//Social Funds Transfer
+	Route::post('transfer-funds', 'TransferController@transferFunds')->name('transfer-funds');
+	Route::get('validate-username/{username}', 'TransferController@validateUsername')->name('validate-username');
+	Route::get('validate-user-id/{userId}', 'TransferController@validateUserId')->name('validate-user-id');
+	Route::get('transfer-history', 'TransferController@getTransferHistory')->name('transfer-history');
 
 	//Points
 	Route::get('transfer-point', 'member\PointTransferController@index')->name('user.point-transfer');
@@ -666,6 +738,12 @@ Route::group(['prefix' => 'user',  'middleware' => 'userMw'], function(){
 	Route::post('update-member-password', 'MemberProfileController@updateMemberPassword')->name('update-member-password');
 	Route::post('update-member-picture', 'MemberProfileController@updateMemberPicture')->name('update-member-picture');
 	Route::post('update-member-account', 'MemberProfileController@updateAccountProfile')->name('update-member-account');
+	
+	//Payments
+	Route::get('payments', 'PaymentUploadController@index')->name('user.payments');
+	Route::post('payments/store', 'PaymentUploadController@store')->name('user.payments.store');
+	Route::get('payments/download/{id}', 'PaymentUploadController@download')->name('user.payments.download');
+	Route::delete('payments/{id}', 'PaymentUploadController@destroy')->name('user.payments.destroy');
 	//
 	Route::get('income-listing/{type}', 'IncomeController@viewIncome')->name('income-listing');
 	Route::get('available-balance', 'IncomeController@getAvailBalance')->name('available-balance');
@@ -674,7 +752,15 @@ Route::group(['prefix' => 'user',  'middleware' => 'userMw'], function(){
 
 	Route::get('affiliate-links/{type}', 'AffiliateController@viewAffiliate')->name('affiliate-links');
 	Route::get('direct-referral/{type}', 'DirectReferralController@viewReferral')->name('direct-referral');
-    
+
+    //Messages/Inbox
+    Route::get('messages', 'MemberConversationController@inbox')->name('user.messages.inbox');
+    Route::get('messages/compose', 'MemberConversationController@compose')->name('user.messages.compose');
+    Route::post('messages', 'MemberConversationController@store')->name('user.messages.store');
+    Route::get('messages/{conversation}', 'MemberConversationController@show')->name('user.messages.show');
+    Route::post('messages/{conversation}/reply', 'MemberConversationController@reply')->name('user.messages.reply');
+    Route::get('messages/{attachment}/download', 'MemberConversationController@downloadAttachment')->name('user.messages.download');
+
     //Code Facility
 	Route::get('codes-facility', 'CodesFacilityController@viewUserCodes')->name('codes-facility');
 	Route::post('get-codes', 'CodesFacilityController@getCodes')->name('get-codes');
@@ -704,10 +790,19 @@ Route::group(['prefix' => 'user',  'middleware' => 'userMw'], function(){
 		Route::get('/checkout','member\ProductController@checkout')->name('cart.checkout');
 		
 		Route::post('/cart/{product}', 'CartController@add')->name('cart.add');
-		Route::post('/cart/{rowId}/update','CartController@update')->name('cart.update');
+		Route::post('/cart/{rowId}/update','CartController@update')->name('cart.cart.update');
 		Route::get('/cart/{rowId}', 'CartController@remove')->name('cart.remove');
 		Route::post('/payment', 'PaymentController@store')->name('cart.payment');
 	});
+
+	// New Products Browse
+	Route::get('browse-products', 'MemberProductController@browse')->name('member.products');
+	Route::get('my-orders', 'MemberProductController@myOrders')->name('my-orders');
+	Route::get('products-api/list', 'MemberProductController@getProducts')->name('api.products.list');
+	Route::get('products-api/{id}', 'MemberProductController@getProduct')->name('api.products.detail');
+	Route::get('api/my-orders', 'MemberProductController@getMyOrders')->name('api.my-orders');
+	Route::post('submit-product', 'MemberProductController@submitProduct')->name('submit-product');
+	Route::post('avail-product', 'MemberProductController@availProduct')->name('avail-product');
 	
 });
 
@@ -721,18 +816,31 @@ Route::post('/e-walletProcess', 'PaymentController@ewalletProcess')->name('e-wal
 //landing page
 Route::name('landing.')->group(function () {
 	Route::get('/','LandingPageController@home')->name('home');
-	Route::get('/about','LandingPageController@about')->name('about');
-
-	Route::get('/announcements','LandingPageController@announcements')->name('announcements');
-	Route::get('/announcements/{slug}','LandingPageController@announcement')->name('announcements.page');
-
-	Route::get('/products','LandingPageController@products')->name('products');
-	Route::get('/advertisements','LandingPageController@advertisements')->name('advertisements');
-	Route::get('/advertisements/{slug}','LandingPageController@advertisement')->name('advertisement');
 	Route::get('/contact-us','LandingPageController@contact')->name('contact');
-	Route::post('contact-us-email','GuestController@emailContactUs')->name('contact-us-email');
-	Route::get('packages/{package}','LandingPageController@getPackage')->name('package');
 
-	Route::get('/get-currencies','LandingPageController@getCurrencies')->name('get-currencies');
+	Route::get('/legal-assistance','LandingPageController@legalAssistance')->name('legal-assistance');
+	Route::get('/translation-service','LandingPageController@translationService')->name('translation-service');
+	Route::get('/financial-assistance','LandingPageController@financialAssistance')->name('financial-assistance');
+	
+	Route::get('/benefit','LandingPageController@benefit')->name('benefit');
+	
+	Route::get('/recruitment','LandingPageController@recruitment')->name('recruitment');
+	Route::get('/social-obligation','LandingPageController@socialObligation')->name('social-obligation');
+	Route::get('/application','LandingPageController@application')->name('application');
+	Route::post('/application/submit','ApplicationController@submitApplication')->name('application.submit');
+	
+	// Route::get('/about','LandingPageController@about')->name('about');
+
+	// Route::get('/announcements','LandingPageController@announcements')->name('announcements');
+	// Route::get('/announcements/{slug}','LandingPageController@announcement')->name('announcements.page');
+
+	// Route::get('/products','LandingPageController@products')->name('products');
+	// Route::get('/advertisements','LandingPageController@advertisements')->name('advertisements');
+	// Route::get('/advertisements/{slug}','LandingPageController@advertisement')->name('advertisement');
+	
+	// Route::post('contact-us-email','GuestController@emailContactUs')->name('contact-us-email');
+	// Route::get('packages/{package}','LandingPageController@getPackage')->name('package');
+
+	// Route::get('/get-currencies','LandingPageController@getCurrencies')->name('get-currencies');
 	
 });

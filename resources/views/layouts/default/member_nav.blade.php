@@ -7,28 +7,42 @@
                     <i data-feather="home"></i>
                 </a>
             </li>
-            <li>
+            <!-- <li>
                 <a href="#" data-toggle="tooltip" data-placement="right" title="Network" data-nav-target="#user">
                     <i data-feather="users"></i>
                 </a>
-            </li>
-            <li>
+            </li> -->
+            <!-- <li>
                 <a href="#" data-toggle="tooltip" data-placement="right" title="Request"
                     data-nav-target="#components">
                     <i data-feather="layers"></i>
                 </a>
-            </li>
-            <li>
+            </li> -->
+            <!-- <li>
                 <a href="#" data-toggle="tooltip" data-placement="right" title="Codes Facility"
                     data-nav-target="#codes_fac">
                     <i data-feather="copy"></i>
                 </a>
-            </li>
+            </li> -->
 
             <li>
                 <a href="#" data-toggle="tooltip" data-placement="right" title="Products"
                     data-nav-target="#products">
-                    <i data-feather="star"></i>
+                    <i data-feather="shopping-cart"></i>
+                </a>
+            </li>
+
+            <li>
+                <a href="#" data-toggle="tooltip" data-placement="right" title="Payments"
+                    data-nav-target="#payments">
+                    <i data-feather="credit-card"></i>
+                </a>
+            </li>
+
+            <li>
+                <a href="#" data-toggle="tooltip" data-placement="right" title="Messages"
+                    data-nav-target="#messages">
+                    <i data-feather="mail"></i>
                 </a>
             </li>
 
@@ -78,23 +92,23 @@
                     <li>
                         <a href="#" class="d-flex align-items-start">
                             <div>
-                                <figure class="avatar mr-3">
+                                <!-- <figure class="avatar mr-3">
                                     <span class="avatar-title bg-warning rounded"><i class="ti-link"></i></span>
-                                </figure>
+                                </figure> -->
                             </div>
                             <div>
-                                <h6>Pairing Bonus</h6>
+                                <!-- <h6>Pairing Bonus</h6>
                                 @if (!empty($TPBunos))
                                     <h6 class="mb-0 font-weight-bold" id="ParingBonusID">{{ number_format($TPBunos) }}
                                         PHP</h6>
                                 @else
                                     <h6 class="mb-0 font-weight-bold" id="ParingBonusID">0</h6>
-                                @endif
+                                @endif -->
 
                             </div>
                         </a>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a href="#" class="d-flex align-items-start">
                             <div>
                                 <figure class="avatar mr-3">
@@ -112,15 +126,16 @@
 
                             </div>
                         </a>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
-            <div id="user">
+            <!-- <div id="user">
                 <ul>
                     <li class="navigation-divider d-flex align-items-center">
                         <i class="mr-2" data-feather="users"></i> Network
                     </li>
                     @php
+                        $auth_id = auth()->id() ?? 0;
                         $auth_id_crypt = Crypt::encrypt($auth_id);
                     @endphp
                     <li>
@@ -132,35 +147,35 @@
                             href="{{ route('view-binary-list') }}">Binary List</a>
                     </li>
                 </ul>
-            </div>
+            </div> -->
             <div id="components">
                 <ul>
-                    <li class="navigation-divider d-flex align-items-center">
+                    <!-- <li class="navigation-divider d-flex align-items-center">
                         <i class="mr-2" data-feather="layers"></i> Request
-                    </li>
-                    <li>
+                    </li> -->
+                    <!-- <li>
                         <a class="{{ request()->is('user/encashment') ? 'active' : '' }}"
                             href="{{ route('encashment') }}">Encashment</a>
                     </li>
                     <li>
                         <a class="{{ request()->is('user/redeem') ? 'active' : '' }}"
                             href="{{ route('redeem.list') }}">Redeem</a>
-                    </li>
-                    <li>
+                    </li> -->
+                    <!-- <li>
                         <a class="{{ request()->is('user/upgrade-account') ? 'active' : '' }}"
                             href="{{ route('upgrade-account') }}">Upgrade Account</a>
                     </li>
                     {{-- <li>
                         <a class="{{ request()->is('user/donations')  ? 'active' : '' }}" href="{{route('user.donations')}}">Donations</a>
-                    </li> --}}
-                    <li>
+                    </li> --}} -->
+                    <!-- <li>
                         <a class="{{ request()->is('user/transfer-income') ? 'active' : '' }}"
                             href="{{ route('user.income-transfer') }}">Transfer Income</a>
                     </li>
                     <li>
                         <a class="{{ request()->is('user/transfer-point') ? 'active' : '' }}"
                             href="{{ route('user.point-transfer') }}">Transfer Point</a>
-                    </li>
+                    </li> -->
 
                     <li>
                         <a class="{{ request()->is('user/advertisements') ? 'active' : '' }}"
@@ -183,19 +198,33 @@
             <div id="products">
                 <ul>
                     <li class="navigation-divider d-flex align-items-center">
-                        <i class="mr-2" data-feather="globe"></i> Products
+                        <i class="mr-2" data-feather="shopping-cart"></i> Products
                     </li>
                     <li>
-                        <a class="{{ request()->is('user/products') ? 'active' : '' }}"
-                            href="{{ route('products.list') }}">Products</a>
+                        <a class="{{ request()->is('user/products') || request()->is('user/browse-products') ? 'active' : '' }}"
+                            href="{{ route('member.products') }}">Browse Products</a>
+                    </li>
+                </ul>
+            </div>
+            <div id="payments">
+                <ul>
+                    <li class="navigation-divider d-flex align-items-center">
+                        <i class="mr-2" data-feather="credit-card"></i> Payments
                     </li>
                     <li>
-                        <a class="{{ request()->is('user/products/cart') ? 'active' : '' }}"
-                            href="{{ route('products.cart') }}">Cart</a>
+                        <a class="{{ request()->is('user/payments') ? 'active' : '' }}"
+                            href="{{ route('user.payments') }}">Upload Payment</a>
+                    </li>
+                </ul>
+            </div>
+            <div id="messages">
+                <ul>
+                    <li class="navigation-divider d-flex align-items-center">
+                        <i class="mr-2" data-feather="mail"></i> Messages
                     </li>
                     <li>
-                        <a class="{{ request()->is('user/products/checkout') ? 'active' : '' }}"
-                            href="{{ route('products.cart.checkout') }}">Checkout</a>
+                        <a class="{{ request()->is('user/messages') || request()->is('user/messages/*') ? 'active' : '' }}"
+                            href="{{ route('user.messages.inbox') }}">Inbox</a>
                     </li>
                 </ul>
             </div>

@@ -1,8 +1,8 @@
 @extends('layouts.default.admin.master')
 
-@section('title', 'Encashment List')
+@section('title', 'Reimbursement List')
 
-@section('page-title', 'Encashment List')
+@section('page-title', 'Reimbursement List')
 
 
 
@@ -49,19 +49,19 @@
                         <h5 class="form-header text-center text-capitalize" id="title-encash">
                             @if (!empty($type))
                                 {{ $type }}
-                            @endif Encashment
+                            @endif Reimbursement
                         </h5><br><br>
 
                         <div class="row">
                             <div class="col-md-6">
-                                <label>Encashment Filter</label><br>
+                                <label>Reimbursement Filter</label><br>
                                 <div class="btn-group mr-1 mb-1">
                                     <button aria-expanded="false" aria-haspopup="true"
                                         class="btn btn-primary dropdown-toggle" data-toggle="dropdown" id="view_by"
-                                        type="button">View encashment by</button>
+                                        type="button">View Reimbursement by</button>
                                     <div aria-labelledby="view_by" class="dropdown-menu">
                                         <a class="dropdown-item filter-by @if ($type == 'all') active @endif"
-                                            href="#" data-type="all"> All Encashment</a>
+                                            href="#" data-type="all"> All Reimbursement</a>
                                         <a class="dropdown-item filter-by @if ($type == 'pending') active @endif"
                                             href="#" data-type="pending"> Pending</a>
                                         <a class="dropdown-item filter-by @if ($type == 'hold') active @endif"

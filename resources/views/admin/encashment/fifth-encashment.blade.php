@@ -1,8 +1,8 @@
 @extends('layouts.default.admin.master')
 
-@section('title','5th Pair Encashment List')
+@section('title','5th Pair Reimbursement List')
 
-@section('page-title','5th Pair Encashment List')
+@section('page-title','5th Pair Reimbursement List')
 
 @section('stylesheets')
 {{-- additional style here --}}
@@ -23,14 +23,14 @@
             <div class="card-body">
                 <!-- <h6 class="element-header text-center">Encashment List</h6><br> -->
                 <div class="">
-                    <h5 class="form-header text-center text-capitalize" id="title-encash">@if(!empty($type)) {{$type}} @endif Fifth Pair Encashment</h5><br><br>
+                    <h5 class="form-header text-center text-capitalize" id="title-encash">@if(!empty($type)) {{$type}} @endif Fifth Pair Reimbursement</h5><br><br>
                     <div class="row">
                         <div class="col-md-3">
-                            <label>Encashment Filter</label><br>
+                            <label>Reimbursement Filter</label><br>
                             <div class="btn-group mr-1 mb-1">
-                                <button aria-expanded="false" aria-haspopup="true" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" id="view_by" type="button">View encashment by</button>
+                                <button aria-expanded="false" aria-haspopup="true" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" id="view_by" type="button">View Reimbursement by</button>
                                 <div aria-labelledby="view_by" class="dropdown-menu">
-                                    <a class="dropdown-item filter-by @if($type=='all') active @endif" href="{{ route('admin-fifth-pair-encashment','all') }}" data-type="all"> All Encashment</a>
+                                    <a class="dropdown-item filter-by @if($type=='all') active @endif" href="{{ route('admin-fifth-pair-encashment','all') }}" data-type="all"> All Reimbursement</a>
                                     <a class="dropdown-item filter-by @if($type=='pending') active @endif" href="{{ route('admin-fifth-pair-encashment','pending') }}" data-type="pending"> Pending</a>
                                     <a class="dropdown-item filter-by @if($type=='decline') active @endif" href="{{ route('admin-fifth-pair-encashment','decline') }}" data-type="decline"> Declined</a>
                                     <a class="dropdown-item filter-by @if($type=='claimed') active @endif" href="{{ route('admin-fifth-pair-encashment','claimed') }}" data-type="claimed"> Claimed</a>

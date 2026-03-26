@@ -2,7 +2,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Claim encashment</h5>
+                <h5 class="modal-title">Claim Reimbursement</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -13,7 +13,7 @@
                     <div class="row">
                         <div class="col-sm-12">
 
-                            <p class="text-center"><strong>Encashment Details</strong></p>
+                            <p class="text-center"><strong>Reimbursement Details</strong></p>
                             <table class="table">
                                 <tr>
                                     <td class="text-left">Amount requested : </td>

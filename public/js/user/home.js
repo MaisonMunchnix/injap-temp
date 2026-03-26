@@ -77,121 +77,132 @@ function getData() {
         url: 'user/get-network-data',
         type: 'GET',
         beforeSend: function () {
-            //console.log('Getting data...');
             $('.preloader').css('display', '');
         },
         success: function (response) {
-            var totalLeft;
-            var totalright;
-            var silverLeft = 0;
-            var goldleft = 0;
-            var silverRight = 0;
-            var goldRight = 0;
-            response.MynetworkData.forEach(element => {
-                // console.log(element);
-                if (element.silverLeft != undefined) {
-                    silverLeft = element.silverLeft;
+            try {
+                // Check if response has the required data
+                if (!response || typeof response !== 'object') {
+                    console.log('Invalid response format:', response);
+                    $('.preloader').css('display', 'none');
+                    return;
                 }
 
-                if (element.goldleft != undefined) {
-                    goldleft = element.goldleft;
+                var totalLeft;
+                var totalright;
+                var silverLeft = 0;
+                var goldleft = 0;
+                var silverRight = 0;
+                var goldRight = 0;
+                
+                // Safely process MynetworkData
+                if (response.MynetworkData && Array.isArray(response.MynetworkData)) {
+                    response.MynetworkData.forEach(element => {
+                        if (element && typeof element === 'object') {
+                            if (element.silverLeft != undefined) {
+                                silverLeft = element.silverLeft;
+                            }
+                            if (element.goldleft != undefined) {
+                                goldleft = element.goldleft;
+                            }
+                            if (element.silverRight != undefined) {
+                                silverRight = element.silverRight;
+                            }
+                            if (element.goldRight != undefined) {
+                                goldRight = element.goldRight;
+                            }
+                        }
+                    });
                 }
-                if (element.silverRight != undefined) {
-                    silverRight = element.silverRight;
+
+                $('#slive_left').text("Silver Left: " + silverLeft);
+                $('#gold_left').text("Gold Left: " + goldleft);
+                $('#slive_right').text("Silver Right: " + silverRight);
+                $('#gold_right').text("Gold Right: " + goldRight);
+
+                totalLeft = silverLeft + goldleft;
+                totalright = silverRight + goldRight;
+
+                $('#right_total').text("Total Right: " + totalright);
+                $('#left_total').text("Total Left: " + totalLeft);
+
+                console.log(silverLeft, goldleft, silverRight, goldRight, totalLeft, totalright);
+
+                // Safely set sponsor data
+                if (response.arr_auth_sponsor && typeof response.arr_auth_sponsor === 'object') {
+                    $('#user_reg_date').text(response.arr_auth_sponsor.register_date || '');
+                    $('#user_sponsor').text(response.arr_auth_sponsor.sponsor || '');
+                    $('#user_up_placement').text(response.arr_auth_sponsor.placement_id || '');
+                    $('#user_position').text(response.arr_auth_sponsor.placement_position || '');
+                    $('#user_member_type').text(response.arr_auth_sponsor.member_type || '');
                 }
 
-                if (element.goldRight != undefined) {
-                    goldRight = element.goldRight;
+                // Safely set all income/bonus data with fallback to 0
+                $('#Total_Direct_Referral').text(addComma(response.Total_Direct_Referral || 0)  + ' ¥');
+                $('#Direct_Referral_side').text(addComma(response.Total_Direct_Referral || 0)  + ' ¥'); 
+                
+                $('#Total_Weekly_Direct_Referral').text(addComma(response.Total_Weekly_Direct_Referral || 0)  + ' ¥'); 
+                $('#Total_Weekly_Pairing_Bonus').text(addComma(response.weekly_income || 0)  + ' ¥'); 
+                $('#Total_Charity_Bonus').text(addComma(response.Total_Charity_Bonus || 0)  + ' ¥'); 
+                $('#Total_Weekly_Pairing_Points').text(addComma(response.weekly_income_points || 0) + " Points"); 
+                $('#fifth_pair_total_weekly_income').text(addComma(response.fifth_sales_weekly_income || 0));
+                $('#Total_Weekly_5th_Pairing_Points').text(addComma(response.weekly_5th_points || 0) + " Points"); 
+                $('#T5thPRPoints').text(addComma(response.total_5th_pairing_points || 0) + " Points"); 
+                $('#total_referral_bonus').text(addComma(response.total_referral || 0) + ' ¥');
+                $('#TPBunos').text(addComma(response.total_sales_match || 0));
+                $('#TPRPoints').text(addComma(response.total_pairing_points || 0) + " Points"); 
+                $('#Total_Ayuda_Compensation_Bonus').text(addComma(response.ayuda_sales || 0));
+                $('#TPMatch').text(addComma(response.TPMatch || 0) + " PAIR");
+                $('#total_5th_sales_match').text(addComma(response.total_5th_sales_match || 0)  + ' ¥');
+                $('#total_added_income').text(addComma(response.total_added_income || 0) + ' ¥');
+                $('#total_deductions').text(addComma(response.total_deductions || 0) + ' ¥');
+                $('#total_no_5th_pair').text(response.fifth_pair_count || 0);
+                $('#Total_Monthly_Unilevel').text(addComma(response.Total_Monthly_Unilevel || 0)  + ' ¥'); 
+                $('#Total_Unilevel_Income').text(addComma(response.Total_Unilevel_Income || 0)  + ' ¥'); 
+                $('#total_accumulated_income').text(addComma(response.total_accumulated || 0) + ' ¥');
+                $('#total_accumulated_encashment').text(addComma(response.total_encashment || 0) + ' ¥');
+                $('#total_accumulated_bal').text(addComma(response.total_avail_bal || 0) + ' ¥');
+
+                // Calculate and display totals tab values
+                var referral_bonus = parseFloat(response.Total_Direct_Referral) || 0;
+                var charity_bonus = parseFloat(response.Total_Charity_Bonus) || 0;
+                var added_income = parseFloat(response.total_added_income) || 0;
+                var deductions = parseFloat(response.total_deductions) || 0;
+                var grand_total = referral_bonus + charity_bonus + added_income;
+                
+                $('#totals_referral_bonus').text(addComma(referral_bonus.toFixed(2)) + ' ¥');
+                $('#totals_charity_bonus').text(addComma(charity_bonus.toFixed(2)) + ' ¥');
+                $('#totals_added_income').text(addComma(added_income.toFixed(2)) + ' ¥');
+                $('#totals_deductions').text(addComma(deductions.toFixed(2)) + ' ¥');
+                $('#grand_total_income').text(addComma(grand_total.toFixed(2)) + ' ¥');
+
+                // Set rank data if it exists - safely check each element
+                try {
+                    if (response.rank && Array.isArray(response.rank)) {
+                        if (response.rank.length > 0 && response.rank[0]) $('#rank1').text(response.rank[0]['rank1'] || '');
+                        if (response.rank.length > 1 && response.rank[1]) $('#rank2').text(response.rank[1]['rank2'] || '');
+                        if (response.rank.length > 2 && response.rank[2]) $('#rank3').text(response.rank[2]['rank3'] || '');
+                        if (response.rank.length > 3 && response.rank[3]) $('#rank4').text(response.rank[3]['rank4'] || '');
+                        if (response.rank.length > 4 && response.rank[4]) $('#rank5').text(response.rank[4]['rank5'] || '');
+                    }
+                } catch (rankError) {
+                    console.log('Error setting rank data:', rankError);
                 }
-            });
-
-
-
-
-            $('#slive_left').text("Silver Left: " + silverLeft);
-
-            $('#gold_left').text("Gold Left: " + goldleft);
-
-            $('#slive_right').text("Silver Right: " + silverRight);
-
-            $('#gold_right').text("Gold Right: " + goldRight);
-
-            totalLeft = silverLeft + goldleft;
-            totalright = silverRight + goldRight;
-
-            $('#right_total').text("Total Right: " + totalright);
-
-            $('#left_total').text("Total Left: " + totalLeft);
-
-
-            console.log(silverLeft);
-            console.log(goldleft);
-            console.log(silverRight);
-            console.log(goldRight);
-            console.log(totalLeft);
-            console.log(totalright);
-
-            //console.log('Getting data success...');
-            //onsole.log(response);
-            //setting data in table my sponsor
-            $('#user_reg_date').text(response.arr_auth_sponsor.register_date);
-            $('#user_sponsor').text(response.arr_auth_sponsor.sponsor);
-            $('#user_up_placement').text(response.arr_auth_sponsor.placement_id);
-            $('#user_position').text(response.arr_auth_sponsor.placement_position);
-
-            //console.log('Network count'+response.downline_data.length);
-
-            $('#Total_Direct_Referral').text(addComma(response.Total_Direct_Referral) + " PHP");
-            $('#Direct_Referral_side').text(addComma(response.Total_Direct_Referral) + " PHP"); 
-            
-            $('#Total_Weekly_Direct_Referral').text(addComma(response.Total_Weekly_Direct_Referral) + " PHP"); 
-
-            $('#Total_Weekly_Pairing_Bonus').text(addComma(response.weekly_income) + " PHP"); 
-
-            $('#Total_Weekly_Pairing_Points').text(addComma(response.weekly_income_points) + " Points"); 
-
-            $('#fifth_pair_total_weekly_income').text(addComma(response.fifth_sales_weekly_income) + " PHP"); //setting data  in 5th sales match bonus
-            //11-22-2021
-            $('#Total_Weekly_5th_Pairing_Points').text(addComma(response.weekly_5th_points) + " Points"); 
-            $('#T5thPRPoints').text(addComma(response.total_5th_pairing_points) + " Points"); 
-            $('#total_referral_bonus').text(addComma(response.total_referral) + " PHP"); //setting data  in total referral
-            $('#TPBunos').text(addComma(response.total_sales_match) + " PHP"); //setting data  in sales match bonus
-            ///10-25-2021
-            $('#TPRPoints').text(addComma(response.total_pairing_points) + " Points"); //setting data  in sales match bonus
-            
-            $('#Total_Ayuda_Compensation_Bonus').text(addComma(response.ayuda_sales) + " PHP"); //Ayuda Sales
-            
-            $('#TPMatch').text(addComma(response.TPMatch) + " PAIR"); //setting data  in sales match bonus
-
-            //$('#ParingBonusID').text(addComma(response.TPBunos) + " PHP"); //setting data  in sales match bonus
-            //$('#ParingMatchID').text(addComma(response.TPMatch) + " PAIR"); //setting data  in sales match bonus
-            $('#total_5th_sales_match').text(addComma(response.total_5th_sales_match) + " PHP"); //setting data  in sales match bonus
-            
-            
-            $('#total_no_5th_pair').text(response.fifth_pair_count); //setting data  in sales match bonus
-            
-            
-            $('#Total_Monthly_Unilevel').text(addComma(response.Total_Monthly_Unilevel) + " PHP"); 
-            $('#Total_Unilevel_Income').text(addComma(response.Total_Unilevel_Income) + " PHP"); 
-
-            
-            
-            
-            
-
-
-            $('#total_accumulated_income').text(addComma(response.total_accumulated) + " PHP"); //setting data  in total accumulated income
-            $('#total_accumulated_encashment').text(addComma(response.total_encashment) + " PHP"); //setting data  in total encashment
-            $('#total_accumulated_bal').text(addComma(response.total_avail_bal) + " PHP"); //setting data  in total available balance
-
-            $('#rank1').text(response.rank[0]['rank1']);
-            $('#rank2').text(response.rank[1]['rank2']);
-            $('#rank3').text(response.rank[2]['rank3']);
-            $('#rank4').text(response.rank[3]['rank4']);
-            $('#rank5').text(response.rank[4]['rank5']);
-            $('#Groupsales').text(response.GroupSales);
-            // console.log(response.GroupSales);
-            $('.preloader').css('display', 'none');
+                
+                try {
+                    if (response.GroupSales !== undefined && response.GroupSales !== null) {
+                        $('#Groupsales').text(response.GroupSales);
+                    }
+                } catch (groupError) {
+                    console.log('Error setting GroupSales:', groupError);
+                }
+                
+                $('.preloader').css('display', 'none');
+            } catch (error) {
+                console.error('Error processing getData response:', error);
+                console.error('Response data:', response);
+                $('.preloader').css('display', 'none');
+            }
         },
         error: function (error) {
             console.log('Getting data error...');
@@ -265,5 +276,63 @@ function addComma(numStr)
         x1 = x1.replace(rgx, '$1' + ',' + '$2');
     }
     return x1 + x2;
+}
+
+// Load adjustment history when the adjustments tab is clicked
+$(document).on('click', '#adjustments-tab', function() {
+    loadAdjustmentHistory();
+});
+
+// Refresh data when the totals tab is clicked
+$(document).on('click', '#totals-tab', function() {
+    getData();
+    loadAdjustmentHistory();
+});
+
+function loadAdjustmentHistory() {
+    $.ajax({
+        url: 'user/get-adjustment-history',
+        type: 'GET',
+        beforeSend: function() {
+            $('#adjustments_table_body').html('<tr><td colspan="5" class="text-center">Loading...</td></tr>');
+        },
+        success: function(response) {
+            if (response.success && response.data.length > 0) {
+                let html = '';
+                response.data.forEach(function(item) {
+                    let rowClass = item.type === 'Added' ? 'table-success' : 'table-danger';
+                    let amountClass = item.type === 'Added' ? 'text-success' : 'text-danger';
+
+                    // Normalize and map certain note labels for display
+                    let displayNotes = item.notes || '';
+                    if (/Direct Referral Bonus/i.test(displayNotes)) {
+                        displayNotes = 'Social Funds';
+                    } else if (/Pairing Bonus/i.test(displayNotes)) {
+                        displayNotes = 'Charity Funds';
+                    } else if (/Fund transfer/i.test(displayNotes)) {
+                        displayNotes = 'Fund Transfer - ' + displayNotes;
+                    }
+
+                    // Get recipient ID, display "-" if not available
+                    let recipientId = item.recipient_id || '-';
+
+                    html += '<tr class="' + rowClass + '">' +
+                        '<td>' + item.date + '</td>' +
+                        '<td><span class="badge ' + (item.type === 'Added' ? 'badge-success' : 'badge-danger') + '">' + item.type + '</span></td>' +
+                        '<td class="' + amountClass + ' font-weight-bold">' + item.amount + '</td>' +
+                        '<td>' + recipientId + '</td>' +
+                        '<td>' + displayNotes + '</td>' +
+                        '</tr>';
+                });
+                $('#adjustments_table_body').html(html);
+            } else {
+                $('#adjustments_table_body').html('<tr><td colspan="5" class="text-center text-muted">No adjustments found</td></tr>');
+            }
+        },
+        error: function(error) {
+            console.log('Error loading adjustment history:', error);
+            $('#adjustments_table_body').html('<tr><td colspan="5" class="text-center text-danger">Error loading data</td></tr>');
+        }
+    });
 }
 

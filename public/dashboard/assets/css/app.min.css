@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 :root {
-    --theme: #FFCC00;
+    --theme: #0E8FFC;
     --primary: #FFD83F;
     --secondary: #FFBF78;
 }
@@ -3438,7 +3438,7 @@ body.no-scroll {
 
 .icon-block.icon-block-outline-primary {
     border: #FFA239 2px solid #0d6efd;
-    color: #ffcc00!important;
+    color: #0E8FFC!important;
     background: 0 0
 }
 
@@ -4176,7 +4176,7 @@ textarea {
 }
 
 .bg-primary {
-    background: #ffcc00!important;
+    background: #0E8FFC!important;
     color: #ecf0f1 !important
 }
 
@@ -4194,7 +4194,7 @@ textarea {
 }
 
 .bg-primary-gradient {
-    background: linear-gradient(230deg, #ffcc00#4da7ff) !important;
+    background: linear-gradient(230deg, #0E8FFC#4da7ff) !important;
     color: #fff !important
 }
 
@@ -4435,7 +4435,7 @@ textarea {
 }
 
 .text-primary {
-    color: #ffcc00!important
+    color: #0E8FFC!important
 }
 
 .text-secondary {
@@ -4837,8 +4837,8 @@ a.btn:hover {
 .header form .input-group .input-group-append button.btn[href="#previous"],
 a.btn[href="#next"],
 a.btn[href="#previous"] {
-    background: #ffcc00!important;
-    border-color: #ffcc00!important;
+    background: #0E8FFC!important;
+    border-color: #0E8FFC!important;
     color: #fff !important
 }
 
@@ -6980,7 +6980,7 @@ body:not(.dark) .nicescroll-cursors {
 }
 
 .alert.alert-primary.alert-with-border {
-    border-left: 3px solid #ffcc00!important
+    border-left: 3px solid #0E8FFC!important
 }
 
 .alert.alert-secondary {
@@ -7992,7 +7992,7 @@ body.form-membership .form-wrapper hr {
 }
 
 .fc .fc-list-table .fc-list-item.bg-primary:hover td {
-    background: #ffcc00!important;
+    background: #0E8FFC!important;
 }
 
 .fc .fc-list-table .fc-list-item.bg-primary .fc-event-dot {
@@ -8037,13 +8037,13 @@ body.form-membership .form-wrapper hr {
 }
 
 .list-group .list-group-item.list-group-item-primary {
-    background: #ffcc00!important;
+    background: #0E8FFC!important;
     color: #fff !important
 }
 
 .list-group .list-group-item.list-group-item-primary-bright {
     background: rgba(0, 129, 255, .3) !important;
-    color: #ffcc00!important;
+    color: #0E8FFC!important;
 }
 
 .list-group .list-group-item.list-group-item-secondary {

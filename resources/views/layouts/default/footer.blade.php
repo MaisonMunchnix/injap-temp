@@ -1,3 +1,3 @@
 <footer class="content-footer">
-    <div>© {{ date('Y') }} {{ env('APP_NAME') }}</div>
+    <div>© {{ date('Y') }} - All Right Reserve - Innovation Japan</div>
 </footer>

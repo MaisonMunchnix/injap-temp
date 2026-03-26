@@ -9,7 +9,7 @@
 	<div class="row no-gutters align-items-center justify-content-center">
 		<!-- Start col -->
 			<div class="text-center">
-				<img src="{{ asset('images/logo.png') }}" class="img-fluid error-logo" alt="logo">
+				<img src="{{ asset('new_landing/images/logs.png') }}" class="img-fluid error-logo" alt="logo">
 				<img src="{{ asset('teller_assets/images/error/internal-server.svg') }}" class="img-fluid error-image" alt="505">
 				<h4 class="error-subtitle mb-4">500 Internal Server Error</h4>
 				<p class="mb-4">The server encountered an internal error or misconfiguration and was unable to complete your request.</p>

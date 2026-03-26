@@ -1,6 +1,6 @@
 @extends('layouts.default.admin.master')
-@section('title','Encashments test')
-@section('page-title','Encashment List')
+@section('title','Reimbursements test')
+@section('page-title','Reimbursement List')
 @section('stylesheets')
 {{-- additional style here --}}
 @endsection
@@ -13,7 +13,7 @@
         <div class="card">
             <div class="card-body p-50">
                 <form action="" id="encash_form">
-                    <button type="submit" class="btn btn-primary">Encash</button>
+                    <button type="submit" class="btn btn-primary">Reimburse</button>
                 </form>
             </div>
         </div>

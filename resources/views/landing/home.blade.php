@@ -1,763 +1,745 @@
 @extends('layouts.landing.master')
-@section('title', 'Home')
-@section('page-title', 'Home')
+@section('title', 'INJAP - Innovation Japan | Home')
+@section('page-title', 'INJAP - Innovation Japan | Home')
 
 @section('stylesheets')
     {{-- additional style here --}}
 @endsection
 
 @section('content')
-    <section class="vs-hero-wrapper position-relative">
-        <div class="vs-hero-carousel" data-height="850" data-container="1900" data-slidertype="responsive">
-            <div class="ls-slide" data-ls="duration:12000; transition2d:5; kenburnszoom:in; kenburnsscale:1.1;">
-                <img width="1920" height="850" src="{{ asset('landing//img/hero/hero-1-1.jpg') }}" class="ls-bg"
-                    alt="hero-bg" />
-                <div style="
-                    font-size: 36px;
-                    color: #000;
-                    text-align: left;
-                    font-style: normal;
-                    text-decoration: none;
-                    text-transform: none;
-                    font-weight: 400;
-                    letter-spacing: 0px;
-                    border-style: solid;
-                    border-color: #000;
-                    background-position: 0% 0%;
-                    background-repeat: no-repeat;
-                    width: 300px;
-                    height: 1558px;
-                    background-color: rgba(14, 84, 245, 0.5);
-                    top: -473px;
-                    left: 51px;
-                "
-                    class="ls-l ls-text-layer d-hd-none"
-                    data-ls="offsetxin:-800; offsetyin:-800; durationin:1700; delayin:1200; easingin:easeOutQuint; rotatein:43.46; offsetxout:1200; offsetyout:1200; durationout:8000; startatout:slidechangeonly + 3000; easingout:easeOutQuint; scaleyout:5; rotation:43.46;">
-                </div>
-                <div style="
-                    font-size: 36px;
-                    color: #000;
-                    text-align: left;
-                    font-style: normal;
-                    text-decoration: none;
-                    text-transform: none;
-                    font-weight: 400;
-                    letter-spacing: 0px;
-                    border-style: solid;
-                    border-color: #000;
-                    background-position: 0% 0%;
-                    background-repeat: no-repeat;
-                    width: 589px;
-                    height: 1819.7px;
-                    top: -485px;
-                    left: 406px;
-                    background: linear-gradient(172deg, rgba(5, 26, 79, 0.35) 21%, rgba(0, 0, 0, 0) 54%);
-                "
-                    class="ls-l ls-text-layer d-hd-none"
-                    data-ls="offsetxin:-800; offsetyin:-800; durationin:1500; delayin:1300; easingin:easeOutQuint; rotatein:43.46; offsetxout:1200; offsetyout:1200; durationout:8000; startatout:slidechangeonly + 3000; easingout:easeOutQuint; scaleyout:5; bgcolorout:transparent; colorout:transparent; rotation:43.46;">
-                </div>
-                <p style="
-                    font-size: 18px;
-                    text-align: left;
-                    font-style: normal;
-                    text-decoration: none;
-                    text-transform: none;
-                    font-weight: 600;
-                    letter-spacing: 0px;
-                    border-style: solid;
-                    background-position: 0% 0%;
-                    background-repeat: no-repeat;
-                    font-family: Exo;
-                    color: #ffffff;
-                    border-width: 2px 2px 2px 2px;
-                    border-color: #ffffff;
-                    border-radius: 5px 5px 5px 5px;
-                    padding-top: 9px;
-                    padding-right: 23.5px;
-                    padding-left: 23.5px;
-                    top: 240px;
-                    left: 588px;
-                    padding-bottom: 9px;
-                "
-                    class="ls-l ls-hide-tablet ls-hide-phone ls-text-layer"
-                    data-ls="offsetxin:300; durationin:1500; delayin:400; easingin:easeOutQuint; offsetxout:300; durationout:1500; easingout:easeOutQuint;">
-                    JOIN US TODAY
-                </p>
-                <h1 style="top: 225px; left: 345px; font-weight: 700; background-size: inherit; background-position: inherit; font-size: 60px; color: #ffffff; font-family: Exo;"
-                    class="ls-l ls-hide-tablet ls-hide-phone ls-text-layer"
-                    data-ls="offsetxin:-200; durationin:1500; easingin:easeOutQuint; offsetxout:-100; durationout:1500; easingout:easeOutQuint; position:relative;">
-                    RCBO
-                </h1>
-                <h1 style="
-                    top: 305px;
-                    left: 345px;
-                    font-weight: 700;
-                    background-size: inherit;
-                    background-position: inherit;
-                    font-size: 60px;
-                    font-family: Exo;
-                    color: #ffffff;
-                    text-transform: none;
-                    border-style: solid;
-                    border-color: #000;
-                    background-color: transparent;
-                    background-repeat: no-repeat;
-                    cursor: auto;
-                "
-                    class="ls-l ls-hide-tablet ls-hide-phone ls-text-layer"
-                    data-ls="offsetxin:-200; durationin:1500; delayin:200; easingin:easeOutQuint; offsetxout:-100; durationout:1500; easingout:easeOutQuint;">
-                    CONSUMER GOODS TRADING
-                </h1>
-                <div style="top: 405px; left: 350px; background-size: inherit; background-position: inherit; font-size: 16px; line-height: 28px; font-family: Fira Sans; width: 695px; color: #ffffff; white-space: normal;"
-                    class="ls-l ls-hide-tablet ls-hide-phone ls-text-layer"
-                    data-ls="offsetyin:50; durationin:1500; delayin:600; easingin:easeOutQuint; offsetyout:50; durationout:1500; easingout:easeOutQuint; position:relative;">
-                    Whether you are looking for high-quality consumer goods at affordable prices or seeking an
-                    entrepreneurial opportunity that can change your life, {{ env('APP_NAME') }} is here to serve your
-                    needs. Join our growing community and experience the difference that our MLM platform can make in your
-                    life.
+ <!-- Hero Section Start -->
+    <div class="hero parallaxie">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-8">
+                    <!-- Section Title start -->
+                    <div class="section-title">
+                        <h3 class="wow fadeInUp" data-wow-delay="0.25s">Let us help each other in times of disaster and hardship</h3>
+                        <h1 class="text-anime">Innovation Japan call for unity</h1>
+                    </div>
+                    <!-- Section Title end -->
 
-                </div>
-
-                <div style="top: 495px; left: 350px; background-size: inherit; background-position: inherit; font-size: 24px;"
-                    class="ls-l ls-hide-tablet ls-hide-phone ls-html-layer"
-                    data-ls="offsetyin:50; durationin:1500; delayin:900; easingin:easeOutQuint; offsetyout:50; durationout:1500; easingout:easeOutQuint; position:relative;">
-                    <br>
-
-
-
-                    <div class="ls-btn-group">
-
-                        <a href="{{ route('landing.about') }}" class="vs-btn ls-hero-btn">ABOUT US<i
-                                class="far fa-arrow-right"></i></a> <a href="{{ route('landing.contact') }}"
-                            class="vs-btn style2 ls-hero-btn">CONTACT US<i class="far fa-arrow-right"></i></a>
+                    <!-- Hero Body start -->
+                    <div class="hero-body">
+                        <p class="wow fadeInUp" data-wow-delay="0.50s">Empowering every member to uplift one another through creativity, compassion, and shared purpose. Together, we rise—spreading hope, unity, and opportunity for a better, abundant life.</p>
+                        <a href="{{ route('landing.application') }}" class="btn-default hero-btn wow fadeInUp" data-wow-delay="0.75s">Get Started</a>
                     </div>
-                </div>
-                <p style="
-                    font-size: 32px;
-                    text-align: left;
-                    font-style: normal;
-                    text-decoration: none;
-                    text-transform: none;
-                    font-weight: 600;
-                    letter-spacing: 0px;
-                    border-style: solid;
-                    background-position: 0% 0%;
-                    background-repeat: no-repeat;
-                    font-family: Exo;
-                    color: #ffffff;
-                    border-width: 2px 2px 2px 2px;
-                    border-color: #ffffff;
-                    border-radius: 5px 5px 5px 5px;
-                    padding-top: 18px;
-                    padding-right: 44px;
-                    padding-left: 44px;
-                    top: 160px;
-                    left: 90px;
-                    padding-bottom: 18px;
-                "
-                    class="ls-l ls-hide-desktop ls-hide-phone ls-text-layer"
-                    data-ls="offsetxin:300; durationin:1500; delayin:400; easingin:easeOutQuint; offsetxout:300; durationout:1500; easingout:easeOutQuint;">
-                    JOIN US TODAY
-                </p>
-                <h1 style="top: 280px; left: 80px; font-weight: 700; background-size: inherit; background-position: inherit; font-size: 80px; color: #ffffff; font-family: Exo;"
-                    class="ls-l ls-hide-desktop ls-hide-phone ls-text-layer"
-                    data-ls="offsetxin:-200; durationin:1500; easingin:easeOutQuint; offsetxout:-100; durationout:1500; easingout:easeOutQuint; position:relative;">
-                    RCBO
-                </h1>
-                <h1 style="
-                    top: 380px;
-                    left: 80px;
-                    font-weight: 700;
-                    background-size: inherit;
-                    background-position: inherit;
-                    font-size: 80px;
-                    font-family: Exo;
-                    color: #ffffff;
-                    text-transform: none;
-                    border-style: solid;
-                    border-color: #000;
-                    background-color: transparent;
-                    background-repeat: no-repeat;
-                    cursor: auto;
-                "
-                    class="ls-l ls-hide-desktop ls-hide-phone ls-text-layer"
-                    data-ls="offsetxin:-200; durationin:1500; delayin:200; easingin:easeOutQuint; offsetxout:-100; durationout:1500; easingout:easeOutQuint;">
-                    CONSUMER GOODS TRADING
-                </h1>
-                <div style="top: 540px; left: 80px; background-size: inherit; background-position: inherit; font-size: 24px;"
-                    class="ls-l ls-hide-desktop ls-hide-phone ls-html-layer"
-                    data-ls="offsetyin:50; durationin:1500; delayin:900; easingin:easeOutQuint; offsetyout:50; durationout:1500; easingout:easeOutQuint; position:relative;">
-                    <div class="ls-btn-group">
-                        <a href="{{ route('landing.about') }}" class="vs-btn ls-hero-btn">ABOUT US<i
-                                class="far fa-arrow-right"></i></a> <a href="{{ route('landing.contact') }}"
-                            class="vs-btn style2 ls-hero-btn">CONTACT US<i class="far fa-arrow-right"></i></a>
-                    </div>
-                </div>
-                <h1 style="top: 120px; left: 50%; text-align: center; font-weight: 700; background-size: inherit; background-position: inherit; font-size: 130px; color: #ffffff; font-family: Exo; width: 10000px;"
-                    class="ls-l ls-hide-desktop ls-hide-tablet ls-text-layer"
-                    data-ls="offsetxin:-200; durationin:1500; easingin:easeOutQuint; offsetxout:-100; durationout:1500; easingout:easeOutQuint; position:relative;">
-                    RCBO
-                </h1>
-                <h1 style="
-                    top: 280px;
-                    left: 50%;
-                    text-align: center;
-                    font-weight: 700;
-                    background-size: inherit;
-                    background-position: inherit;
-                    font-size: 130px;
-                    font-family: Exo;
-                    color: #ffffff;
-                    width: 10000px;
-                    text-transform: none;
-                    border-style: solid;
-                    border-color: #000;
-                    background-color: transparent;
-                    background-repeat: no-repeat;
-                    cursor: auto;
-                "
-                    class="ls-l ls-hide-desktop ls-hide-tablet ls-text-layer"
-                    data-ls="offsetxin:-200; durationin:1500; delayin:200; easingin:easeOutQuint; offsetxout:-100; durationout:1500; easingout:easeOutQuint;">
-                    CONSUMER GOODS TRADING
-                </h1>
-                <div style="top: 520px; left: 50%; text-align: center; background-size: inherit; background-position: inherit; font-size: 24px; width: 1000px;"
-                    class="ls-l ls-hide-desktop ls-hide-tablet ls-html-layer"
-                    data-ls="offsetyin:50; durationin:1500; delayin:900; easingin:easeOutQuint; offsetyout:50; durationout:1500; easingout:easeOutQuint; position:relative;">
-                    <div class="ls-btn-group">
-                        <a href="{{ route('landing.about') }}" class="vs-btn ls-hero-btn">ABOUT US<i
-                                class="far fa-arrow-right"></i></a> <a href="{{ route('landing.contact') }}"
-                            class="vs-btn style2 ls-hero-btn">CONTACT US<i class="far fa-arrow-right"></i></a>
-                    </div>
-                </div>
-                <a class="ls-l ls-hide-tablet ls-hide-phone" href="#next" target="_self" data-ls="static:forever;">
-                    <div style="
-                        font-size: 36px;
-                        color: #000;
-                        text-align: left;
-                        font-style: normal;
-                        text-decoration: none;
-                        text-transform: none;
-                        font-weight: 400;
-                        letter-spacing: 0px;
-                        border-style: solid;
-                        border-color: #000;
-                        background-position: 0% 0%;
-                        background-repeat: no-repeat;
-                        left: 1685px;
-                        top: 50%;
-                    "
-                        class="ls-html-layer">
-                        <span class="icon-btn style2"><i class="far fa-arrow-right"></i></span>
-                    </div>
-                </a>
-                <a class="ls-l ls-hide-tablet ls-hide-phone" href="#prev" target="_self" data-ls="static:forever;">
-                    <div style="
-                        font-size: 36px;
-                        color: #000;
-                        text-align: left;
-                        font-style: normal;
-                        text-decoration: none;
-                        text-transform: none;
-                        font-weight: 400;
-                        letter-spacing: 0px;
-                        border-style: solid;
-                        border-color: #000;
-                        background-position: 0% 0%;
-                        background-repeat: no-repeat;
-                        left: 150px;
-                        top: 50%;
-                    "
-                        class="ls-html-layer">
-                        <span class="icon-btn style2"><i class="far fa-arrow-left"></i></span>
-                    </div>
-                </a>
-            </div>
-            <div class="ls-slide" data-ls="duration:12000; transition2d:5; kenburnszoom:out; kenburnsscale:1.1;">
-                <img width="1920" height="850" src="{{ asset('landing//img/hero/hero-1-2.jpg') }}" class="ls-bg"
-                    alt="hero-bg" />
-                <div style="
-                    font-size: 36px;
-                    color: #000;
-                    text-align: left;
-                    font-style: normal;
-                    text-decoration: none;
-                    text-transform: none;
-                    font-weight: 400;
-                    letter-spacing: 0px;
-                    border-style: solid;
-                    border-color: #000;
-                    background-position: 0% 0%;
-                    background-repeat: no-repeat;
-                    width: 300px;
-                    height: 1558px;
-                    background-color: rgba(14, 84, 245, 0.5);
-                    top: -473px;
-                    left: 51px;
-                "
-                    class="ls-l ls-text-layer d-hd-none"
-                    data-ls="offsetxin:-800; offsetyin:-800; durationin:1700; delayin:1200; easingin:easeOutQuint; rotatein:43.46; offsetxout:1200; offsetyout:1200; durationout:8000; startatout:slidechangeonly + 3000; easingout:easeOutQuint; scaleyout:5; rotation:43.46;">
-                </div>
-                <div style="
-                    font-size: 36px;
-                    color: #000;
-                    text-align: left;
-                    font-style: normal;
-                    text-decoration: none;
-                    text-transform: none;
-                    font-weight: 400;
-                    letter-spacing: 0px;
-                    border-style: solid;
-                    border-color: #000;
-                    background-position: 0% 0%;
-                    background-repeat: no-repeat;
-                    width: 589px;
-                    height: 1819.7px;
-                    top: -485px;
-                    left: 406px;
-                    background: linear-gradient(172deg, rgba(5, 26, 79, 0.35) 21%, rgba(0, 0, 0, 0) 54%);
-                "
-                    class="ls-l ls-text-layer d-hd-none"
-                    data-ls="offsetxin:-800; offsetyin:-800; durationin:1500; delayin:1300; easingin:easeOutQuint; rotatein:43.46; offsetxout:1200; offsetyout:1200; durationout:8000; startatout:slidechangeonly + 3000; easingout:easeOutQuint; scaleyout:5; bgcolorout:transparent; colorout:transparent; rotation:43.46;">
-                </div>
-                <p style="
-                    font-size: 18px;
-                    text-align: left;
-                    font-style: normal;
-                    text-decoration: none;
-                    text-transform: none;
-                    font-weight: 600;
-                    letter-spacing: 0px;
-                    border-style: solid;
-                    background-position: 0% 0%;
-                    background-repeat: no-repeat;
-                    font-family: Exo;
-                    color: #ffffff;
-                    border-width: 2px 2px 2px 2px;
-                    border-color: #ffffff;
-                    border-radius: 5px 5px 5px 5px;
-                    padding-top: 9px;
-                    padding-right: 23.5px;
-                    padding-left: 23.5px;
-                    top: 240px;
-                    left: 558px;
-                    padding-bottom: 9px;
-                "
-                    class="ls-l ls-hide-tablet ls-hide-phone ls-text-layer"
-                    data-ls="offsetxin:300; durationin:1500; delayin:400; easingin:easeOutQuint; offsetxout:300; durationout:1500; easingout:easeOutQuint;">
-                    JOIN US TODAY
-                </p>
-                <h1 style="top: 225px; left: 345px; font-weight: 700; background-size: inherit; background-position: inherit; font-size: 60px; color: #ffffff; font-family: Exo;"
-                    class="ls-l ls-hide-tablet ls-hide-phone ls-text-layer"
-                    data-ls="offsetxin:-200; durationin:1500; easingin:easeOutQuint; offsetxout:-100; durationout:1500; easingout:easeOutQuint; position:relative;">
-                    RCBO
-                </h1>
-                <h1 style="
-                    top: 305px;
-                    left: 345px;
-                    font-weight: 700;
-                    background-size: inherit;
-                    background-position: inherit;
-                    font-size: 60px;
-                    font-family: Exo;
-                    color: #ffffff;
-                    text-transform: none;
-                    border-style: solid;
-                    border-color: #000;
-                    background-color: transparent;
-                    background-repeat: no-repeat;
-                    cursor: auto;
-                "
-                    class="ls-l ls-hide-tablet ls-hide-phone ls-text-layer"
-                    data-ls="offsetxin:-200; durationin:1500; delayin:200; easingin:easeOutQuint; offsetxout:-100; durationout:1500; easingout:easeOutQuint;">
-                    CONSUMER GOODS TRADING
-                </h1>
-                <div style="top: 405px; left: 350px; background-size: inherit; background-position: inherit; font-size: 16px; line-height: 28px; font-family: Fira Sans; width: 695px; color: #ffffff; white-space: normal;"
-                    class="ls-l ls-hide-tablet ls-hide-phone ls-text-layer"
-                    data-ls="offsetyin:50; durationin:1500; delayin:600; easingin:easeOutQuint; offsetyout:50; durationout:1500; easingout:easeOutQuint; position:relative;">
-                    Discover the world of essential products and financial empowerment with {{ env('APP_NAME') }}.
-                    Together, we can create a brighter and more prosperous future for everyone.
-                </div>
-                <div style="top: 495px; left: 350px; background-size: inherit; background-position: inherit; font-size: 24px;"
-                    class="ls-l ls-hide-tablet ls-hide-phone ls-html-layer"
-                    data-ls="offsetyin:50; durationin:1500; delayin:900; easingin:easeOutQuint; offsetyout:50; durationout:1500; easingout:easeOutQuint; position:relative;">
-                    <div class="ls-btn-group">
-                        <a href="{{ route('landing.about') }}" class="vs-btn ls-hero-btn">ABOUT US<i
-                                class="far fa-arrow-right"></i></a> <a href="{{ route('landing.contact') }}"
-                            class="vs-btn style2 ls-hero-btn">CONTACT US<i class="far fa-arrow-right"></i></a>
-                    </div>
-                </div>
-                <p style="
-                    font-size: 32px;
-                    text-align: left;
-                    font-style: normal;
-                    text-decoration: none;
-                    text-transform: none;
-                    font-weight: 600;
-                    letter-spacing: 0px;
-                    border-style: solid;
-                    background-position: 0% 0%;
-                    background-repeat: no-repeat;
-                    font-family: Exo;
-                    color: #ffffff;
-                    border-width: 2px 2px 2px 2px;
-                    border-color: #ffffff;
-                    border-radius: 5px 5px 5px 5px;
-                    padding-top: 18px;
-                    padding-right: 44px;
-                    padding-left: 44px;
-                    top: 160px;
-                    left: 90px;
-                    padding-bottom: 18px;
-                "
-                    class="ls-l ls-hide-desktop ls-hide-phone ls-text-layer"
-                    data-ls="offsetxin:300; durationin:1500; delayin:400; easingin:easeOutQuint; offsetxout:300; durationout:1500; easingout:easeOutQuint;">
-                    PROVIDE FREE CONSULTATION
-                </p>
-                <h1 style="top: 280px; left: 80px; font-weight: 700; background-size: inherit; background-position: inherit; font-size: 80px; color: #ffffff; font-family: Exo;"
-                    class="ls-l ls-hide-desktop ls-hide-phone ls-text-layer"
-                    data-ls="offsetxin:-200; durationin:1500; easingin:easeOutQuint; offsetxout:-100; durationout:1500; easingout:easeOutQuint; position:relative;">
-                    RCBO
-                </h1>
-                <h1 style="
-                    top: 380px;
-                    left: 80px;
-                    font-weight: 700;
-                    background-size: inherit;
-                    background-position: inherit;
-                    font-size: 80px;
-                    font-family: Exo;
-                    color: #ffffff;
-                    text-transform: none;
-                    border-style: solid;
-                    border-color: #000;
-                    background-color: transparent;
-                    background-repeat: no-repeat;
-                    cursor: auto;
-                "
-                    class="ls-l ls-hide-desktop ls-hide-phone ls-text-layer"
-                    data-ls="offsetxin:-200; durationin:1500; delayin:200; easingin:easeOutQuint; offsetxout:-100; durationout:1500; easingout:easeOutQuint;">
-                    CONSUMER GOODS TRADING
-                </h1>
-                <div style="top: 540px; left: 80px; background-size: inherit; background-position: inherit; font-size: 24px;"
-                    class="ls-l ls-hide-desktop ls-hide-phone ls-html-layer"
-                    data-ls="offsetyin:50; durationin:1500; delayin:900; easingin:easeOutQuint; offsetyout:50; durationout:1500; easingout:easeOutQuint; position:relative;">
-                    <div class="ls-btn-group">
-                        <a href="{{ route('landing.about') }}" class="vs-btn ls-hero-btn">ABOUT US<i
-                                class="far fa-arrow-right"></i></a> <a href="{{ route('landing.contact') }}"
-                            class="vs-btn style2 ls-hero-btn">CONTACT US<i class="far fa-arrow-right"></i></a>
-                    </div>
-                </div>
-                <h1 style="top: 120px; left: 50%; text-align: center; font-weight: 700; background-size: inherit; background-position: inherit; font-size: 130px; color: #ffffff; font-family: Exo; width: 10000px;"
-                    class="ls-l ls-hide-desktop ls-hide-tablet ls-text-layer"
-                    data-ls="offsetxin:-200; durationin:1500; easingin:easeOutQuint; offsetxout:-100; durationout:1500; easingout:easeOutQuint; position:relative;">
-                    RCBO
-                </h1>
-                <h1 style="
-                    top: 280px;
-                    left: 50%;
-                    text-align: center;
-                    font-weight: 700;
-                    background-size: inherit;
-                    background-position: inherit;
-                    font-size: 130px;
-                    font-family: Exo;
-                    color: #ffffff;
-                    width: 10000px;
-                    text-transform: none;
-                    border-style: solid;
-                    border-color: #000;
-                    background-color: transparent;
-                    background-repeat: no-repeat;
-                    cursor: auto;
-                "
-                    class="ls-l ls-hide-desktop ls-hide-tablet ls-text-layer"
-                    data-ls="offsetxin:-200; durationin:1500; delayin:200; easingin:easeOutQuint; offsetxout:-100; durationout:1500; easingout:easeOutQuint;">
-                    CONSUMER GOODS TRADING
-                </h1>
-                <div style="top: 520px; left: 50%; text-align: center; background-size: inherit; background-position: inherit; font-size: 24px; width: 1000px;"
-                    class="ls-l ls-hide-desktop ls-hide-tablet ls-html-layer"
-                    data-ls="offsetyin:50; durationin:1500; delayin:900; easingin:easeOutQuint; offsetyout:50; durationout:1500; easingout:easeOutQuint; position:relative;">
-                    <div class="ls-btn-group">
-                        <a href="{{ route('landing.about') }}" class="vs-btn ls-hero-btn">ABOUT US<i
-                                class="far fa-arrow-right"></i></a> <a href="{{ route('landing.contact') }}"
-                            class="vs-btn style2 ls-hero-btn">CONTACT US<i class="far fa-arrow-right"></i></a>
-                    </div>
+                    <!-- Hero Body end -->
                 </div>
             </div>
-
         </div>
-    </section>
-    <div data-bg-src="{{ asset('landing/img/bg/ab-bg-1-1.jpg') }}">
-        <section class="feature-wrap1 space-top space-extra-bottom">
-            <div class="container wow fadeInUp" data-wow-delay="0.2s">
-                <div class="row vs-carousel" data-slide-show="3" data-lg-slide-show="2" data-md-slide-show="2">
-                    <div class="col-xl-4">
-                        <div class="feature-style1">
-
-                            <h3 class="feature-title h5"><a class="text-inherit"
-                                    href="{{ route('landing.package', 'wgc-membership') }}">WGC Membership -
-                                    Empower
-                                    Your Start</a></h3>
-                            <p class="feature-text">Unlock your journey to financial freedom with our WGC Japan Charity
-                                Package, designed for those who are willing...</p>
-                            <a href="{{ route('landing.package', 'wgc-membership') }}" class="vs-btn style3">Read More<i
-                                    class="far fa-long-arrow-right"></i></a>
-                        </div>
-                    </div>
-                    <div class="col-xl-4">
-                        <div class="feature-style1">
-
-                            <h3 class="feature-title h5"><a class="text-inherit"
-                                    href="{{ route('landing.package', 'gold') }}">Gold Package
-                                    - Accelerate Your Growth</a></h3>
-                            <p class="feature-text">Ready to amplify your earnings and network? Upgrade to the Gold Package
-                                to fast-track your journey towards financial success and abundance.</p>
-                            <a href="{{ route('landing.package', 'gold') }}" class="vs-btn style3">Read More<i
-                                    class="far fa-long-arrow-right"></i></a>
-                        </div>
-                    </div>
-                    <div class="col-xl-4">
-                        <div class="feature-style1">
-
-                            <h3 class="feature-title h5"><a class="text-inherit"
-                                    href="{{ route('landing.package', 'diamond') }}">Diamond
-                                    Package - Achieve the Highest Level</a></h3>
-                            <p class="feature-text">For those who have big dreams and want to reach the very top, the
-                                Diamond Package is the best choice. You lead and achieve extraordinary success.</p>
-                            <a href="{{ route('landing.package', 'diamond') }}" class="vs-btn style3">Read More<i
-                                    class="far fa-long-arrow-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="position-relative space-bottom">
-            <span class="about-shape1 d-none d-xl-block">RCBO</span>
-            <div class="container z-index-common">
-                <div class="row gx-60">
-                    <div class="col-lg-6 col-xl-5 mb-50 mb-lg-0 wow fadeInUp" data-wow-delay="0.2s">
-                        <div class="img-box1">
-                            <div class="img-1"><img src="{{ asset('landing/img/about/ab-1-1.jpg') }}" alt="About image"
-                                    style="border-radius: 25px" /></div>
-                            <br>
-                            <h2 class="sec-title h4">RONALD CLARION BOLO</h2>
-
-                            <h2 class="sec-title h5">PROPRIETOR/OWNER</h2>
-
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-xl-7 align-self-center wow fadeInUp" data-wow-delay="0.3s">
-                        <span class="sec-subtitle"><i class="fas fa-bring-forward"></i>{{ env('APP_NAME') }}</span>
-                        <h2 class="sec-title h1">Unlock Opportunities with {{ env('APP_NAME') }}</h2>
-                        <p class="mb-4 mt-1 pb-3">
-                            Welcome to {{ env('APP_NAME') }}, your go-to destination for essential products and an
-                            exceptional networking business experience. Our company was founded with a dedication to
-                            delivering top-quality goods while nurturing entrepreneurial growth. We are proud to be your
-                            dependable partner on the path to achieving financial independence and self-sufficiency through
-                            networking opportunities.
-                        </p>
-                        <p>At {{ env('APP_NAME') }}, we understand the power of building connections and leveraging
-                            them for mutual benefit. Our networking business model offers you a unique avenue to explore
-                            entrepreneurship, connect with like-minded individuals, and access essential products at
-                            competitive prices.</p>
-                        <a href="{{ route('landing.about') }}" class="vs-btn">More About Us<i
-                                class="far fa-long-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-        </section>
     </div>
-    <section class="space-top space-extra-bottom" data-bg-src="{{ asset('landing/img/bg/sr-bg-1-1.png') }}">
+    <!-- Hero Section End -->
+
+    <!-- Home Inforamtion Section Starts -->
+    <div class="home-info-section">
         <div class="container">
-            <div class="row justify-content-center text-center">
-                <div class="col-lg-8 col-xl-6 wow fadeInUp" data-wow-delay="0.2s">
-                    <div class="title-area">
-                        <span class="sec-subtitle">Our Membership Benefits</span>
-                        <h2 class="sec-title h1">Membership Benefits at {{ env('APP_NAME') }}</h2>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-12">
+                    <!-- Information Box Item start -->
+                    <div class="info-box wow fadeInUp" data-wow-delay="0.50s">
+                        <div class="box-icon">
+                            <img src="{{ asset('new_landing/images/icon-peace-of-mind.svg')}}" alt="">
+                        </div>
+                        <div class="box-body">
+                            <h3>Vision</h3>  
+                            <p>To be the most creative organization in terms of economic in the Country</p>
+                            
+                        </div>
                     </div>
+                    <!-- Information Box Item end -->
                 </div>
-            </div>
-            <div class="row wow fadeInUp" data-wow-delay="0.2s">
 
-                <div class="col-md-6 col-lg-4">
-                    <div class="service-style1">
-                        <div class="service-bg" data-bg-src="{{ asset('landing/img/bg/sr-box-bg-1.jpg') }}"></div>
-
-                        <h3 class="service-title h5"><a href="#">Referral Bonus</a></h3>
-                        <p class="service-text">As a valued member of {{ env('APP_NAME') }}, you can earn Referral
-                            Bonuses by introducing new individuals to our networking business. For each new member you bring
-                            in, you'll receive a Referral Bonus that varies depending on your chosen package.</p>
-
+                <div class="col-lg-4 col-md-6 col-12">
+                    <!-- Information Box Item start -->
+                    <div class="info-box wow fadeInUp" data-wow-delay="0.75s">
+                        <div class="box-icon">
+                           <img src="{{ asset('new_landing/images/icon-peace-of-mind.svg')}}" alt="">
+                        </div>
+                        <div class="box-body">
+                            <h3>Mission</h3>
+                            <p>To bring joy, peace and unity to every member</p>
+                           
+                        </div>
                     </div>
+                    <!-- Information Box Item end -->
                 </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="service-style1">
-                        <div class="service-bg" data-bg-src="{{ asset('landing/img/bg/sr-box-bg-1.jpg') }}"></div>
-                        <h3 class="service-title h5"><a href="#">Pairing Bonus</a></h3>
-                        <p class="service-text">With our Pairing Bonus, your earnings grow as your network expands. For
-                            each successful pairing within your network, you'll receive a Pairing Bonus. The Pairing Bonus
-                            amount differs based on your package. </p>
-                        <br>
 
+                <div class="col-lg-4 col-md-6 col-12">
+                    <!-- Information Box Item start -->
+                    <div class="info-box wow fadeInUp" data-wow-delay="1.0s">
+                        <div class="box-icon">
+                           <img src="{{ asset('new_landing/images/icon-peace-of-mind.svg')}}" alt="">
+                        </div>
+                        <div class="box-body">
+                            <h3>Goals</h3>
+                            <p>To Transform Human Lives from poverty to abundant life</p>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="service-style1">
-                        <div class="service-bg" data-bg-src="{{ asset('landing/img/bg/sr-box-bg-1.jpg') }}"></div>
-
-                        <h3 class="service-title h5"><a href="#">Product Reward Points</a></h3>
-                        <p class="service-text">Our Product Reward Points system allows you to accumulate points with every
-                            purchase of our essential products. These points can be redeemed or convertibale to cash. The
-                            more you shop and build your network, the more Product Reward Points you can earn.</p>
-
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="service-style1">
-                        <div class="service-bg" data-bg-src="{{ asset('landing/img/bg/sr-box-bg-1.jpg') }}"></div>
-
-                        <h3 class="service-title h5"><a href="#">Encashment</a></h3>
-                        <p class="service-text">At {{ env('APP_NAME') }}, we understand that financial flexibility is
-                            crucial. Our members have the option to encash their earned bonuses and rewards, providing you
-                            with a source of cash when you need it most. This feature ensures that you have the freedom to
-                            use your earnings as you see fit.</p>
-
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="service-style1">
-                        <div class="service-bg" data-bg-src="{{ asset('landing/img/bg/sr-box-bg-1.jpg') }}"></div>
-
-                        <h3 class="service-title h5"><a href="#">Transfer Funds</a></h3>
-                        <p class="service-text">Transferring funds within our network is quick and easy. You can send and
-                            receive funds from other members securely and efficiently. Whether you're supporting a team
-                            member or conducting business transactions, our Transfer Funds feature simplifies financial
-                            interactions within RCBO community.</p>
-
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="service-style1">
-                        <div class="service-bg" data-bg-src="{{ asset('landing/img/bg/sr-box-bg-1.jpg') }}"></div>
-
-                        <h3 class="service-title h5"><a href="#">Transfer Reward Points</a></h3>
-                        <p class="service-text">In addition to transferring funds, you can also transfer Reward Points to
-                            other members. This can be a powerful tool for helping your team members access rewards and
-                            incentives more quickly, fostering a sense of collaboration and mutual success within our
-                            networks.</p>
-                        <br>
-                    </div>
-                </div>
+                    <!-- Information Box Item end -->
+                </div>                
             </div>
         </div>
-    </section>
+    </div>
+    <!-- Home Inforamtion Section End -->
+        <!-- Currency Exchange Rates Section Start -->
 
 
-
-
-    <section class="z-index-common space" data-bg-src="{{ asset('landing/img/bg/cta-bg-1-1.jpg') }}">
+<div class="about-section">
         <div class="container">
-            <div class="row text-center text-lg-start align-items-center justify-content-between">
-                <div class="col-lg-auto">
-                    <span class="sec-subtitle text-white">We are here to answer your questions 24/7</span>
-                    <h2 class="h1 sec-title cta-title1">Need A Consultation?</h2>
+            <div class="row align-items-center">
+                
+
+                <div class="col-lg-6 col-md-12 order-lg-2 order-2">
+                    <div class="about-content">
+                        <!-- Section Title start -->
+                        <div class="section-title">
+                        
+                            <h2 class="text-anime">Standing Together in Natural Calamities</h2>
+                        </div>
+                        <!-- Section Title end -->
+
+                        <div class="about-body">
+                            <p class="wow fadeInUp" data-wow-delay="0.50s">Natural calamities test not only our strength but also our unity as people. In these moments of crisis, compassion and cooperation become the foundation of recovery. At Innovation Japan, we believe that helping one another during disasters is a powerful form of innovation—one that brings hope, peace, and healing to affected communities.</p>
+                       
+                       <p>Guided by our mission to create a united future, we stand alongside those facing hardship, empowering communities to rebuild with resilience and purpose. Through shared creativity and support, we help transform loss into opportunity, ensuring that no one stands alone on the path toward recovery and a better tomorrow.</p>
+                       
+                        </div>  
+
+                        <!-- About Icon Box start -->
+                       
+                        <!-- About Icon Box end -->
+
+                        
+                    </div>
                 </div>
-                <div class="col-lg-auto">
-                    <a href="{{ route('landing.contact') }}" class="vs-btn">Contact Us Now<i
-                            class="far fa-arrow-right"></i></a>
+              
+              <div class="col-lg-6 col-md-12 order-lg-1 order-1">
+                    <!-- About video start -->
+					<div class="ratio ratio-16x9">
+            <iframe 
+                src="https://www.youtube.com/embed/pLATFqeNsks"
+                    
+                    
+                title="Natural Calamity"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen>
+            </iframe>
+        </div>
+					<!-- About video end -->
                 </div>
+              
+              
             </div>
         </div>
-    </section>
+    </div>
 
 
 
-    <!-- <section class="vs-blog-wrapper space-top space-extra-bottom"
-                        data-bg-src="{{ asset('landing/img/bg/blog-bg-1-1.jpg') }}">
-                        <div class="container wow fadeInUp" data-wow-delay="0.2s">
-                            <div class="row justify-content-center text-center">
-                                <div class="col-xl-6">
-                                    <div class="title-area">
-                                        <span class="sec-subtitle">Announcement</span>
-                                        <h2 class="sec-title h1">RCBO News and Announcements</h2>
+    <div class="currency-rates-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <!-- Section Title start -->
+                  
+                  
+                    <div class="section-title text-center">
+                      
+         
+                      
+                      
+                        <h3 class="wow fadeInUp" data-wow-delay="0.25s">Exchange Rates</h3>
+                        <h2 class="text-anime" style="color:black;">Current Currency Exchange Rates</h2>
+                    </div>
+                    <!-- Section Title end -->
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-md-4">
+                    <div class="card shadow-none border mb-0 wow fadeInUp" data-wow-delay="0.50s">
+                        <div class="card-header">
+                            <h5>YEN</h5>
+                        </div>
+                        <div class="card-body">
+                            <form action="{{ route('admin.currency-update') }}" method="post">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">Exchange Rate</label>
+                                            <input type="hidden" name="currency" value="yen" disabled>
+                                            <input type="number" name='buy' step="0.01" class="form-control"
+                                                placeholder="Buy" value="{{ $yen->buy ?? null }}" disabled>
+                                        </div>
                                     </div>
+                                    <!-- <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">Sell</label>
+                                            <input type="number" name='sell' step="0.01" class="form-control"
+                                                placeholder="Sell" value="{{ $yen->sell ?? null }}" required>
+                                        </div>
+                                    </div> -->
                                 </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow-none border mb-0 wow fadeInUp" data-wow-delay="0.75s">
+                        <div class="card-header">
+                            <h5>HKD</h5>
+                        </div>
+                        <div class="card-body">
+                            <form action="{{ route('admin.currency-update') }}" method="post">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">Exchange Rate</label>
+                                            <input type="hidden" name="currency" value="hkd" disabled>
+                                            <input type="number" name='buy' step="0.01"
+                                                class="form-control" placeholder="Buy"
+                                                value="{{ $hkd->buy ?? null }}" disabled>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">Sell</label>
+                                            <input type="number" name='sell' step="0.01"
+                                                class="form-control" placeholder="Sell"
+                                                value="{{ $hkd->sell ?? null }}" required>
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow-none border mb-0 wow fadeInUp" data-wow-delay="1.0s">
+                        <div class="card-header">
+                            <h5>USD</h5>
+                        </div>
+                        <div class="card-body">
+                            <form action="{{ route('admin.currency-update') }}" method="post">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">Exchange Rate</label>
+                                            <input type="hidden" name="currency" value="usd" disabled>
+                                            <input type="number" name='buy' step="0.01"
+                                                class="form-control" placeholder="Buy"
+                                                value="{{ $usd->buy ?? null }}" disabled>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">Sell</label>
+                                            <input type="number" name='sell' step="0.01"
+                                                class="form-control" placeholder="Sell"
+                                                value="{{ $usd->sell ?? null }}" required>
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Currency Exchange Rates Section End -->
+
+    <!-- About Section Start -->
+    <div class="about-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 col-md-12 order-lg-1 order-2">
+                    <!-- About video start -->
+					<div class="about-video wow fadeInLeft" data-wow-delay="0.25s">
+                        <figure class="image-anime">
+                            <img src="{{ asset('new_landing/images/video-placeholder.jpg')}}" alt="">
+                        </figure>
+					</div>
+					<!-- About video end -->
+                </div>
+
+                <div class="col-lg-6 col-md-12 order-lg-2 order-1">
+                    <div class="about-content">
+                        <!-- Section Title start -->
+                        <div class="section-title">
+                            <h3 class="wow fadeInUp" data-wow-delay="0.25s">Innovation Japan</h3>
+                            <h2 class="text-anime">Innovating for a United Future</h2>
+                        </div>
+                        <!-- Section Title end -->
+
+                        <div class="about-body">
+                            <p class="wow fadeInUp" data-wow-delay="0.50s">Innovation Japan is an organization dedicated to fostering unity, creativity, and progress among individuals and communities. Guided by our mission to bring joy, peace, and harmony to every member, we believe that true innovation begins with compassion and cooperation.</p>
+                       
+                       <p>Our goal is to transform lives—helping people rise from poverty to abundance through shared purpose, creativity, and support for one another. In times of disaster and hardship, we stand together, empowering communities to rebuild with hope, resilience, and a vision for a better tomorrow.</p>
+                       
+                        </div>  
+
+                        <!-- About Icon Box start -->
+                       
+                        <!-- About Icon Box end -->
+
+                        <div class="about-btn">
+                            <a href="{{ route('landing.application') }}" class="btn-default wow fadeInUp" data-wow-delay="1.25s">Be A Member</a>
+                          
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- About Section End -->
+
+    <!-- Our Services Start -->
+    <div class="our-service">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <!-- Section Title start -->
+                    <div class="section-title text-center">
+                        <h3 class="wow fadeInUp" data-wow-delay="0.25s">PURPOSES</h3>
+                        <h2 class="text-anime">Empowering Members Through Training and Growth</h2>
+                    </div>
+                    <!-- Section Title end -->
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Services Step Box Start -->
+                <div class="col-lg-4 col-md-12">
+                    <div class="step-box wow fadeInUp" data-wow-delay="0.50s">
+                        <!-- Step Box Img start -->
+                        <div class="step-img">
+                            <figure class="image-anime">
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                            </figure>
+                        </div>
+                        <!-- Step Box Img end -->
+
+                        <!-- Step Box Body start -->
+                        <div class="step-body">
+                            <!-- Step Icon start -->
+                            <div class="step-icon">
+                                <img src="{{ asset('new_landing/images/icon-services-1.svg')}}" alt="">
                             </div>
-                            <div class="row vs-carousel" data-slide-show="3" data-md-slide-show="2">
-                                <div class="col-xl-4">
-                                    <div class="vs-blog blog-style1">
-                                        <div class="blog-img">
-                                            <img src="{{ asset('landing/img/blog/blog-1-1.jpg') }}" alt="Blog Image" class="w-100" />
-                                            <div class="blog-content">
-                                                <div class="blog-meta">
-                                                    <a href="{{ route('landing.announcements') }}"><i class="far fa-calendar"></i>24
-                                                        August, 2023</a> <a href="{{ route('landing.announcements') }}"></a>
-                                                </div>
-                                                <h3 class="blog-title h5"><a href="announcement-dynamic-single-page.html">Sample
-                                                        Announcement Title 1</a></h3>
-                                                <a href="announcement-dynamic-single-page.html" class="link-btn">Read Details<i
-                                                        class="far fa-arrow-right"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <!-- Step Icon end -->
+
+                            <h3>Purpose No. 1</h3>
+                            <p>To conduct work good manner and right conduct training and
+business strategy seminars to all members so that each member
+will have a peaceful, competitive, and prosperous life style and
+to be more participants in boosting country economy by paying
+individual taxes to government.</p>
+                           
+                        </div>
+                        <!-- Step Box Body end -->
+                    </div>
+                </div>
+                <!-- Services Step Box End -->
+
+                <!-- Services Step Box Start -->
+                <div class="col-lg-4 col-md-12">
+                    <div class="step-box wow fadeInUp" data-wow-delay="0.50s">
+                        <!-- Step Box Img start -->
+                        <div class="step-img">
+                            <figure class="image-anime">
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                            </figure>
+                        </div>
+                        <!-- Step Box Img end -->
+
+                        <!-- Step Box Body start -->
+                        <div class="step-body">
+                            <!-- Step Icon start -->
+                            <div class="step-icon">
+                                <img src="{{ asset('new_landing/images/icon-services-1.svg')}}" alt="">
+                            </div>
+                            <!-- Step Icon end -->
+
+                            <h3>Purpose No. 2</h3>
+                            <p>To assist all members to be more familiar of Japanese Laws and
+customs to be able to become more efficient to work with
+Japanese people and to become more productive in all aspect of
+life.</p>
+                            <br>
+                             <br>
+                             <br>
+                        </div>
+                        <!-- Step Box Body end -->
+                    </div>
+                </div>
+                <!-- Services Step Box End -->
+
+                <!-- Services Step Box Start -->
+                <div class="col-lg-4 col-md-12">
+                    <div class="step-box wow fadeInUp" data-wow-delay="0.50s">
+                        <!-- Step Box Img start -->
+                        <div class="step-img">
+                            <figure class="image-anime">
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                            </figure>
+                        </div>
+                        <!-- Step Box Img end -->
+
+                        <!-- Step Box Body start -->
+                        <div class="step-body">
+                            <!-- Step Icon start -->
+                            <div class="step-icon">
+                                <img src="{{ asset('new_landing/images/icon-services-1.svg')}}" alt="">
+                            </div>
+                            <!-- Step Icon end -->
+
+                            <h3>Purpose No. 3</h3>
+                            <p>To conduct project and or livelihood program to be able to assist the day to day lives of in need member.</p>
+                            <br>
+                            <br>
+                           <br>
+                            <br>
+                             <br>
+                             <br>
+                             <br>
+                        </div>
+                        <!-- Step Box Body end -->
+                    </div>
+                </div>
+
+              <hr>
+
+                <div class="col-lg-6 col-md-12">
+                    <div class="step-box wow fadeInUp" data-wow-delay="0.50s">
+                        <!-- Step Box Img start -->
+                        <div class="step-img">
+                            <figure class="image-anime">
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                            </figure>
+                        </div>
+                        <!-- Step Box Img end -->
+
+                        <!-- Step Box Body start -->
+                        <div class="step-body">
+                            <!-- Step Icon start -->
+                            <div class="step-icon">
+                                <img src="{{ asset('new_landing/images/icon-services-1.svg')}}" alt="">
+                            </div>
+                            <!-- Step Icon end -->
+
+                            <h3>Purpose No. 4</h3>
+                            <p>To assist the community or government in the time of calamity and disaster.</p>
+                           
+                        </div>
+                        <!-- Step Box Body end -->
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-12">
+                    <div class="step-box wow fadeInUp" data-wow-delay="0.50s">
+                        <!-- Step Box Img start -->
+                        <div class="step-img">
+                            <figure class="image-anime">
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                            </figure>
+                        </div>
+                        <!-- Step Box Img end -->
+
+                        <!-- Step Box Body start -->
+                        <div class="step-body">
+                            <!-- Step Icon start -->
+                            <div class="step-icon">
+                                <img src="{{ asset('new_landing/images/icon-services-1.svg')}}" alt="">
+                            </div>
+                            <!-- Step Icon end -->
+
+                            <h3>Purpose No. 5</h3>
+                            <p>To build a Business, Music and English training center for kids, youth and to any interested resident of Japan.</p>
+                           
+                        </div>
+                        <!-- Step Box Body end -->
+                    </div>
+                </div>
+                <!-- Services Step Box End -->
+            </div>
+
+           
+        </div>
+    </div>
+    <!-- Our Services End -->
+
+    <!-- Get Consultations Start -->
+    <div class="get-consulations">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 col-md-12">
+                    <!-- Consulations Image start -->
+                    <div class="consulations-img text-lg-start text-center wow fadeInUp" data-wow-delay="0.50s">
+                        <img src="{{ asset('new_landing/images/get-consulations.png')}}" alt="">
+                    </div>
+                    <!-- Consulations Image end -->
+                </div>
+
+                <div class="col-lg-6 col-md-12">
+                    <div class="consulations-content">
+                        <!-- Section Title start -->
+                        <div class="section-title">
+                            <h3 class="wow fadeInUp" data-wow-delay="0.25s">Our Services</h3>
+                            <h2 class="text-anime">Supporting Members, Empowering Lives</h2>
+                        </div>
+                        <!-- Section Title end -->
+
+                        <!-- Consulations Body start -->
+                        <div class="consulations-body">
+                            <p class="wow fadeInUp" data-wow-delay="0.50s">Offering trusted legal and translation services to help our members thrive in work, life, and community. Through unity and service, we contribute to a stronger, more prosperous nation.</p>
+                        </div>
+                        <!-- Consulations Body end -->
+
+                        <!-- List Icon start -->
+                        <div class="list-icon wow fadeInUp" data-wow-delay="0.75s">
+                            <ul>
+                                <li><span>01.</span> Legal Assistance</li>
+                                <li><span>02.</span> Translation Service</li>
+                                 <li><span>03.</span> Financial Assistance</li>
+                            </ul>
+                        </div>
+                        <!-- List Icon end -->
+
+                        <a href="{{ route('landing.contact') }}" class="btn-default wow fadeInUp" data-wow-delay="1.0s">Contact Us Now</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    
+    <!-- Get Consultations Section End -->
+
+    <!-- Counter Section Start -->
+ 
+    <!-- Counter Section End -->
+
+    <!-- Our Team Section Start -->
+    
+    <!-- Our Team Section End -->
+
+    <!-- Why Choose Us Section Start -->
+    <div class="why-choose-us parallaxie">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 col-12">
+                    <!-- Why Choose Image start -->
+                    <div class="why-choose-img">
+                        <figure  class="reveal image-anime">
+                            <img src="{{ asset('new_landing/images/why-choose-us-img.jpg')}}" alt="">
+                        </figure>
+                    </div>
+                    <!-- Why Choose Image end -->
+                </div>
+
+                <div class="col-lg-7 col-12">
+                    <!-- Section Title start -->
+                    <div class="section-title">
+                        <h3 class="wow fadeInUp" data-wow-delay="0.25s">Members Benefit</h3>
+                        <h2 class="text-anime">Providing Assistance When Members Need It Most</h2>
+                    </div>
+                    <!-- Section Title end -->
+
+                    <!-- Why Choose Body start -->
+                    <div class="why-choose-body">
+                        <p class="wow fadeInUp" data-wow-delay="0.50s">Through our medical, food, and burial assistance programs, we stand beside our membershelping them live with dignity, security, and peace of mind.</p>
+                        
+                        <ul class="why-choose-list wow fadeInUp" data-wow-delay="0.75s">
+                            <li>Medical Reimbursement Support</li>
+                            <li>Food Reimbursement Support</li>
+                            <li>Member Death & Burial Assistance</li>
+      
+                        </ul>
+
+                        <!-- Support Team Section start -->
+                        <div class="support-team-section wow fadeInUp" data-wow-delay="1.0s">
+                            <!-- Video Section start -->
+                            <div class="video-section">
+                                <div class="video-section-img">
+                                    <figure class="image-anime">
+                                        <img src="{{ asset('new_landing/images/why-choose-us-video-img.jpg')}}" alt="">
+                                    </figure>   
                                 </div>
-                                <div class="col-xl-4">
-                                    <div class="vs-blog blog-style1">
-                                        <div class="blog-img">
-                                            <img src="{{ asset('landing/img/blog/blog-1-4.jpg') }}" alt="Blog Image" class="w-100" />
-                                            <div class="blog-content">
-                                                <div class="blog-meta">
-                                                    <a href="{{ route('landing.announcements') }}"><i class="far fa-calendar"></i>25
-                                                        August, 2023</a> <a href="{{ route('landing.announcements') }}"></a>
-                                                </div>
-                                                <h3 class="blog-title h5"><a href="announcement-dynamic-single-page.html">Sample
-                                                        Announcement Title 2</a></h3>
-                                                <a href="announcement-dynamic-single-page.html" class="link-btn">Read Details<i
-                                                        class="far fa-arrow-right"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-4">
-                                    <div class="vs-blog blog-style1">
-                                        <div class="blog-img">
-                                            <img src="{{ asset('landing/img/blog/blog-1-2.jpg') }}" alt="Blog Image" class="w-100" />
-                                            <div class="blog-content">
-                                                <div class="blog-meta">
-                                                    <a href="{{ route('landing.announcements') }}"><i class="far fa-calendar"></i>26
-                                                        August, 2023</a> <a href="{{ route('landing.announcements') }}"></a>
-                                                </div>
-                                                <h3 class="blog-title h5"><a href="announcement-dynamic-single-page.html">Sample
-                                                        Announcement Title 3</a></h3>
-                                                <a href="announcement-dynamic-single-page.html" class="link-btn">Read Details<i
-                                                        class="far fa-arrow-right"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-4">
-                                    <div class="vs-blog blog-style1">
-                                        <div class="blog-img">
-                                            <img src="{{ asset('landing/img/blog/blog-1-3.jpg') }}" alt="Blog Image" class="w-100" />
-                                            <div class="blog-content">
-                                                <div class="blog-meta">
-                                                    <a href="{{ route('landing.announcements') }}"><i class="far fa-calendar"></i>27
-                                                        August, 2023</a> <a href="{{ route('landing.announcements') }}"></a>
-                                                </div>
-                                                <h3 class="blog-title h5"><a href="announcement-dynamic-single-page.html">Sample
-                                                        Announcement Title 4</a></h3>
-                                                <a href="announcement-dynamic-single-page.html" class="link-btn">Read Details<i
-                                                        class="far fa-arrow-right"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                               
+                            </div>
+                            <!-- Video Section end -->
+
+                            <!-- Support Team Body start -->
+                            <div class="support-team-body">
+                                <img src="{{ asset('new_landing/images/icon-support-team.svg')}}" alt="">
+                                <h3>Contact Us</h3>
+
+                                <ul class="support-team-contact">
+                                    <li><a href="tel:1900-05-012089" class="contact-btn">Japan Ministry of Justice Registration #1900-05-012089</a></li>
+                                   
+                                </ul>
+                            </div>
+                            <!-- Support Team Body end -->
+                        </div>
+
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                         <br>
+                        <!-- Support Team Section end -->
+                    </div>
+                </div>
+                <!-- Why Choose Body end -->
+            </div>
+        </div>
+    </div>
+
+    <br>
+        <br>
+            <br>
+                <br>
+                    <br>
+                        <br>
+                            <br>
+                                <br>
+                                    <br>
+                                     <br>
+                                     <br>
+
+                   
+    <!-- Why Choose Us Section End -->
+
+    <!-- Testimonials Start -->
+   
+    <!-- Testimonials End -->
+   <div class="our-articles">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Section Title Start -->
+                    <div class="section-title text-center">
+                        <h3 class="wow fadeInUp" data-wow-delay="0.25s">Membership Rules</h3>
+                        <h2 class="text-anime">Member Duties and Social Obligations</h2>
+                    </div>
+                    <!-- Section Title End -->                    
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Post item Start -->
+                <div class="col-lg-6 col-md-12">
+                    <div class="post-item wow fadeInUp" data-wow-delay="0.50s">
+                        <!-- Post Header start -->
+                        <div class="post-header">
+                            <!-- Feature Img start -->
+                            <div class="feature-img">
+                                <a href="{{ route('landing.recruitment') }}">
+                                    <figure class="image-anime">
+                                        <img src="{{ asset('new_landing/images/recruitment.jpg')}}" alt="">
+                                    </figure>
+                                </a>
+                            </div>
+                            <!-- Feature Img end -->
+
+                            <!-- Post Meta start -->
+                            <div class="post-meta">
+                                <ul>
+                                    <li>Invitation</li>
+                                </ul>
+                            </div>
+                            <!-- Post Meta end -->
+                        </div>
+                        <!-- Post Feature Img end -->
+
+                        <!-- Post Content start -->
+                        <div class="post-content">
+                            <div class="post-header">   
+                          
+
+                                <p>Each member must invite atlest two (2) person minimum to be come regular member of the association. The purpose of invitation is to boost the population of the association to be able to give more benefits to the members</p>
+
+                        
                             </div>
                         </div>
-                    </section>-->
+                        <!-- Post Content end -->
+                    </div>
+                </div>
+                <!-- Post item End -->
 
+                <!-- Post item Start -->
+                <div class="col-lg-6 col-md-12">
+                    <div class="post-item wow fadeInUp" data-wow-delay="0.75s">
+                        <!-- Post Header start -->
+                        <div class="post-header">
+                            <!-- Feature Img start -->
+                            <div class="feature-img">
+                                <a href="{{ route('landing.social-obligation') }}">
+                                    <figure class="image-anime">
+                                        <img src="{{ asset('new_landing/images/social.jpg')}}" alt="">
+                                    </figure>
+                                </a>
+                            </div>
+                            <!-- Feature Img end -->
 
+                            <!-- Post Meta start -->
+                            <div class="post-meta">
+                                <ul>
+                                    <li>Social Obligation</li>
+                                </ul>
+                            </div>
+                            <!-- Post Meta end -->
+                        </div>
+                        <!-- Post Feature Img end -->
 
+                        <!-- Post Content start -->
+                        <div class="post-content">
+                            <div class="post-header">   
+                 
+
+                                <p>Every member is compulsory to contribute through dashboard deduction if any of the member will pass away.</p>
+                                <br>
+                                <br>
+<br>
+                             
+                            </div>
+                        </div>
+                        <!-- Post Content end -->
+                    </div>
+                </div>
+                <!-- Post item End -->
+
+                <!-- Post item Start -->
+                
+                <!-- Post item End -->
+            </div>
+        </div>
+    </div>
+    <!-- Our Articles Start -->
+   
+    <!-- Our Articles End -->
 @endsection
 
 @section('scripts')

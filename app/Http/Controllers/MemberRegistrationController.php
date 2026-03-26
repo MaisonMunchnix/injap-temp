@@ -1213,7 +1213,9 @@ class MemberRegistrationController extends Controller
 	}
 
 	public function checkUpline($username) {
-		$check_user = DB::table('users')->where('username', $username)->where('userType', 'user')->first();
+		// $check_user = DB::table('users')->where('username', $username)->where('userType', 'user')->first();//old code
+		$check_user = DB::table('users')->where('sponsor_id', $username)->where('userType', 'user')->first();
+		
 	
 		if (empty($check_user)) {
 			return response()->json([

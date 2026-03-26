@@ -44,7 +44,7 @@
                     <span>Members Account</span>
                 </a>
                 <ul class="sub-menu">
-                    <li><a href="{{ route('members-today') }}">Distributors List</a></li>
+                    <li><a href="{{ route('members-today') }}">Member List</a></li>
                 </ul>
             </li>
             <!--<li class="has-sub-menu">
@@ -98,10 +98,10 @@
                 <a href="#">
                     <div class="icon-w">
                         <div class="os-icon os-icon-package"></div>
-                    </div><span>Encashments</span>
+                    </div><span>Reimbursements</span>
                 </a>
                 <ul class="sub-menu">
-                    <li><a href="{{ route('encashment-view', 'all') }}">All Encashments</a></li>
+                    <li><a href="{{ route('encashment-view', 'all') }}">All Reimbursements</a></li>
                     <li><a href="{{ route('encashment-view', 'pending') }}">Pending</a></li>
                     <li><a href="{{ route('encashment-view', 'hold') }}">Hold</a></li>
                     <li><a href="{{ route('encashment-view', 'decline') }}">Declined</a></li>
@@ -121,7 +121,7 @@
                     <li><a href="{{ route('user-logs') }}">User Logs</a></li>
                 </ul>
             </li>
-            <li class="has-sub-menu">
+            <!-- <li class="has-sub-menu">
                 <a href="#">
                     <div class="icon-w">
                         <div class="os-icon os-icon-crown"></div>
@@ -131,7 +131,7 @@
                     <li><a href="{{ route('top-earners') }}">Top Earners</a></li>
                     <li><a href="{{ route('top-recuiters') }}">Top Recruiters</a></li>
                 </ul>
-            </li>
+            </li> -->
 
             <li class="has-sub-menu">
                 <a href="#">
@@ -320,7 +320,7 @@
                 <div class="sub-menu-icon"><i class="os-icon os-icon-package"></i></div>
                 <div class="sub-menu-i">
                     <ul class="sub-menu">
-                        <li><a href="{{ route('encashment-view', 'all') }}">All Encashments</a></li>
+                        <li><a href="{{ route('encashment-view', 'all') }}">All Reimbursements</a></li>
                         <li><a href="{{ route('encashment-view', 'pending') }}">Pending</a></li>
                         <li><a href="{{ route('encashment-view', 'hold') }}">Hold</a></li>
                         <li><a href="{{ route('encashment-view', 'decline') }}">Declined</a></li>
@@ -351,7 +351,7 @@
             </div>
         </li>
         <li class="sub-header"><span>Others</span></li>
-        <li class=" has-sub-menu">
+        <!-- <li class=" has-sub-menu">
             <a href="#">
                 <div class="icon-w">
                     <div class="os-icon os-icon-crown"></div>
@@ -368,7 +368,7 @@
                     </ul>
                 </div>
             </div>
-        </li>
+        </li> -->
         <li class=" has-sub-menu">
             <a href="#">
                 <div class="icon-w">

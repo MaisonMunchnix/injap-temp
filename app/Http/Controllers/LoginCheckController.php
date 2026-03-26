@@ -13,7 +13,7 @@ class LoginCheckController extends Controller
 {
    
 	function check($user){
-		$users = DB::table('users')->select('userType')->where('username',$user)->orWhere('email',$user)->first();
+		$users = DB::table('users')->select('userType')->whereRaw('LOWER(username) = ?', [strtolower($user)])->orWhereRaw('LOWER(email) = ?', [strtolower($user)])->first();
 		$type=0;
 		if(!empty($users)){
 			if($users->userType=='user'){

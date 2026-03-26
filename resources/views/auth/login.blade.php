@@ -8,7 +8,7 @@
     <title>Login | {{ env('APP_NAME') }}</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ asset('images/favicons/favicon.ico') }}" />
+    <link rel="shortcut icon" href="{{ asset('new_landing/images/logs.png') }}" />
     <link rel="stylesheet" href="{{ asset('dashboard/vendors/bundle.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('dashboard/assets/css/app.min.css') }}" type="text/css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -34,13 +34,13 @@
 
         <!-- logo -->
         <div id="logo">
-            <img class="logo img-fluid" src="{{ asset('images/logo.png') }}" alt="image">
+            <img class="logo img-fluid" src="{{ asset('new_landing/images/logs.png') }}" alt="image">
 
         </div>
         <!-- ./ logo -->
 
         <h5>Sign in</h5>
-
+        
         <!-- form -->
         <form method="POST" action="{{ route('login') }}">
             <div class="form-group">
@@ -61,17 +61,20 @@
                 <strong>{{ $message }}</strong><br>
             </span>
             @enderror
-            <div class="form-group d-flex justify-content-between">
+            <!-- <div class="form-group d-flex justify-content-between">
                 <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" checked="" id="customCheck1">
                     <label class="custom-control-label" for="customCheck1">Remember me</label>
                 </div>
                 <a href="{{route('forgot-password')}}">Reset password</a>
-            </div>
-            <button class="btn btn-primary btn-block" type="submit">Sign in</button>
+            </div> -->
+                <button class="btn btn-primary btn-block" type="submit">Sign in</button>
+<a href="{{ route('landing.home') }}" class="btn btn-secondary mb-3 w-100 mt-3 text-white d-flex justify-content-center align-items-center">
+    <span>Back to Home</span>
+</a>
             <hr>
             <p class="text-muted">Don't have an account?</p>
-            <a href="{{route('membership-registration')}}" class="btn btn-outline-light btn-sm">Register now!</a>
+            <a href="{{route('landing.application')}}" class="btn btn-outline-light btn-sm">Register now!</a>
         </form>
         <!-- ./ form -->
 

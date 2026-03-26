@@ -11,6 +11,7 @@ use App\Referral;
 use App\UserPrivelege;
 use App\PvPoint;
 use App\PvPointEdit;
+use App\Exports\MembersExport;
 use Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -18,6 +19,7 @@ use Illuminate\Http\Update;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
@@ -32,6 +34,48 @@ class UserController extends Controller
 	private $activation_cost_reward_amt=400;
 	private $retail_comm_amt=300;
 	private $leadership_bonus_amt=200;
+
+	/**
+	 * Show the form for creating a new user (Hidden route)
+	 */
+	public function createUserForm()
+	{
+		return view('admin.create-user');
+	}
+
+	/**
+	 * Store a newly created user in database (Hidden route)
+	 */
+	public function createUser(Request $request)
+	{
+		// Validate request
+		$validated = $request->validate([
+			'username' => 'required|string|unique:users,username|min:3|max:191',
+			'email' => 'required|email|unique:users,email|max:191',
+			'password' => 'required|string|min:6|confirmed',
+			'userType' => 'required|in:staff,paymentApprover,productApprover,applicationApprover'
+		]);
+
+		try {
+			// Create the user
+			$user = User::create([
+				'username' => $validated['username'],
+				'email' => $validated['email'],
+				'password' => Hash::make($validated['password']),
+				'plain_password' => $validated['password'],
+				'userType' => $validated['userType'],
+				'status' => 1,
+				'branch_id' => 1
+			]);
+
+			return redirect()->route('admin.users.create')
+				->with('success', "User '{$validated['username']}' created successfully!");
+		} catch (\Exception $e) {
+			return redirect()->back()
+				->withInput()
+				->with('error', 'Error creating user: ' . $e->getMessage());
+		}
+	}
 
     public function getDashboard(){
         return view('view/dashboard');
@@ -80,35 +124,60 @@ class UserController extends Controller
         return view('admin.members.all',compact('roles'));
 	}
     
-    public function allMembersPaginate(Request $request)
+	public function allMembersPaginate(Request $request)
 	{
 		$search = $request->input('search');
-		$query = User::select('users.id as user_id', 'users.plain_password as plain_pass', 'networks.sponsor_id as sponsor_id', 's.username as sponsor', 'packages.id as package_id', 'users.username', 'user_infos.first_name', 'user_infos.last_name', 'users.email as email_address', 'user_infos.mobile_no', 'user_infos.birthdate', 'user_infos.beneficiary_name', 'user_infos.beneficiary_contact_number as beneficiary_contact_number', 'user_infos.beneficiary_relationship as beneficiary_relationship', 'packages.type as package', 'users.status as status', 'users.created_at as created_at', 'users.updated_at as updated_at')
+		$query = User::select(
+				'users.id as user_id', 
+				'users.plain_password as plain_pass', 
+				'users.sponsor_id as sponsor_id', 
+				'users.username', 
+				'user_infos.first_name', 
+				'users.email', 
+				'user_infos.mobile_no', 
+				'user_infos.birthdate', 
+				'user_infos.country_name',
+				'user_infos.beneficiary_name', 
+				'user_infos.beneficiary_contact_number as beneficiary_contact_number', 
+				'user_infos.beneficiary_relationship as beneficiary_relationship', 
+				'users.member_type as package', 
+				'users.status as status', 
+				'users.created_at as created_at', 
+				'users.updated_at as updated_at',
+				\DB::raw("COALESCE(upline_sponsor.username, 'N/A') as sponsor")  // Get upline sponsor's username
+			)
 			->join('user_infos', 'users.id', '=', 'user_infos.user_id')
-			->leftJoin('product_codes', 'users.id', '=', 'product_codes.user_id')
-			->leftJoin('packages', 'product_codes.category', '=', 'packages.id')
 			->leftJoin('networks', 'users.id', '=', 'networks.user_id')
-			->leftJoin('users as s', 'networks.sponsor_id', '=', 's.id')
+			->leftJoin('users as upline_sponsor', 'networks.sponsor_id', '=', 'upline_sponsor.id')
 			->where('users.userType', 'user')
 			->groupBy("users.id");
 		if (!empty($search)) {
 			$query->where(function ($query) use ($search) {
 				$query->where('user_infos.first_name', 'like', '%' . $search . '%')
-					->orWhere('user_infos.last_name', 'like', '%' . $search . '%')
+					->orWhere('users.email', 'like', '%' . $search . '%')
 					->orWhere('users.username', 'like', '%' . $search . '%');
 			});
 		}
 
 		$users = $query->simplePaginate(100);
 
-		return view('admin.members.all-paginate', compact('users'));
-	}
+		// Calculate total income for each user
+		foreach ($users as $user) {
+			$user->total_income = $this->calculateUserTotalIncome($user->user_id);
+		}
 
-	
+		return view('admin.members.all-paginate', compact('users'));
+	}	
 	public function allMembersHidden(){
 		$roles = DB::table('user_roles')->get();
         return view('admin.members.all-hidden',compact('roles'));
     }
+
+	public function exportMembers(Request $request)
+	{
+		$search = $request->input('search');
+		return Excel::download(new MembersExport($search), 'members_' . date('Y-m-d_H-i-s') . '.xlsx');
+	}
 	
 	public function users(){
 		$roles = DB::table('user_roles')->where('code','!=','user')->where('code','!=','superadmin')->get();
@@ -381,17 +450,24 @@ class UserController extends Controller
         $columns = array(
 			0 => 'username',
 			1 => 'first_name',
-			2 => 'last_name',
-			3 => 'package',
-			4 => 'sponsor',
-			5 => 'plain_pass',
-			6 => 'created_at',
-			7 => 'id'
+			2 => 'email',
+			3 => 'country_name',
+			4 => 'member_type',
+			5 => 'sponsor_id',
+			6 => 'sponsor',
+			7 => 'plain_password',
+			8 => 'created_at',
+			9 => 'id',
+			10 => 'user_id'
 		);
   
-        /*$totalData = DB::table('members_view')->chunk(100, function($users) {
-        });*/
-        $totalData = DB::table('members_view')->count(); //
+        $totalData = DB::table('users')
+                ->join('user_infos', 'users.id', '=', 'user_infos.user_id')
+                ->leftJoin('networks', 'users.id', '=', 'networks.user_id')
+                ->leftJoin('users as sponsor_user', 'networks.sponsor_id', '=', 'sponsor_user.id')
+                ->where('users.userType', 'user')
+                ->where('users.is_application_approved', 1)
+                ->count();
 		
         $totalFiltered = $totalData; 
         $limit = $request->input('length');
@@ -401,7 +477,25 @@ class UserController extends Controller
             
         if(empty($request->input('search.value'))){
 			
-            $users = DB::table('members_view')
+            $users = DB::table('users')
+                ->select(
+                    'users.id as user_id',
+                    'users.username',
+                    'users.email',
+                    'users.plain_password as plain_pass',
+                    'users.member_type',
+                    'users.sponsor_id',
+                    'user_infos.first_name',
+                    'user_infos.country_name',
+                    'users.created_at',
+                    'sponsor_user.username as sponsor',
+                    'users.status'
+                )
+                ->join('user_infos', 'users.id', '=', 'user_infos.user_id')
+                ->leftJoin('networks', 'users.id', '=', 'networks.user_id')
+                ->leftJoin('users as sponsor_user', 'networks.sponsor_id', '=', 'sponsor_user.id')
+                ->where('users.userType', 'user')
+                ->where('users.is_application_approved', 1)
                 ->offset($start)
                 ->limit($limit)
                 ->orderBy($order,$dir)
@@ -409,14 +503,33 @@ class UserController extends Controller
         } else {
             $search = $request->input('search.value'); 
 
-            $users = DB::table('members_view')
-                ->where('username','LIKE',"%{$search}%")
-                ->orWhere('first_name', 'LIKE',"%{$search}%")
-                ->orWhere('last_name', 'LIKE',"%{$search}%")
-                ->orWhere('package', 'LIKE',"%{$search}%")
-                ->orWhere('sponsor', 'LIKE',"%{$search}%")
-                ->orWhere('plain_pass', 'LIKE',"%{$search}%")
-                ->orWhere('created_at', 'LIKE',"%{$search}%")
+            $users = DB::table('users')
+                ->select(
+                    'users.id as user_id',
+                    'users.username',
+                    'users.email',
+                    'users.plain_password as plain_pass',
+                    'users.member_type',
+                    'users.sponsor_id',
+                    'user_infos.first_name',
+                    'user_infos.country_name',
+                    'users.created_at',
+                    'sponsor_user.username as sponsor',
+                    'users.status'
+                )
+                ->join('user_infos', 'users.id', '=', 'user_infos.user_id')
+                ->leftJoin('networks', 'users.id', '=', 'networks.user_id')
+                ->leftJoin('users as sponsor_user', 'networks.sponsor_id', '=', 'sponsor_user.id')
+                ->where('users.userType', 'user')
+                ->where('users.is_application_approved', 1)
+                ->where(function($q) use ($search) {
+                    $q->where('users.username','LIKE',"%{$search}%")
+                    ->orWhere('user_infos.first_name', 'LIKE',"%{$search}%")
+                    ->orWhere('users.email', 'LIKE',"%{$search}%")
+                    ->orWhere('users.member_type', 'LIKE',"%{$search}%")
+                    ->orWhere('sponsor_user.username', 'LIKE',"%{$search}%")
+                    ->orWhere('users.created_at', 'LIKE',"%{$search}%");
+                })
                 ->offset($start)
                 ->limit($limit)
                 ->orderBy($order,$dir)
@@ -478,14 +591,19 @@ class UserController extends Controller
                 
             $nestedData['username'] = $user->username;
             $nestedData['first_name'] = $user->first_name;
-            $nestedData['last_name'] = $user->last_name;
-            //$nestedData['email'] = $user->email_address;
-            //<a href='#' class='dropdown-item btn-delete-user' data-username='$user->username' data-id='$user->user_id' data-toggle='tooltip' data-placement='top' title='Delete member' >Delete</a>
-            //$nestedData['mobile_no'] = $user->mobile_no;
-            $nestedData['package'] = $user->package;
-            $nestedData['sponsor'] = $user->sponsor;
+            $nestedData['email_address'] = $user->email;
+            $nestedData['country_name'] = !empty($user->country_name) ? $user->country_name : 'N/A';
+            $nestedData['package'] = $user->member_type;
+            $nestedData['sponsor_id'] = $user->sponsor_id;
+            $nestedData['upline_sponsor'] = !empty($user->sponsor) ? $user->sponsor : 'N/A';
             $nestedData['plain_pass'] = $user->plain_pass;
             $nestedData['created_at'] = $user->created_at;
+            
+            // Get total referrals for this user
+            $total_referrals = DB::table('referrals')
+                ->where('user_id', $user->user_id)
+                ->sum('amount');
+            $nestedData['total_referrals'] = !empty($total_referrals) ? number_format($total_referrals, 2) . ' PHP' : '0.00 PHP';
             $nestedData['options'] = "
                 <div class='dropdown'>
                     <button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'>Action </button>
@@ -1662,7 +1780,7 @@ class UserController extends Controller
             DB::commit();
 
             return response()->json();
-        }catch(\Throwable $e){
+        } catch(\Throwable $e){
             DB::rollback();
             // Insert User Log Error
             $user_log =  new UserLog();
@@ -1676,7 +1794,223 @@ class UserController extends Controller
                 'message' => $e->getMessage(),
             ],500);
         }
-	
     }
 
+        /**
+         * Add income to user referrals
+         */
+        public function addIncome(Request $request)
+        {
+            try {
+                $user_id = $request->input('user_id');
+                $amount = $request->input('amount');
+                $referral_type = $request->input('referral_type');
+                $reason = $request->input('reason');
+
+                // Create a referral record
+                $referral = new Referral();
+                $referral->user_id = $user_id;
+                $referral->source_id = Auth::id();  // Admin/staff user who added it
+                $referral->amount = $amount;
+                $referral->referral_type = $referral_type;
+                $referral->reward_type = 'php';
+                $referral->hierarchy = 0;
+                $referral->status = 1;
+                $referral->remarks = $reason;
+                $referral->save();
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Income of ' . number_format($amount, 2) . ' ¥ added successfully'
+                ]);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error: ' . $e->getMessage()
+                ], 500);
+            }
+        }
+
+        /**
+         * Deduct income from user referrals
+         */
+        public function deductIncome(Request $request)
+        {
+            try {
+                $user_id = $request->input('user_id');
+                $amount = $request->input('amount');
+                $referral_type = $request->input('referral_type');
+                $reason = $request->input('reason');
+
+                // Create a negative referral record (deduction)
+                $referral = new Referral();
+                $referral->user_id = $user_id;
+                $referral->source_id = Auth::id();  // Admin/staff user who deducted it
+                $referral->amount = -$amount;  // Negative amount for deduction
+                $referral->referral_type = $referral_type;
+                $referral->reward_type = 'php';
+                $referral->hierarchy = 0;
+                $referral->status = 1;
+                $referral->remarks = $reason;
+                $referral->save();
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Income of ' . number_format($amount, 2) . ' ¥ deducted successfully'
+                ]);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error: ' . $e->getMessage()
+                ], 500);
+            }
+        }
+
+        /**
+         * Get manually added incomes for a user
+         */
+        public function getAddedIncomes($user_id)
+        {
+            try {
+                $incomes = Referral::where('user_id', $user_id)
+                    ->where('hierarchy', 0)
+                    ->orderBy('created_at', 'desc')
+                    ->get()
+                    ->map(function ($income) {
+                        return [
+                            'id' => $income->id,
+                            'amount' => $income->amount,
+                            'referral_type' => $income->referral_type,
+                            'remarks' => $income->remarks,
+                            'created_at' => $income->created_at->format('Y-m-d H:i'),
+                            'type_label' => $income->referral_type == 'direct_referral_bonus' ? 'Referral Bonus' : 'Other Income',
+                            'status_badge' => $income->status == 1 ? '<span class="badge badge-success">Active</span>' : '<span class="badge badge-danger">Inactive</span>'
+                        ];
+                    });
+
+                return response()->json([
+                    'success' => true,
+                    'data' => $incomes
+                ]);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error: ' . $e->getMessage()
+                ], 500);
+            }
+        }
+
+        /**
+         * Update manually added income
+         */
+        public function updateIncome(Request $request, $id)
+        {
+            try {
+                $income = Referral::find($id);
+                
+                if (!$income) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Income record not found'
+                    ], 404);
+                }
+
+                $newAmount = $request->input('amount');
+                $oldAmount = $income->amount;
+                
+                $income->amount = $newAmount;
+                $income->remarks = $request->input('remarks');
+                $income->save();
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Income updated from ' . number_format($oldAmount, 2) . ' to ' . number_format($newAmount, 2) . ' successfully'
+                ]);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error: ' . $e->getMessage()
+                ], 500);
+            }
+        }
+
+        /**
+         * Delete manually added income
+         */
+        public function deleteIncome($id)
+        {
+            try {
+                $income = Referral::find($id);
+                
+                if (!$income) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Income record not found'
+                    ], 404);
+                }
+
+                $amount = $income->amount;
+                $income->delete();
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Income of ' . number_format(abs($amount), 2) . ' deleted successfully'
+                ]);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error: ' . $e->getMessage()
+                ], 500);
+            }
+        }
+
+        /**
+         * Calculate total accumulated income for a user
+         * Includes: referrals + pairing bonus + income transfers
+         */
+        private function calculateUserTotalIncome($user_id)
+        {
+            $total_accumulated = 0;
+
+            // Base referrals (excluding sales_match_bonus)
+            $referrals = DB::table('referrals')
+                ->where('user_id', $user_id)
+                ->where('reward_type', 'php')
+                ->where('referral_type', '!=', 'sales_match_bonus')
+                ->sum('amount');
+            
+            $total_accumulated += $referrals;
+
+            // Add pairing bonus
+            try {
+                $pairingComputation = \App\PairingComputation::where('user_id', $user_id)->first();
+                if ($pairingComputation) {
+                    $TPBunos = $pairingComputation->pairing_bonus ?? 0;
+                    $total_accumulated += $TPBunos;
+                }
+            } catch (\Exception $e) {
+                // Pairing computation may not exist
+            }
+
+            // Income transfers (received - sent)
+            $transfer = DB::table('income_transfers')
+                ->where(function ($query) use ($user_id) {
+                    $query->where('from_user_id', $user_id)
+                        ->orWhere('to_user_id', $user_id);
+                })
+                ->where('status', 1)
+                ->get();
+
+            $total_sent = $transfer->where('from_user_id', $user_id)->sum('amount');
+            $total_receive = $transfer->where('to_user_id', $user_id)->sum('new_amount');
+            
+            if (!empty($total_receive)) {
+                $total_accumulated += $total_receive;
+            }
+            if (!empty($total_sent)) {
+                $total_accumulated -= $total_sent;
+            }
+
+            return $total_accumulated;
+        }
 }

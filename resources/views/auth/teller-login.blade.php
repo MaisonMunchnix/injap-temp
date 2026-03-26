@@ -8,7 +8,7 @@
     <title>Teller Login | {{ env('APP_NAME') }}</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ asset('images/favicons/favicon.ico') }}" />
+    <link rel="shortcut icon" href="{{ asset('new_landing/images/logs.png') }}" />
     <link rel="stylesheet" href="{{ asset('dashboard/vendors/bundle.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('dashboard/assets/css/app.min.css') }}" type="text/css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -27,7 +27,7 @@
 
         <!-- logo -->
         <div id="logo">
-            <img class="logo img-fluid" src="{{ asset('images/logo.png') }}" alt="image">
+            <img class="logo img-fluid" src="{{ asset('new_landing/images/logs.png') }}" alt="image">
 
         </div>
         <!-- ./ logo -->

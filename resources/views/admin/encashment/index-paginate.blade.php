@@ -1,8 +1,8 @@
 @extends('layouts.default.admin.master')
 
-@section('title','Encashment List')
+@section('title','Reimbursement List')
 
-@section('page-title','Encashment List')
+@section('page-title','Reimbursement List')
 
 @section('stylesheets')
 {{-- additional style here --}}
@@ -21,16 +21,16 @@
     <div class="content">
         <div class="card">
             <div class="card-body">
-                <!-- <h6 class="element-header text-center">Encashment List</h6><br> -->
+                <!-- <h6 class="element-header text-center">Reimbursement List</h6><br> -->
                 <div class="">
-                    <h5 class="form-header text-center text-capitalize" id="title-encash">@if(!empty($type)) {{$type}} @endif Encashment</h5><br><br>
+                    <h5 class="form-header text-center text-capitalize" id="title-encash">@if(!empty($type)) {{$type}} @endif Reimbursement</h5><br><br>
                     <div class="row">
                         <div class="col-md-3">
-                            <label>Encashment Filter</label><br>
+                            <label>Reimbursement Filter</label><br>
                             <div class="btn-group mr-1 mb-1">
-                                <button aria-expanded="false" aria-haspopup="true" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" id="view_by" type="button">View encashment by</button>
+                                <button aria-expanded="false" aria-haspopup="true" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" id="view_by" type="button">View Reimbursement by</button>
                                 <div aria-labelledby="view_by" class="dropdown-menu">
-                                    <a class="dropdown-item filter-by @if($type=='all') active @endif" href="{{ route('encashment-view','all') }}" data-type="all"> All Encashment</a>
+                                    <a class="dropdown-item filter-by @if($type=='all') active @endif" href="{{ route('encashment-view','all') }}" data-type="all"> All Reimbursement</a>
                                     <a class="dropdown-item filter-by @if($type=='pending') active @endif" href="{{ route('encashment-view','pending') }}" data-type="pending"> Pending</a>
                                     {{--<a class="dropdown-item filter-by @if($type=='hold') active @endif" href="{{ route('encashment-view','hold') }}" data-type="hold"> Hold</a>--}}
                                     <a class="dropdown-item filter-by @if($type=='decline') active @endif" href="{{ route('encashment-view','decline') }}" data-type="decline"> Declined</a>
@@ -138,7 +138,7 @@
                                 </tr>
                                 @empty
                                 <tr class="text-center">
-                                    <td colspan="8">No Encashment/s</td>
+                                    <td colspan="8">No Reimbursement/s</td>
                                 </tr>
                                 @endforelse
                             </tbody>

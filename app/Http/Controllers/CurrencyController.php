@@ -72,7 +72,6 @@ class CurrencyController extends Controller
         $request->validate([
             'currency' => 'required',
             'buy' => 'required',
-            'sell' => 'required',
         ]);
     
         $currency = $request->currency;

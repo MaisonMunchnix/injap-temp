@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header faded">
-                <h5 class="modal-title" id="exampleModalLabel">View encashment Details</h5>
+                <h5 class="modal-title" id="exampleModalLabel">View Reimbursement Details</h5>
                 <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true"> &times;</span></button>
             </div>
             <div class="modal-body">
@@ -54,7 +54,7 @@
                                 <td><span id="view-fname">Data</span></td>
                             </tr>
                             <tr>
-                                <td>Encashment Status</td>
+                                <td>Reimbursement Status</td>
                                 <td><span id="view-stat">Data</span></td>
                             </tr>
                             <tr>

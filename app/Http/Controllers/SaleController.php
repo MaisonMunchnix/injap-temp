@@ -239,4 +239,118 @@ class SaleController extends Controller {
             'date_range' => ($date_start && $date_end ? "$date_start to $date_end" : null)
         ], 200);
     }
+
+    /**
+     * Display top earners by combined Pairing and Referral bonuses
+     */
+    public function topPairingReferral(Request $request) {
+        // Get ALL users first (without pagination)
+        $allUsers = User::select(
+            'users.id as user_id',
+            'users.username',
+            DB::raw('CONCAT(user_infos.first_name, " ", user_infos.last_name) as full_name'),
+            'packages.type as rank_type'
+        )
+        ->leftJoin('user_infos', 'users.id', '=', 'user_infos.user_id')
+        ->leftJoin('packages', 'users.account_type', '=', 'packages.id')
+        ->where('users.userType', 'user')
+        ->groupBy('users.id')
+        ->get();
+
+        // Calculate totals for each user
+        $allUsers->each(function ($user) {
+            $user->total_pairing = Referral::where('user_id', $user->user_id)
+                ->where('referral_type', 'pairing_bonus')
+                ->sum('amount');
+            
+            $user->total_referral = Referral::where('user_id', $user->user_id)
+                ->where('referral_type', 'direct_referral_bonus')
+                ->sum('amount');
+            
+            $user->total_combined = $user->total_pairing + $user->total_referral;
+
+            //donwline count dito
+            $count = 0;
+
+            $queue = [$user->user_id];
+            $visited = [];
+
+            while (!empty($queue)) {
+
+                $children = DB::table('networks')
+                    ->whereIn('upline_placement_id', $queue)
+                    ->pluck('user_id')
+                    ->toArray();
+
+                // remove duplicates just in case
+                $children = array_diff($children, $visited);
+
+                if (empty($children)) break;
+
+                $count += count($children);
+
+                $visited = array_merge($visited, $children);
+                $queue = $children;
+            }
+
+            $user->downline_count = $count;
+
+
+        });//end here
+
+        // Apply search filter if provided
+        $search = $request->input('search');
+        if ($search) {
+            $allUsers = $allUsers->filter(function ($user) use ($search) {
+                return stripos($user->username, $search) !== false || 
+                       stripos($user->full_name, $search) !== false;
+            })->values();
+        }
+
+        // Sort by total_combined descending
+        $sortedUsers = $allUsers->sortByDesc('total_combined')->values();
+
+        return view('admin.top-pairing-referral.index', [
+            'query' => $sortedUsers
+        ]);
+    }
+
+    /**
+     * Get top pairing and referral data via AJAX
+     */
+    public function getTopPairingReferralData(Request $request) {
+        $date_start = $request->input('date_start');
+        $date_end = $request->input('date_end');
+
+        $query = User::select(
+            'users.id as user_id',
+            'users.username',
+            DB::raw('CONCAT(user_infos.first_name, " ", user_infos.last_name) as full_name'),
+            'packages.type as rank_type',
+            DB::raw('COALESCE(pairing.total_pairing, 0) as total_pairing'),
+            DB::raw('COALESCE(referral.total_referral, 0) as total_referral'),
+            DB::raw('(COALESCE(pairing.total_pairing, 0) + COALESCE(referral.total_referral, 0)) as total_combined')
+        )
+        ->leftJoin('user_infos', 'users.id', '=', 'user_infos.user_id')
+        ->leftJoin('packages', 'users.account_type', '=', 'packages.id')
+        ->leftJoin(DB::raw('(SELECT user_id, SUM(amount) as total_pairing FROM referrals WHERE referral_type = "pairing_bonus" ' . 
+            ($date_start ? 'AND created_at >= "' . date('Y-m-d', strtotime($date_start)) . ' 00:00:00" ' : '') .
+            ($date_end ? 'AND created_at <= "' . date('Y-m-d', strtotime($date_end)) . ' 23:59:59" ' : '') .
+            'GROUP BY user_id) as pairing'), 'users.id', '=', 'pairing.user_id')
+        ->leftJoin(DB::raw('(SELECT user_id, SUM(amount) as total_referral FROM referrals WHERE referral_type = "direct_referral_bonus" ' . 
+            ($date_start ? 'AND created_at >= "' . date('Y-m-d', strtotime($date_start)) . ' 00:00:00" ' : '') .
+            ($date_end ? 'AND created_at <= "' . date('Y-m-d', strtotime($date_end)) . ' 23:59:59" ' : '') .
+            'GROUP BY user_id) as referral'), 'users.id', '=', 'referral.user_id')
+        ->where('users.userType', 'user')
+        ->havingRaw('total_combined > 0')
+        ->orderBy('total_combined', 'desc')
+        ->limit(500)
+        ->get();
+
+        if ($query->isEmpty()) {
+            return response()->json(['users' => 'NoData'], 200);
+        }
+
+        return response()->json(['users' => $query], 200);
+    }
 }

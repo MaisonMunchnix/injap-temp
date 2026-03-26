@@ -904,7 +904,7 @@ END - Messages Link in secondary top menu
                         </div>
                     </li>-->
                     <li class="sub-header"><span>Options</span></li>
-                    <li class=" has-sub-menu">
+                    <!--<li class=" has-sub-menu">
                         <a href="apps_bank.html">
                             <div class="icon-w">
                                 <div class="os-icon os-icon-package"></div>
@@ -918,22 +918,10 @@ END - Messages Link in secondary top menu
                                     <li><a href="apps_email.html">Binary Graphical</a></li>
                                     <li><a href="apps_support_dashboard.html">Binary List</a></li>
                                     <li><a href="apps_support_dashboard.html">Personal Enrollment Tree</a></li>
-                                    <!--<li><a href="apps_support_index.html">Tickets Index</a></li>
-                                    <li><a href="apps_crypto.html">Crypto Dashboard <strong class="badge badge-danger">New</strong></a></li>
-                                    <li><a href="apps_projects.html">Projects List</a></li>
-                                    <li><a href="apps_bank.html">Banking <strong class="badge badge-danger">New</strong></a></li>-->
                                 </ul>
-                                <!--  <ul class="sub-menu">
-                                    <li><a href="apps_full_chat.html">Chat Application</a></li>
-                                    <li><a href="apps_todo.html">To Do Application <strong class="badge badge-danger">New</strong></a></li>
-                                    <li><a href="misc_chat.html">Popup Chat</a></li>
-                                    <li><a href="apps_pipeline.html">CRM Pipeline</a></li>
-                                    <li><a href="rentals_index_grid.html">Property Listing <strong class="badge badge-danger">New</strong></a></li>
-                                    <li><a href="misc_calendar.html">Calendar</a></li>
-                                </ul>-->
                             </div>
                         </div>
-                    </li>
+                    </li>-->
                     <li class=" has-sub-menu">
                         <a href="#">
                             <div class="icon-w">
@@ -1377,7 +1365,7 @@ END - Controls below table
 
                                                                                 <hr style="background-color :white">
                                                                                 <div class="value"
-                                                                                    style="color:white">400 PHP</div>
+                                                                                    style="color:white">400</div>
                                                                                 <div class="trending trending-up">
                                                                                     <span></span><i
                                                                                         class="os-icon os-icon-arrow-up6"></i>
@@ -1399,7 +1387,7 @@ END - Controls below table
 
                                                                                 <hr style="background-color :white">
                                                                                 <div class="value"
-                                                                                    style="color:white">1000 PHP</div>
+                                                                                    style="color:white">1000</div>
                                                                                 <div class="trending trending-up">
                                                                                     <span></span><i
                                                                                         class="os-icon os-icon-arrow-up6"></i>
@@ -1432,7 +1420,7 @@ END - Controls below table
 
                                                                                 <hr style="background-color :white">
                                                                                 <div class="value"
-                                                                                    style="color:white">400 PHP</div>
+                                                                                    style="color:white">400</div>
                                                                                 <div class="trending trending-up">
                                                                                     <span></span><i
                                                                                         class="os-icon os-icon-arrow-up6"></i>
@@ -1454,7 +1442,7 @@ END - Controls below table
 
                                                                                 <hr style="background-color :white">
                                                                                 <div class="value"
-                                                                                    style="color:white">1000 PHP</div>
+                                                                                    style="color:white">1000</div>
                                                                                 <div class="trending trending-up">
                                                                                     <span></span><i
                                                                                         class="os-icon os-icon-arrow-up6"></i>
@@ -1488,7 +1476,7 @@ END - Controls below table
 
                                                                                 <hr style="background-color :white">
                                                                                 <div class="value"
-                                                                                    style="color:white">100 PHP</div>
+                                                                                    style="color:white">100</div>
                                                                                 <div class="trending trending-up">
                                                                                     <span></span><i
                                                                                         class="os-icon os-icon-arrow-up6"></i>

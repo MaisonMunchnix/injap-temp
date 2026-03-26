@@ -29,6 +29,49 @@ class User extends Authenticatable implements InstanceIdentifier
     public function sales() {
 	    return $this->hasMany(Sale::class);
     }
+
+    /**
+     * Get conversations where user is the admin
+     */
+    public function administratedConversations()
+    {
+        return $this->hasMany(Conversation::class, 'admin_id');
+    }
+
+    /**
+     * Get conversations where user is the member
+     */
+    public function conversations()
+    {
+        return $this->hasMany(Conversation::class, 'member_id');
+    }
+
+    /**
+     * Get sent messages
+     */
+    public function sentMessages()
+    {
+        return $this->hasMany(Message::class, 'sender_id');
+    }
+
+    /**
+     * Get received messages
+     */
+    public function receivedMessages()
+    {
+        return $this->hasMany(Message::class, 'recipient_id');
+    }
+
+    /**
+     * Get unread message count
+     */
+    public function unreadMessageCount()
+    {
+        return $this->receivedMessages()
+            ->where('is_read', false)
+            ->count();
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -47,7 +90,10 @@ class User extends Authenticatable implements InstanceIdentifier
         'account_extension',
         'account_status',
         'member_type',
-        'sub_package'
+        'sub_package',
+        'is_application_approved',
+        'affiliate_link',
+        'sponsor_id'
     ];
 
     /**
@@ -102,10 +148,22 @@ class User extends Authenticatable implements InstanceIdentifier
         })->sum();
     }
 
-    public static function getSalesCommission($affiliate_link_used)
+    public static function getSalesCommission($affiliate_link_or_sponsor_id)
     {
-        if(Auth::check() && Auth::user()->affiliate_link === $affiliate_link_used) return null;
+        if(Auth::check() && Auth::user()->sponsor_id === $affiliate_link_or_sponsor_id) return null;
 
-        return self::where('affiliate_link', $affiliate_link_used)->first()->package->account_discount;
+        // Try to find by sponsor_id first (new system)
+        $user = self::where('sponsor_id', $affiliate_link_or_sponsor_id)->first();
+        
+        // Fallback to affiliate_link for backward compatibility
+        if (!$user) {
+            $user = self::where('affiliate_link', $affiliate_link_or_sponsor_id)->first();
+        }
+        
+        if (!$user) {
+            return 0;
+        }
+        
+        return $user->package->account_discount ?? 0;
     }
 }

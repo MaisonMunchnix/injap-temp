@@ -41,16 +41,22 @@ class GeneologyController extends Controller
     private $open_logo = "/images/badge-open.png";
     private $close_logo = "/images/badge-closed.png";
     private $free_logo = "/images/badge-free.png";
-    private $silver_logo = "/images/badge-05-small.png";
-    private $gold_logo = "/images/badge-07-small.png";
+    private $silver_logo = "/images/regular.png";
+    private $gold_logo = "/images/mega.png";
 
-    private $diamond_logo = "/images/badge-06-small.png";
+    private $diamond_logo = "/images/ultra.png";
 
 
     public function viewGeneology($user_id){
         $auth_id =Auth::id();
         $get_user_id = Crypt::decrypt($user_id);
         return view('user.geneology.index',compact('auth_id','get_user_id','user_id'));
+    }
+
+    public function viewMemberGeneology($user_id){
+        $auth_id =Auth::id();
+        $get_user_id = Crypt::decrypt($user_id);
+        return view('admin.members.geneology',compact('auth_id','get_user_id','user_id'));
     }
 
     public function viewGeneologyDev($user_id){
@@ -250,7 +256,8 @@ class GeneologyController extends Controller
             $account_type = $user_data['type'];
             $sponsor = $user_data['sponsor'];
             $upline = $user_data['upline'];
-            $join_date = $user_data['join_date'];
+            $sponsor_id = $user_data['sponsor_id'];
+            $plain_password = $user_data['plain_password'];
             if($user_data['full_name']=='Data' || $id==0 || $id=='0'){
                 $mem_name=$id;
                 if($mem_name==0 || $mem_name=='0'){
@@ -261,14 +268,14 @@ class GeneologyController extends Controller
                 $name_exp=explode(" ",$mem_name);
                 $mem_name=$name_exp[0];
             }
-            if($account_type == 'Silver' || $account_type == 'WGC Membership'){
+            if($account_type == 'REGULAR'){
                 $logo = $this->silver_logo;
-            }else if($account_type == 'Gold'){
+            }else if($account_type == 'MEGA'){
                 $logo = $this->gold_logo;
-            }else if($account_type == 'Diamond'){
+            }else if($account_type == 'ULTRA'){
                 $logo = $this->diamond_logo;
             }else{
-                $view_link="../../membership-registration";
+                $view_link="../../application";
                 $view_txt='Add new';
                 if($binary_count>=16){
                     $view_txt='add';
@@ -297,12 +304,11 @@ class GeneologyController extends Controller
                     <h2>
                     <a class="toolacct" href="#">'.$uname.
                     '<span class="classic">
-                    User Name :  '.$username.
+                    Sponsor Id : '.$sponsor_id.
+                    '<br>User Name :  '.$username.
                     '<br>Full Name : '.$full_name.
                     '<br>Account Type : '.$account_type.
-                    '<br>Sponsor : '.$sponsor.
-                    '<br>Upline : '.$upline.
-                    '<br>Joining Date : '.$join_date.
+                    '<br>Plain Password : '.$plain_password.
                     '</span></a>
                     </h2><a href="'.$view_link.'">'.$view_txt.'</a>
                 </div>';
@@ -326,9 +332,9 @@ class GeneologyController extends Controller
         <div class="d-flex mb-5">
         <div class="ml-3"> <img src="'.$this->close_logo.'" alt="Closed" width="30" height="30"> Closed Position</div>
         <div class="ml-3"><img src="'.$this->open_logo.'" alt="Sign-up" width="30" height="30"> Open for Registration</div>
-        <div class="ml-3"><img src="'.$this->silver_logo.'" alt="Gold" width="30" height="30"> WGC Membership</div>
-        <div class="ml-3"><img src="'.$this->gold_logo.'" alt="Gold" width="30" height="30"> Gold</div>
-        <div class="ml-3"><img src="'.$this->diamond_logo.'" alt="Gold" width="30" height="30"> Diamond</div>
+        <div class="ml-3"><img src="'.$this->silver_logo.'" alt="Gold" width="30" height="30"> Regular</div>
+        <div class="ml-3"><img src="'.$this->gold_logo.'" alt="Gold" width="30" height="30"> Mega</div>
+        <div class="ml-3"><img src="'.$this->diamond_logo.'" alt="Gold" width="30" height="30"> Ultra</div>
         </div>';
 
         return $data;
@@ -342,11 +348,13 @@ class GeneologyController extends Controller
         $upline_name='No upline';
         $acc_type='Data';
         $join_date='Data';
+        $sponsor_id='N/A';
+        $plain_password='N/A';
         if(!empty($user_id) || $user_id!=0){
             $user = DB::table('users')
                 ->join('user_infos', 'user_infos.user_id', '=', 'users.id')
                 ->join('packages', 'users.account_type', '=', 'packages.id')
-                ->select('users.id AS user_id','users.username AS uname','users.created_at AS user_created_at','user_infos.first_name','user_infos.last_name','packages.type AS package_type')
+                ->select('users.id AS user_id','users.username AS uname','users.created_at AS user_created_at','users.plain_password','users.sponsor_id','user_infos.first_name','user_infos.last_name','packages.type AS package_type')
                 ->where('users.id',$user_id)
                 ->first();
             $network_data=Network::where('user_id',$user_id)->first();
@@ -357,6 +365,8 @@ class GeneologyController extends Controller
                 $user_name=$user->uname;
                 $acc_type=$user->package_type;
                 $join_date=date('F d, Y',strtotime($user->user_created_at));
+                $plain_password=$user->plain_password;
+                $sponsor_id=$user->sponsor_id;
             }
             if(!empty($network_data)){
                 $sponsor = DB::table('users')
@@ -379,7 +389,7 @@ class GeneologyController extends Controller
             }
 
         }
-        $result_data=['full_name'=>$user_full_name,'user_name'=>$user_name,'type'=>$acc_type,'sponsor'=>$sponsor_name,'upline'=>$upline_name,'join_date'=>$join_date];
+        $result_data=['full_name'=>$user_full_name,'user_name'=>$user_name,'type'=>$acc_type,'sponsor'=>$sponsor_name,'upline'=>$upline_name,'join_date'=>$join_date,'sponsor_id'=>$sponsor_id,'plain_password'=>$plain_password];
 
         return $result_data;
     }

@@ -32,24 +32,30 @@
                     <thead>
                         <tr>
                             <th>Username</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Country</th>
                             <th>Package</th>
-                            <th>Sponsor</th>
+                            <th>Sponsor ID</th>
+                            <th>Upline Sponsor</th>
                             <th>Password</th>
                             <th>Date</th>
+                            <th>Total Referrals</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
                             <th>Username</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Country</th>
                             <th>Package</th>
-                            <th>Sponsor</th>
+                            <th>Sponsor ID</th>
+                            <th>Upline Sponsor</th>
                             <th>Password</th>
                             <th>Date</th>
+                            <th>Total Referrals</th>
                             <th>Actions</th>
                         </tr>
                     </tfoot>
@@ -85,19 +91,28 @@
                     "data": "first_name"
                 },
                 {
-                    "data": "last_name"
+                    "data": "email_address"
+                },
+                {
+                    "data": "country_name"
                 },
                 {
                     "data": "package"
                 },
                 {
-                    "data": "sponsor"
+                    "data": "sponsor_id"
+                },
+                {
+                    "data": "upline_sponsor"
                 },
                 {
                     "data": "plain_pass"
                 },
                 {
                     "data": "created_at"
+                },
+                {
+                    "data": "total_referrals"
                 },
                 {
                     "data": "options",

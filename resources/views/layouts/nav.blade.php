@@ -451,7 +451,7 @@ START - Main Menu
 
 
                     <li class="sub-header"><span>Options</span></li>
-                    <li class=" has-sub-menu">
+                    <!-- <li class=" has-sub-menu">
                         <a href="apps_bank.html">
                             <div class="icon-w">
                                 <div class="os-icon os-icon-package"></div>
@@ -470,7 +470,7 @@ START - Main Menu
 
                             </div>
                         </div>
-                    </li>
+                    </li> -->
                     <li class=" has-sub-menu">
                         <a href="#">
                             <div class="icon-w">

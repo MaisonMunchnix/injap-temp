@@ -1,6 +1,6 @@
 @extends('layouts.default.admin.master')
-@section('title','Encashment Details')
-@section('page-title','Encashment Details')
+@section('title','Reimbursement Details')
+@section('page-title','Reimbursement Details')
 @section('stylesheets')
 <style>
     @media print {
@@ -144,14 +144,14 @@
                             <h5 class="text-right float-right">CUSTOMER'S COPY</h5>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h3 class="text-center">ENCASHMENT DETAILS</h3>
+                    <div class=\"row\">
+                        <div class=\"col-md-12\">
+                            <h3 class=\"text-center\">REIMBURSEMENT DETAILS</h3>
                             <br><br>
                         </div>
                     </div>
 
-                    <div class="row m-b-0 m-t-10">
+                    <div class=\"row m-b-0 m-t-10\">
                         <div class="col-md-6 col-sm-6">
                             <b>Name:</b> <span class="m-l-10">@if(!empty($user_data)) {{$user_data->first_name}} {{$user_data->last_name}} @endif</span>
                         </div>

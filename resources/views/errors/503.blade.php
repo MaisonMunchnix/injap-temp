@@ -24,7 +24,7 @@
     <div class="row no-gutters align-items-center justify-content-center">
         <!-- Start col -->
         <div class="text-center">
-            <img src="{{ asset('images/logo.png') }}" class="img-fluid error-logo" alt="logo">
+            <img src="{{ asset('new_landing/images/logs.png') }}" class="img-fluid error-logo" alt="logo">
             <br>
             <img src="{{ asset('teller_assets/images/error/maintenance.svg') }}" class="img-fluid error-image" alt="Maintenance">
             <h4 class="error-subtitle mb-4">Under Maintenance</h4>

@@ -3,7 +3,7 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>@yield('title') | {{ env('APP_NAME') }}</title>
 <link rel="shortcut icon" href="{{ asset('images/favicons/favicon.ico') }}" />
-<link rel="apple-touch-icon" sizes="57x57" href="{{ asset('/images/favicons/apple-icon-57x57.png') }}">
+<!-- <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('/images/favicons/apple-icon-57x57.png') }}">
 <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('/images/favicons/apple-icon-60x60.png') }}">
 <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('/images/favicons/apple-icon-72x72.png') }}">
 <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('/images/favicons/apple-icon-76x76.png') }}">
@@ -15,7 +15,7 @@
 <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('/images/favicons/android-icon-192x192.png') }}">
 <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('/images/favicons/favicon-32x32.png') }}">
 <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('/images/favicons/favicon-96x96.png') }}">
-<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/images/favicons/favicon-16x16.png') }}">
+<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/images/favicons/favicon-16x16.png') }}"> -->
 <link rel="manifest" href="{{ asset('/images/favicons/manifest.json') }}">
 <meta name="msapplication-TileColor" content="#ffffff">
 <meta name="msapplication-TileImage" content="{{ asset('/images/favicons/ms-icon-144x144.png') }}">

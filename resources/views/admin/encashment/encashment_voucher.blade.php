@@ -1,6 +1,6 @@
 @extends('layouts.default.admin.master')
-@section('title','Encashment Voucher')
-@section('page-title','Encashment Voucher')
+@section('title','Reimbursement Voucher')
+@section('page-title','Reimbursement Voucher')
 @section('stylesheets')
 <style>
     @media print {
@@ -114,7 +114,7 @@
 
 
                                 @endphp
-                                <b>Encashment Date:</b> <span>{{date('F d, Y',strtotime($encash_date))}}</span><br>
+                                <b>Reimbursement Date:</b> <span>{{date('F d, Y',strtotime($encash_date))}}</span><br>
                                 <b>Cut off:</b> <span>{{$cut_off}}</span><br>
                             </p>
                         </div>
@@ -149,7 +149,7 @@
                                 }
                                 @endphp
                                 <tr>
-                                    <td class="text-left">Total Encashment</td>
+                                    <td class="text-left">Total Reimbursement</td>
                                     <td class="text-right">{{number_format($amount_encash,2)}}</td>
                                 </tr>
                                 <tr>

@@ -1,239 +1,150 @@
 @extends('layouts.landing.master')
-@section('title', 'Contact Us')
+@section('title', 'INJAP - Innovation Japan | Contact')
 
 @section('stylesheets')
     {{-- additional style here --}}
 @endsection
 
 @section('content')
-    <section class="space-top space-extra-bottom">
+     <!-- Subpage Section Start -->
+    <div class="page-header parallaxie contact-us-hero">
         <div class="container">
-
-            <div class="tab-content" id="nav-contactTabContent">
-                <div class="tab-pane fade show active" id="nav-GermanyAddress" role="tabpanel"
-                    aria-labelledby="nav-GermanyAddress-tab">
-                    <div class="row">
-                        <div class="col-lg-6 mb-30">
-                            <div class="contact-box">
-                                <h3 class="contact-box__title h4">Contact Information</h3>
-                                <p class="contact-box__text">Join our growing community and experience the difference that
-                                    our networking business can make in your life.</p>
-
-
-                                <div class="contact-box__item">
-
-
-
-
-
-
-                                    <div class="contact-box__icon"><i class="fal fa-phone-alt"></i></div>
-                                    <div class="media-body">
-                                        <h4 class="contact-box__label">Contact Number</h4>
-                                        <p class="contact-box__info"><a>+81-595-51-6639</a>
-                                        </p>
-                                        <p class="contact-box__info"><a>+63-995-965-7236 </a>
-                                        </p>
-                                    </div>
-
-
-                                </div>
-
-
-                                <div class="contact-box__item">
-
-
-
-
-
-
-                                    <div class="contact-box__icon"><i class="fal fa-envelope"></i></div>
-                                    <div class="media-body">
-                                        <h4 class="contact-box__label">Email Address</h4>
-                                        <p class="contact-box__info"><a
-                                                href="mailto:{{ config('mail.support.address') }}">{{ config('mail.support.address') }}</a>
-                                        </p>
-                                    </div>
-
-
-                                </div>
-                                <div class="contact-box__item">
-                                    <div class="contact-box__icon"><i class="far fa-map-marker-alt"></i></div>
-                                    <div class="media-body">
-                                        <h4 class="contact-box__label">Our Office Address</h4>
-                                        <p class="contact-box__info">518-0835 Japan Mie ken Midorigaoka Minami machi 3885-3
-                                        </p>
-                                        <br>
-                                        <p class="contact-box__info">Purok 3 Brgy Fatima New Bataan Davao De Oro
-                                        </p>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="col-lg-6 mb-30">
-                            <div class="contact-box">
-                                <h3 class="contact-box__title h4">Leave a Message</h3>
-                                <p class="contact-box__text">We’re Ready To Help You</p>
-                                <form class="contact-box__form ajax-contact" action="" method="POST">
-                                    <div class="row gx-20">
-                                        <div class="col-md-6 form-group"><input type="text" name="name" id="name"
-                                                placeholder="Your Name"> <i class="fal fa-user"></i></div>
-                                        <div class="col-md-6 form-group">
-                                            <input type="email" name="email" id="email" placeholder="Email Address">
-                                            <i class="fal fa-envelope"></i>
-                                        </div>
-                                        <div class="col-12 form-group">
-                                            <input type="text" name="subject" id="subject" placeholder="Subject"> <i
-                                                class="fal fa-subject"></i>
-                                        </div>
-                                        <div class="col-12 form-group">
-                                            <textarea name="message" id="message" placeholder="Type Your Message"></textarea>
-                                        </div>
-                                        <div class="col-12"><button class="vs-btn">Submit Message<i
-                                                    class="far fa-arrow-right"></i></button></div>
-                                    </div>
-                                </form>
-                                <p class="form-messages mb-0 mt-3"></p>
-                            </div>
-                        </div>
+            <div class="row">
+                <div class="co-md-12">
+                    <!-- Sub page Header start -->
+                    <div class="page-header-box">
+                        <h1 class="text-anime">Contact Us</h1>
+                        
                     </div>
-                </div>
-                <div class="tab-pane fade" id="nav-AustraliaAddress" role="tabpanel"
-                    aria-labelledby="nav-AustraliaAddress-tab">
-                    <div class="row">
-                        <div class="col-lg-6 mb-30">
-                            <div class="contact-box">
-                                <h3 class="contact-box__title h4">Australia Office Address</h3>
-                                <p class="contact-box__text">Completely recaptiualize 24/7 communities via standards
-                                    compliant metrics whereas web-enabled content</p>
-                                <div class="contact-box__item">
-                                    <div class="contact-box__icon"><i class="fal fa-phone-alt"></i></div>
-                                    <div class="media-body">
-                                        <h4 class="contact-box__label">Phone Number & Email</h4>
-                                        <p class="contact-box__info"><a href="tel:+310259121563">+(310) 2591 21563</a><a
-                                                href="mailto:info@example.com">info@example.com</a></p>
-                                    </div>
-                                </div>
-                                <div class="contact-box__item">
-                                    <div class="contact-box__icon"><i class="far fa-map-marker-alt"></i></div>
-                                    <div class="media-body">
-                                        <h4 class="contact-box__label">Our Office Address</h4>
-                                        <p class="contact-box__info">258 Dancing Street, Miland Line, HUYI 21563, Canberra
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="contact-box__item">
-                                    <div class="contact-box__icon"><i class="far fa-clock"></i></div>
-                                    <div class="media-body">
-                                        <h4 class="contact-box__label">Official Work Time</h4>
-                                        <p class="contact-box__info">7:00am - 6:00pm ( Mon - Fri ) Sat, Sun & Holiday Closed
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 mb-30">
-                            <div class="contact-box">
-                                <h3 class="contact-box__title h4">Leave a Message</h3>
-                                <p class="contact-box__text">We’re Ready To Help You</p>
-                                <form class="contact-box__form ajax-contact2" action="" method="POST">
-                                    <div class="row gx-20">
-                                        <div class="col-md-6 form-group"><input type="text" name="name"
-                                                id="name2" placeholder="Your Name"> <i class="fal fa-user"></i></div>
-                                        <div class="col-md-6 form-group"><input type="email" name="email"
-                                                id="email2" placeholder="Email Address"> <i
-                                                class="fal fa-envelope"></i></div>
-                                        <div class="col-12 form-group"><select name="subject" id="subject2">
-                                                <option selected="selected" disabled="disabled" hidden>Select subject
-                                                </option>
-                                                <option value="Web Development">Web Development</option>
-                                                <option value="UI Design">UI Design</option>
-                                                <option value="CMS Development">CMS Development</option>
-                                                <option value="Theme Development">Theme Development</option>
-                                                <option value="Wordpress Development">Wordpress Development</option>
-                                            </select></div>
-                                        <div class="col-12 form-group">
-                                            <textarea name="message" id="message2" placeholder="Type Your Message"></textarea>
-                                        </div>
-                                        <div class="col-12"><button class="vs-btn">Submit Message<i
-                                                    class="far fa-arrow-right"></i></button></div>
-                                    </div>
-                                </form>
-                                <p class="form-messages mb-0 mt-3"></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                    <div class="row">
-                        <div class="col-lg-6 mb-30">
-                            <div class="contact-box">
-                                <h3 class="contact-box__title h4">United State Office Address</h3>
-                                <p class="contact-box__text">Completely recaptiualize 24/7 communities via standards
-                                    compliant metrics whereas web-enabled content</p>
-                                <div class="contact-box__item">
-                                    <div class="contact-box__icon"><i class="fal fa-phone-alt"></i></div>
-                                    <div class="media-body">
-                                        <h4 class="contact-box__label">Phone Number & Email</h4>
-                                        <p class="contact-box__info"><a href="tel:+310259121563">+(310) 2591 21563</a><a
-                                                href="mailto:info@example.com">info@example.com</a></p>
-                                    </div>
-                                </div>
-                                <div class="contact-box__item">
-                                    <div class="contact-box__icon"><i class="far fa-map-marker-alt"></i></div>
-                                    <div class="media-body">
-                                        <h4 class="contact-box__label">Our Office Address</h4>
-                                        <p class="contact-box__info">258 Dancing Street, Miland Line, HUYI 21563, NewYork
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="contact-box__item">
-                                    <div class="contact-box__icon"><i class="far fa-clock"></i></div>
-                                    <div class="media-body">
-                                        <h4 class="contact-box__label">Official Work Time</h4>
-                                        <p class="contact-box__info">7:00am - 6:00pm ( Mon - Fri ) Sat, Sun & Holiday
-                                            Closed</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 mb-30">
-                            <div class="contact-box">
-                                <h3 class="contact-box__title h4">Leave a Message</h3>
-                                <p class="contact-box__text">We’re Ready To Help You</p>
-                                <form class="contact-box__form ajax-contact3"
-                                    action="https://html.vecurosoft.com/techbiz/demo/mail.php" method="POST">
-                                    <div class="row gx-20">
-                                        <div class="col-md-6 form-group"><input type="text" name="name"
-                                                id="name3" placeholder="Your Name"> <i class="fal fa-user"></i></div>
-                                        <div class="col-md-6 form-group"><input type="email" name="email"
-                                                id="email3" placeholder="Email Address"> <i
-                                                class="fal fa-envelope"></i></div>
-                                        <div class="col-12 form-group"><select name="subject" id="subject3">
-                                                <option selected="selected" disabled="disabled" hidden>Select subject
-                                                </option>
-                                                <option value="Web Development">Web Development</option>
-                                                <option value="UI Design">UI Design</option>
-                                                <option value="CMS Development">CMS Development</option>
-                                                <option value="Theme Development">Theme Development</option>
-                                                <option value="Wordpress Development">Wordpress Development</option>
-                                            </select></div>
-                                        <div class="col-12 form-group">
-                                            <textarea name="message" id="message3" placeholder="Type Your Message"></textarea>
-                                        </div>
-                                        <div class="col-12"><button class="vs-btn">Submit Message<i
-                                                    class="far fa-arrow-right"></i></button></div>
-                                    </div>
-                                </form>
-                                <p class="form-messages mb-0 mt-3"></p>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- Sub page Header end -->
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+    <!-- Subpage Section End -->
+
+    <!-- Contact Us Section Start -->
+    <div class="contact-us-section">
+        <div class="container">
+            <div class="row">
+                <!-- Contact Info Box start -->
+                <div class="col-lg-4 col-md-12">
+                    <div class="contact-info-box wow fadeInUp" data-wow-delay="0.25s">
+                        <div class="contact-info-icon">
+                            <img src="{{ asset('new_landing/images/icon-location.svg')}}" alt="">
+                        </div>
+                        <div class="contact-info-body">
+                            <h2>Address</h2>
+                            <p>518-0225 Japan Mie-ken, Iga Shi, Kirigaoka 3Chome 212</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Contact Info Box end -->
+
+                <!-- Contact Info Box start -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="contact-info-box wow fadeInUp" data-wow-delay="0.50s">
+                        <div class="contact-info-icon">
+                            <img src="{{ asset('new_landing/images/icon-phone.svg')}}" alt="">
+                        </div>
+                        <div class="contact-info-body">
+                            <h2>Phone Number</h2>
+                            <p>
+                                <a href="tel:0595518190">0595518190</a><br>
+                               
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Contact Info Box end -->
+
+                <!-- Contact Info Box start -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="contact-info-box wow fadeInUp" data-wow-delay="0.75s">
+                        <div class="contact-info-icon">
+                            <img src="{{ asset('new_landing/images/icon-mail.svg')}}" alt="">
+                        </div>
+                        <div class="contact-info-body">
+                            <h2>E-mail Address</h2>
+                            <p>
+                                <a href="#">innovationjapan3@gmail.com</a>
+                        
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Contact Info Box end -->
+            </div>
+        </div>
+    </div>
+    <!-- Contact Us Section End -->
+
+    <!-- Get In Touch Section Start -->
+    <div class="get-in-touch">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <!-- Section Title start -->
+                    <div class="section-title">
+                        <h3 class="wow fadeInUp" data-wow-delay="0.25s">Get In Touch</h3>
+                        <h2 class="text-anime">Contact Innovation Japan</h2>
+                    </div>
+                    <!-- Section Title end -->
+
+                    <!-- Get In Touch start -->
+                    <div class="get-in-touch-body wow fadeInUp" data-wow-delay="0.50s">
+                        <p>Connect with our team for membership support, legal or translation assistance, and other inquiries—we’ll respond as soon as possible.</p>
+                    </div>
+                    <!-- Get In Touch end -->
+                </div>
+
+                <div class="col-lg-6">
+                    <!-- Contact Form Start -->
+                    <div class="contact-form wow fadeInUp" data-wow-delay="0.75s">
+                        <form id="contactForm" action="#" method="POST" data-toggle="validator">
+                            <div class="row">
+                                <div class="form-group col-md-6 mb-3">
+                                    <input type="text" class="form-control" id="name" placeholder="Name" required>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+
+                                <div class="form-group  col-md-6 mb-3">
+                                    <input type="email" class="form-control" id="email" placeholder="Email Address" required>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+
+                                <div class="form-group col-md-6 mb-3">
+                                    <input type="text" class="form-control" id="phone" placeholder="Contact Number" required>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+
+                                <div class="form-group  col-md-6 mb-3">
+                                    <input type="text" class="form-control" id="subject" placeholder="Subject" required>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+
+                                <div class="form-group col-md-12 mb-3">
+                                    <textarea class="form-control" id="msg" rows="4" placeholder="Message" required></textarea>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn-default">Submit Now</button>
+                                    <div id="msgSubmit" class="h3 text-left hidden"></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- Contact Form End -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Get In Touch Section End -->
+
+    <!-- Google Map Start -->
+   
+    <!-- Google Map End -->
 @endsection
 
 @section('scripts')

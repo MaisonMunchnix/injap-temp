@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Reset Password | {{ env('APP_NAME') }}</title>
-    <link rel="shortcut icon" href="{{ asset('images/favicons/favicon.ico') }}" />
+    <link rel="shortcut icon" href="{{ asset('new_landing/images/logs.png') }}" />
     <link rel="stylesheet" href="{{asset('dashboard/vendors/bundle.css')}}" type="text/css">
     <link rel="stylesheet" href="{{asset('dashboard/assets/css/app.min.css')}}" type="text/css">
 </head>
@@ -15,7 +15,7 @@
     </div>
     <div class="form-wrapper">
         <div id="logo">
-            <img class="logo img-fluid" src="{{ asset('images/logo.png') }}" alt="{{ env('APP_NAME') }}">
+            <img class="logo img-fluid" src="{{ asset('new_landing/images/logs.png') }}" alt="{{ env('APP_NAME') }}">
         </div>
         <h5>Reset password</h5>
         <form action="" method="post" id="reset_form">

@@ -3,12 +3,59 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use App\Advertisement;
+use App\Currency;
 
 class LandingPageController extends Controller
 {
     public function home()
     {
-        return view('landing.home');
+        $currencies = DB::table('currencies')->select('id','sell','buy')->get();
+        $yen = $currencies->where('id',1)->first();
+        $hkd = $currencies->where('id',2)->first();
+        $usd = $currencies->where('id',3)->first();
+        
+        return view('landing.home', compact('yen', 'hkd', 'usd'));
+    }
+
+    public function legalAssistance()
+    {
+        return view('landing.legal_assistance');
+    }
+
+    public function translationService()
+    {
+        return view('landing.translation_service');
+    }
+
+    public function financialAssistance()
+    {
+        return view('landing.financial_assistance');
+    }
+
+    public function benefit()
+    {
+        return view('landing.benefit');
+    }
+
+    public function recruitment()
+    {
+        return view('landing.recruitment');
+    }
+
+    public function socialObligation()
+    {
+        return view('landing.social_obligation');
+    }
+
+    public function application()
+    {
+        // Get all active packages for member type selection
+        $packages = DB::table('packages')
+            ->where('status', 1)
+            ->select('id', 'type', 'amount')
+            ->get();
+        
+        return view('landing.application', compact('packages'));
     }
 
     public function about()

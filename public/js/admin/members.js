@@ -27,8 +27,6 @@ $(document).ready(function () {
                 $('#username').val(data.username);
                 $('#current_password').val(data.plain_password);
                 $('#first_name').val(data.first_name);
-                $('#middle_name').val(data.middle_name);
-                $('#last_name').val(data.last_name);
                 $('#mobile_no').val(data.mobile_no);
                 $('#email').val(data.email);
                 $('.classFormUpdate').attr('action', action);
@@ -53,11 +51,9 @@ $(document).ready(function () {
         event.preventDefault();
         var formData = new FormData();
         formData.append("id", $("#id").val());
-        //formData.append("username", $("#username").val());
+        formData.append("username", $("#username").val());
         formData.append("email_address", $("#email").val());
         formData.append("first_name", $("#first_name").val());
-        formData.append("middle_name", $("#middle_name").val());
-        formData.append("last_name", $("#last_name").val());
         formData.append("mobile_no", $("#mobile_no").val());
 
         formData.append("new_password", $("#new_password").val());
@@ -92,16 +88,8 @@ $(document).ready(function () {
                 },
                 success: function (response) {
                     $('.preloader').hide();
-                    swal({
-                        title: 'Success!',
-                        text: 'Successfully Updated',
-                        timer: 1500,
-                        type: "success",
-                    }, function () {
-                        location.reload();
-                        //window.location.href = 'members';
-                    });
-
+                    $('#editModal').modal('hide');
+                    window.location.reload(true);
                 },
                 error: function (error) {
                     $('.preloader').hide();

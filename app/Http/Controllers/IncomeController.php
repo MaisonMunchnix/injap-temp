@@ -252,7 +252,9 @@ class IncomeController extends Controller
         $trans_type=['referral_bonus'=>'Referral Bonus','sales_match_bonus'=>'Sales Match Bonus','activation_cost_reward'=>'Activation Cost Reward','fifth_activation_cost_reward'=>'5th Sales Match Bonus','total_accumulated_income'=>'Total Accumulated Income','total_withdrawable_amount'=>'Total Withdrawable Amount','direct_referral_bonus'=>'Direct Referral Bonus','ayuda_sales'=>'Ayuda Sales'];
         
         $referral=Referral::where('user_id',$auth_id)->where('reward_type','php')
-          ->where("referral_type",  "!=","sales_match_bonus")->get();
+          ->where("referral_type",  "!=","sales_match_bonus")
+          ->where("referral_type", "!=", "direct_referral_bonus")
+          ->get();
         if(!empty($referral)){
             foreach($referral as $refer){
                 $t_type=$trans_type[$refer->referral_type];

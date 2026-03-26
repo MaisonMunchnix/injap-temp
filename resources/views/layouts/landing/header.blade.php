@@ -1,160 +1,111 @@
-<div class="preloader">
-    <div class="preloader-inner"><span class="loader"></span></div>
-</div>
+<!-- Preloader Start -->
+	<div class="preloader">
+		<div class="loading-container">
+			<div class="loading"></div>
+			<div id="loading-icon"><img src="{{ asset('new_landing/images/logs.png')}}" alt=""></div>
+		</div>
+	</div>
+	<!-- Preloader End -->
 
-<div class="vs-menu-wrapper">
-    <div class="vs-menu-area text-center">
-        <button class="vs-menu-toggle"><i class="fal fa-times"></i></button>
-        <div class="mobile-logo">
-            <a href="{{ route('landing.home') }}"><img src="{{ asset('landing/img/logs.png') }}" alt="RCBO"
-                    class="logo" /></a>
-        </div>
-        <div class="vs-mobile-menu">
-            <ul>
-                <li><a href="{{ route('landing.home') }}">Home</a></li>
-                <li><a href="{{ route('landing.about') }}">About Us</a></li>
-                <li><a href="{{ route('landing.advertisements') }}">Advertisements</a></li>
-                <li class="menu-item-has-children">
-                    <a href="#none">Our Packages</a>
-                    <ul class="sub-menu">
-                        <li><a href="{{ route('landing.package', 'wgc-membership') }}">WGC Membership</a></li>
-                        <li><a href="{{ route('landing.package', 'gold') }}">Gold Package</a></li>
-                        <li><a href="{{ route('landing.package', 'diamond') }}">Diamond Package</a></li>
-                    </ul>
-                </li>
-                <li><a href="{{ route('landing.products') }}">Our Products</a></li>
-                <li><a href="{{ route('landing.contact') }}">Contact Us</a></li>
-                <li class="menu-item-has-children">
-                    <a href="#none">Account</a>
-                    <ul class="sub-menu">
-                        <li><a href="{{ route('login') }}">Login</a></li>
-                        <li><a href="{{ route('membership-registration') }}">Register</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
-<header class="vs-header header-layout1">
-    <div class="header-top">
+	<!-- Magic Cursor Start -->
+	<div id="magic-cursor">
+		<div id="ball"></div>
+	</div>
+	<!-- Magic Cursor End -->
+
+    <!-- Topbar Section Start -->    
+    <div class="header-link-section">
         <div class="container">
-            <div class="row align-items-center justify-content-between gy-1 text-center text-lg-start">
-                <div class="col-lg-auto d-none d-lg-block">
-                    <p class="header-text"><span class="fw-medium">Register your own account now!</p>
-                </div>
-                <div class="col-lg-auto">
-                    <div class="header-social style-white">
-                        <span class="social-title">Address: 518-0835 Japan Mie ken Midorigaoka Minami machi 3885-3
-                        </span>
-
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <!-- Topbar Contact Info Start -->
+                    <div class="header-contact-info">
+                        <ul>
+                            <li><i class=""></i><span style="font-size: 11px;">Japan Ministry of Justice Registration <br>1900-05-012089</span></a></li>
+                            <li><a href="mailto:innovationjapan3@gmail.com"><i class="fa-solid fa-envelope"></i>innovationjapan3@gmail.com</a></li>
+                        </ul>
                     </div>
+                    <!-- Topbar Contact Info End -->
+                </div>
+                <div class="col-md-6">
+                    <!-- Header Social Links Start -->
+                    <div class="header-social-link">
+                        <ul>
+                            <li><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
+                            <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa-brands fa-linkedin-in"></i></a></li>
+                            <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+                        </ul>
+                    </div>
+                    <!-- Header Social Links End -->
                 </div>
             </div>
         </div>
     </div>
-    <div class="container">
-        <div class="menu-top">
-            <div class="row justify-content-between align-items-center gx-sm-0">
-                <div class="col">
-                    <div class="header-logo">
-                        <a href="{{ route('landing.home') }}"><img src="{{ asset('landing/img/logs.png') }}"
-                                alt="RCBO" class="logo" width="30%" /></a>
-                    </div>
-                </div>
-                <div class="col-auto header-info">
-                    <div class="header-info_icon"><i class="fas fa-currency"></i></div>
-                    <div class="media-body text-center">
-                        <span class="header-info_link">Exchange Rate</span>
-                        <table class="table table-hover table-responsive table-sm">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th></th>
-                                    <th>USD</th>
-                                    <th>YEN</th>
-                                    <th>HKD</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Buy</td>
-                                    <td id="buy_usd"></td>
-                                    <td id="buy_yen"></td>
-                                    <td id="buy_hkd"></td>
-                                </tr>
-                                <tr>
-                                    <td>Sell</td>
-                                    <td id="sell_usd"></td>
-                                    <td id="sell_yen"></td>
-                                    <td id="sell_hkd"></td>
-                                </tr>
-                            </tbody>
-                        </table>
+    <!-- Topbar Section End -->
 
-                    </div>
-                </div>
+    <!-- Header Start -->
+	<header class="main-header" id="hero-section">
+		<div class="header-sticky">
+			<nav class="navbar navbar-expand-lg">
+				<div class="container">
+					<!-- Logo Start -->
+					<a class="navbar-brand" href="{{ route('landing.home') }}">
+						<img src="{{ asset('new_landing/images/logs.png')}}" alt="Logo" height="100px">
+					</a>
+					<!-- Logo End -->
+	
+					<!-- Main Menu start -->
+					<div class="collapse navbar-collapse main-menu">
+						<ul class="navbar-nav mr-auto" id="menu">
+		
 
-                <div class="col-auto header-info">
-                    <div class="header-info_icon"><i class="fas fa-phone-alt"></i></div>
-                    <div class="media-body">
-                        <span class="header-info_label">Japan Contact Number</span>
-                        <div class="header-info_link"><a href="tel:+81-595-51-6639">+81-595-51-6639</a></div>
-                        <span class="header-info_label">Philippines Contact Number</span>
-                        <div class="header-info_link"><a href="tel:+63-995-965-7236">+63-995-965-7236</a></div>
-                    </div>
-                </div>
 
-                <div class="col-auto header-info d-none d-lg-flex">
-                    <div class="header-info_icon"><i class="fas fa-envelope"></i></div>
-                    <div class="media-body">
-                        <span class="header-info_label">Mail Us For Support</span>
-                        <div class="header-info_link"><a
-                                href="mailto:{{ config('mail.support.address') }}">{{ config('mail.support.address') }}</a>
-                        </div>
-                    </div>
-                </div>
+                               <li class="nav-item has-submenu"><a class="nav-link" href="#">Services</a>
+								<ul class="submenu">									
+                                    <li class="nav-item"><a class="nav-link" href="{{ route('landing.legal-assistance') }}">Legal Assistance</a></li>
+									<li class="nav-item"><a class="nav-link" href="{{ route('landing.translation-service')}}">Translation Service</a></li>
 
-            </div>
-        </div>
-    </div>
-    <div class="sticky-wrapper">
-        <div class="sticky-active">
-            <div class="container">
-                <div class="row align-items-center justify-content-between">
-                    <div class="col-auto">
-                        <nav class="main-menu menu-style1 d-none d-lg-block">
-                            <ul>
-                                <li><a href="{{ route('landing.home') }}">Home</a></li>
-                                <li><a href="{{ route('landing.about') }}">About Us</a></li>
-                                <li><a href="{{ route('landing.advertisements') }}">Advertisements</a></li>
-                                <li class="menu-item-has-children">
-                                    <a href="#none">Our Packages</a>
-                                    <ul class="sub-menu">
-                                        <li><a href="{{ route('landing.package', 'wgc-membership') }}">WGC
-                                                Membership</a></li>
-                                        <li><a href="{{ route('landing.package', 'gold') }}">Gold Package</a></li>
-                                        <li><a href="{{ route('landing.package', 'diamond') }}">Diamond Package</a>
-                                        </li>
-                                    </ul>
-                                </li>
+                                    <li class="nav-item"><a class="nav-link" href="{{ route('landing.financial-assistance')}}">Financial Assistance</a></li>
+								
+								</ul>
+							</li>
 
-                                <li><a href="{{ route('landing.products') }}">Our Products</a></li>
 
-                                <!-- <li><a href="{{ route('landing.announcements') }}">Announcements</a></li>-->
+                          
+   <li class="nav-item"><a class="nav-link" href="{{ route('landing.benefit')}}">Members Benefit</a></li>
 
-                                <li><a href="{{ route('landing.contact') }}">Contact Us</a></li>
-                                <li class="menu-item-has-children">
-                                    <a href="#none">Account</a>
-                                    <ul class="sub-menu">
-                                        <li><a href={{ route('login') }}>Login</a></li>
-                                        <li><a href="{{ route('membership-registration') }}">Register</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </nav>
-                        <button class="vs-menu-toggle d-inline-block d-lg-none"><i class="fal fa-bars"></i></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
+                             
+
+                             <li class="nav-item has-submenu"><a class="nav-link" href="#">Membership Rules</a>
+								<ul class="submenu">									
+                                    <li class="nav-item"><a class="nav-link" href="{{ route('landing.recruitment')}}">Invitation</a></li>
+									<li class="nav-item"><a class="nav-link" href="{{ route('landing.social-obligation')}}">Social Obligation</a></li>
+             
+								
+								
+								</ul>
+							</li>
+
+
+
+							<li class="nav-item"><a class="nav-link" href="{{ route('landing.application')}}">Application Form</a></li>
+
+	<li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
+							
+                            
+
+
+							
+							<li class="nav-item highlighted-menu"><a class="nav-link" href="{{ route('landing.contact') }}">Contact Us</a></li>
+						</ul>
+					</div>
+					<!-- Main Menu End -->
+	
+					<div class="navbar-toggle"></div>
+				</div>
+			</nav>
+			<div class="responsive-menu"></div>
+		</div>
+	</header>
+	<!-- Header End -->

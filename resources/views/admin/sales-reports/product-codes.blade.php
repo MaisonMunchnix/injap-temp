@@ -19,7 +19,7 @@
             <div class="card-body">
                 <div class="">
                     <h5 class="text-center">
-                        Members Product Codes</h5><br>
+                        Member Codes</h5><br>
                 </div>
                 <div class="">
                     <form action="" method="GET">

@@ -31,6 +31,31 @@ class LoginController extends Controller
     protected $redirectTo = '/tellers';
 
     /**
+     * Get the post-authentication redirect path.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return string
+     */
+    protected function redirectPath()
+    {
+        $user = Auth::user();
+        
+        if ($user->userType === 'staff') {
+            return '/staff';
+        } elseif ($user->userType === 'paymentApprover') {
+            return '/staff/payments';
+        } elseif ($user->userType === 'applicationApprover') {
+            return '/staff/applications/pending';
+        } elseif ($user->userType === 'productApprover') {
+            return '/staff/admin/products/submissions/pending';
+        } elseif ($user->userType === 'tellers') {
+            return '/tellers';
+        } else {
+            return '/user';
+        }
+    }
+
+    /**
      * Create a new controller instance.
      *
      * @return void
@@ -61,9 +86,12 @@ class LoginController extends Controller
         if(!empty($user)){
             $user_type = $user->userType;
             
-            if($user->status == 2){
-                $request->status = 2;
-                return $this->sendFailedLoginResponse($request);
+            // Check if user is deactivated (status 0 or 2 means inactive/deactivated)
+            if($user->status == 0 || $user->status == 2){
+                return redirect()
+                    ->back()
+                    ->withInput($request->only($this->username(), 'remember'))
+                    ->withErrors(['username' => 'This account has been deactivated. Please contact support.']);
             }
         }
         /* if(!empty($user)){ */

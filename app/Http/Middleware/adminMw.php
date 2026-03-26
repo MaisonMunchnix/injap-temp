@@ -22,6 +22,11 @@ class adminMw
         if(auth()->check() &&  Auth::user()->userType =='user'){
            return redirect('user');
         }
+        // Only allow staff and approver users to access admin routes
+        $allowedUserTypes = ['staff', 'paymentApprover', 'productApprover', 'applicationApprover'];
+        if(auth()->check() && !in_array(Auth::user()->userType, $allowedUserTypes)){
+            abort(403, 'Unauthorized access.');
+        }
 
         $response = $next($request);
         $response->headers->set('Cache-Control','nocache, no-store, max-age=0, must-revalidate');

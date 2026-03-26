@@ -10,25 +10,11 @@
 				</div> <!-- // END .modal-header -->
 				<div class="modal-body">
 					@csrf
-					<div class="form-group row required" data-toggle="tooltip" data-placement="top" title="First Name is required">
-						<label for="first_name" class="col-form-label col-md-3">First Name: *</label>
+					<div class="form-group row required" data-toggle="tooltip" data-placement="top" title="Full Name is required">
+						<label for="first_name" class="col-form-label col-md-3">Full Name: *</label>
 						<div class="col-md-9">
 							<input type="hidden" id="id" name="id" required>
-							<input class="form-control" placeholder="First Nam" id="first_name" name="first_name" type="text" required>
-							<span id="error-name" class="invalid-feedback"></span>
-						</div>
-					</div>
-					<div class="form-group row" data-toggle="tooltip" data-placement="top" title="Middle Name is not required">
-						<label for="middle_name" class="col-form-label col-md-3">Middle Name:</label>
-						<div class="col-md-9">
-							<input class="form-control" placeholder="Middle Name" id="middle_name" name="middle_name" type="text">
-							<span id="error-name" class="invalid-feedback"></span>
-						</div>
-					</div>
-					<div class="form-group row required" data-toggle="tooltip" data-placement="top" title="Last Name is required">
-						<label for="last_name" class="col-form-label col-md-3">Last Name: *</label>
-						<div class="col-md-9">
-							<input class="form-control" placeholder="Last Name" id="last_name" name="last_name" type="text" required>
+							<input class="form-control" placeholder="Full Name" id="first_name" name="first_name" type="text" required>
 							<span id="error-name" class="invalid-feedback"></span>
 						</div>
 					</div>
@@ -42,8 +28,8 @@
 					<div class="form-group row">
 						<label for="username" class="col-form-label col-md-3">Username:</label>
 						<div class="col-md-9">
-							<input class="form-control" placeholder="Username" id="username" type="text" readonly>
-							<span id="error-name" class="invalid-feedback"></span>
+							<input class="form-control" placeholder="Username" id="username" name="username" type="text" required>
+							<span id="error-username" class="invalid-feedback"></span>
 						</div>
 					</div>
 					<div class="form-group row required" data-toggle="tooltip" data-placement="top" title="Email Address is required">
