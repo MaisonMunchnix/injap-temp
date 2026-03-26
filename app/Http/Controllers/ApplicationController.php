@@ -15,6 +15,18 @@ use Illuminate\Support\Facades\Log;
 class ApplicationController extends Controller
 {
     /**
+     * Check if an application code is valid and unused (for real-time UI validation)
+     */
+    public function checkApplicationCode($code)
+    {
+        $valid = \App\ApplicationCode::where('code', $code)
+            ->where('is_used', false)
+            ->exists();
+
+        return response()->json(['valid' => $valid]);
+    }
+
+    /**
      * Store application submission
      */
     public function submitApplication(Request $request)
@@ -39,7 +51,7 @@ class ApplicationController extends Controller
             'address' => 'required|string|max:500',
             'member_type' => 'required|in:' . $validTypes,
             'agreeTerms' => 'required|accepted',
-            'proof_of_payment' => 'required|file|mimes:pdf,jpg,jpeg,png'
+            'proof_of_payment' => 'nullable|file|mimes:pdf,jpg,jpeg,png'
         ]);
 
         // Validate Product Code

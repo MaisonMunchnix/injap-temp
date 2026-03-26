@@ -108,7 +108,8 @@
                             <div class="row">
                                 <div class="form-group col-md-12 mb-3">
                                     <label for="product_code" class="form-placeholder">Product Code</label>
-                                    <input type="text" class="form-control" id="product_code" required>
+                                    <input type="text" class="form-control" id="product_code" required maxlength="100" autocomplete="off">
+                                    <div id="product_code_feedback" class="mt-1" style="display:none; font-size:0.875rem;"></div>
                                     <div class="help-block with-errors"></div>
                                 </div>
 
@@ -191,7 +192,7 @@
                 </div>
 
                                 <div class="form-group col-md-12 mb-3">
-                    <label for="proofOfPayment" class="form-placeholder">Proof of Payment <span class="text-danger"></span></label>
+                    <label for="proofOfPayment" class="form-placeholder">Proof of Payment (Optional)</label>
                     <small class="d-block text-muted mb-2">Upload a screenshot or document showing your payment (PDF, JPG, PNG)</small>
                     <div class="custom-file-upload">
                         <input type="file" class="form-control" id="proofOfPayment" accept=".pdf,.jpg,.jpeg,.png">
@@ -226,7 +227,39 @@
     <script>
         $(document).ready(function() {
             console.log('Application form script loaded');
-            
+
+            // Real-time product code validation
+            $('#product_code').on('blur', function () {
+                var code = $(this).val().trim();
+                var $feedback = $('#product_code_feedback');
+                var $input = $(this);
+
+                if (!code) {
+                    $feedback.hide();
+                    return;
+                }
+
+                $feedback.html('<span style="color:#888;"><i class="fas fa-spinner fa-spin"></i> Checking code...</span>').show();
+
+                $.get('{{ route("landing.application.check-code", ["code" => "__CODE__"]) }}'.replace('__CODE__', encodeURIComponent(code)), function (res) {
+                    if (res.valid) {
+                        $feedback.html('<span style="color:#28a745;"><i class="fas fa-check-circle"></i> Valid product code.</span>');
+                        $input.removeClass('is-invalid').addClass('is-valid');
+                    } else {
+                        $feedback.html('<span style="color:#dc3545;"><i class="fas fa-times-circle"></i> Invalid or already used product code.</span>');
+                        $input.removeClass('is-valid').addClass('is-invalid');
+                    }
+                }).fail(function () {
+                    $feedback.html('<span style="color:#888;">Could not verify code. Please try again.</span>');
+                });
+            });
+
+            // Clear feedback when user starts typing again
+            $('#product_code').on('input', function () {
+                $('#product_code_feedback').hide();
+                $(this).removeClass('is-valid is-invalid');
+            });
+
             // Handle file upload
             $('#proofOfPayment').change(function(e) {
                 var file = e.target.files[0];
@@ -284,11 +317,6 @@
                     return;
                 }
 
-                if (!proofOfPaymentFile) {
-                    alert("Please upload your Proof of Payment before submitting");
-                    return;
-                }
-
                 // Disable submit button to prevent multiple submissions
                 $('#submitBtn').prop('disabled', true).text('Submitting...');
 
@@ -306,7 +334,9 @@
                 formData.append('address', address);
                 formData.append('member_type', member_type);
                 formData.append('agreeTerms', agreeTerms ? 1 : 0);
-                formData.append('proof_of_payment', proofOfPaymentFile);
+                if (proofOfPaymentFile) {
+                    formData.append('proof_of_payment', proofOfPaymentFile);
+                }
 
                 $.ajax({
                     url: '{{ route("landing.application.submit") }}',
