@@ -107,7 +107,7 @@
                             @csrf
                             <div class="row">
                                 <div class="form-group col-md-12 mb-3">
-                                    <label for="product_code" class="form-placeholder">Product Code</label>
+                                    <label for="product_code" class="form-placeholder">INCO SECURITY CODE</label>
                                     <input type="text" class="form-control" id="product_code" required maxlength="100" autocomplete="off">
                                     <div id="product_code_feedback" class="mt-1" style="display:none; font-size:0.875rem;"></div>
                                     <div class="help-block with-errors"></div>
