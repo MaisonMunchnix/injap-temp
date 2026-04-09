@@ -571,6 +571,13 @@ Route::group(['prefix' => 'staff',  'middleware' => 'adminMw'], function(){
 	Route::post('advertisements/delete', 'admin\AdvertisementController@destroy')->name('admin.delete-ads');
 	Route::post('advertisements/action', 'admin\AdvertisementController@action')->name('admin.ads.action');
 
+	// Instructors Management
+	Route::middleware(['can_manage_instructors'])->group(function () {
+		Route::get('instructors', 'admin\InstructorController@index')->name('admin.instructors.index');
+		Route::get('instructors/create', 'admin\InstructorController@create')->name('admin.instructors.create');
+		Route::post('instructors', 'admin\InstructorController@store')->name('admin.instructors.store');
+	});
+
     //profile
 	Route::get('profile', 'AdminProfileController@viewProfile')->name('admin.profile');
 	Route::post('update-profile', 'AdminProfileController@updateMemberProfile')->name('admin.update-profile');

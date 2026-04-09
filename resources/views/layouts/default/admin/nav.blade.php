@@ -21,6 +21,16 @@
             </li>
             @endif
 
+            <!-- Instructors: Show if can_manage_instructors -->
+            @if(auth()->check() && auth()->user()->can_manage_instructors)
+            <li>
+                <a href="#" data-toggle="tooltip" data-placement="right" title="Instructors"
+                    data-nav-target="#instructors">
+                    <i data-feather="book-open"></i>
+                </a>
+            </li>
+            @endif
+
             <!-- Product Approver: Show Products & Orders tab -->
             @if(auth()->user() && (auth()->user()->userType === 'staff' || auth()->user()->userType === 'productApprover'))
             <li>
@@ -108,6 +118,21 @@
                             href="{{ route('applications.codes') }}">Product Codes</a>
                     </li>
                     @endif
+                </ul>
+            </div>
+            @endif
+
+            <!-- Instructors Section -->
+            @if(auth()->check() && auth()->user()->can_manage_instructors)
+            <div id="instructors">
+                <ul>
+                    <li class="navigation-divider d-flex align-items-center">
+                        <i class="mr-2" data-feather="book-open"></i> Instructors Management
+                    </li>
+                    <li>
+                        <a class="{{ request()->is('staff/instructors*') ? 'active' : '' }}"
+                            href="{{ route('admin.instructors.index') }}">Instructors Directory</a>
+                    </li>
                 </ul>
             </div>
             @endif
