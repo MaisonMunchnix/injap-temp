@@ -48,6 +48,8 @@ class LoginController extends Controller
             return '/staff/applications/pending';
         } elseif ($user->userType === 'productApprover') {
             return '/staff/admin/products/submissions/pending';
+        } elseif ($user->userType === 'instructor') {
+            return '/instructor';
         } elseif ($user->userType === 'tellers') {
             return '/tellers';
         } else {
@@ -101,7 +103,7 @@ class LoginController extends Controller
             if($referrer == 'admin-login' && $user_type != 'staff')
                 return $this->sendFailedLoginResponse($request);
 
-            if($referrer == 'member-login' && $user_type != 'user')
+            if($referrer == 'member-login' && !in_array($user_type, ['user', 'instructor']))
                 return $this->sendFailedLoginResponse($request);
 
             if ($this->attemptLogin($request)) {

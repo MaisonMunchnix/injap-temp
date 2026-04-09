@@ -576,6 +576,11 @@ Route::group(['prefix' => 'staff',  'middleware' => 'adminMw'], function(){
 		Route::get('instructors', 'admin\InstructorController@index')->name('admin.instructors.index');
 		Route::get('instructors/create', 'admin\InstructorController@create')->name('admin.instructors.create');
 		Route::post('instructors', 'admin\InstructorController@store')->name('admin.instructors.store');
+
+        // Course Management for Admin
+        Route::get('courses', 'admin\CourseController@index')->name('admin.courses.index');
+        Route::post('courses/{course}/status', 'admin\CourseController@updateStatus')->name('admin.courses.update-status');
+        Route::post('courses/{course}/price', 'admin\CourseController@updatePrice')->name('admin.courses.update-price');
 	});
 
     //profile
@@ -798,14 +803,15 @@ Route::group(['prefix' => 'user',  'middleware' => 'userMw'], function(){
 	//Products
 	Route::prefix('products')->name('products.')->group(function () {
 		Route::get('/', 'member\ProductController@index')->name('list');
-		Route::get('/cart', 'member\ProductController@cart')->name('cart');
-		Route::get('/checkout','member\ProductController@checkout')->name('cart.checkout');
-		
-		Route::post('/cart/{product}', 'CartController@add')->name('cart.add');
-		Route::post('/cart/{rowId}/update','CartController@update')->name('cart.cart.update');
-		Route::get('/cart/{rowId}', 'CartController@remove')->name('cart.remove');
-		Route::post('/payment', 'PaymentController@store')->name('cart.payment');
-	});
+    });
+	
+	Route::get('/cart', 'member\ProductController@cart')->name('cart');
+	Route::get('/checkout','member\ProductController@checkout')->name('cart.checkout');
+	
+	Route::post('/cart/{product}', 'CartController@add')->name('cart.add');
+	Route::post('/cart/{rowId}/update','CartController@update')->name('cart.cart.update');
+	Route::get('/cart/{rowId}', 'CartController@remove')->name('cart.remove');
+	Route::post('/payment', 'PaymentController@store')->name('cart.payment');
 
 	// New Products Browse
 	Route::get('browse-products', 'MemberProductController@browse')->name('member.products');
@@ -816,6 +822,12 @@ Route::group(['prefix' => 'user',  'middleware' => 'userMw'], function(){
 	Route::post('submit-product', 'MemberProductController@submitProduct')->name('submit-product');
 	Route::post('avail-product', 'MemberProductController@availProduct')->name('avail-product');
 	
+});
+
+/* ******************** Instructor Route ******************** */
+Route::group(['prefix' => 'instructor', 'middleware' => 'instructorMw'], function(){
+    Route::get('/', 'Instructor\CourseController@index')->name('instructor.dashboard');
+    Route::resource('courses', 'Instructor\CourseController', ['as' => 'instructor']);
 });
 
 Route::post('/e-walletProcess', 'PaymentController@ewalletProcess')->name('e-walletProcess');

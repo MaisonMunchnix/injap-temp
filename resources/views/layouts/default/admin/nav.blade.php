@@ -133,6 +133,10 @@
                         <a class="{{ request()->is('staff/instructors*') ? 'active' : '' }}"
                             href="{{ route('admin.instructors.index') }}">Instructors Directory</a>
                     </li>
+                    <li>
+                        <a class="{{ request()->is('staff/courses*') ? 'active' : '' }}"
+                            href="{{ route('admin.courses.index') }}">Course Review</a>
+                    </li>
                 </ul>
             </div>
             @endif

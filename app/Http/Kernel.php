@@ -64,6 +64,7 @@ class Kernel extends HttpKernel
         'tellerMw' =>\App\Http\Middleware\tellerMw::class,
         'adminMw' =>\App\Http\Middleware\adminMw::class,
         'userMw' =>\App\Http\Middleware\userMw::class,
+        'instructorMw' => \App\Http\Middleware\instructorMw::class,
         'checkApproved' => \App\Http\Middleware\CheckApplicationApproved::class,
         'can_manage_instructors' => \App\Http\Middleware\CanManageInstructors::class,
 		'cors' => \App\Http\Middleware\Cors::class, 

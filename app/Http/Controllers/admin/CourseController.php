@@ -1,0 +1,38 @@
+<?php
+
+namespace App\Http\Controllers\admin;
+
+use App\Http\Controllers\Controller;
+use App\Course;
+use Illuminate\Http\Request;
+
+class CourseController extends Controller
+{
+    public function index()
+    {
+        $courses = Course::with('instructor')->latest()->get();
+        return view('admin.courses.index', compact('courses'));
+    }
+
+    public function updateStatus(Request $request, Course $course)
+    {
+        $request->validate([
+            'status' => 'required|in:pending,published,rejected',
+        ]);
+
+        $course->update(['status' => $request->status]);
+
+        return redirect()->back()->with('success', 'Course status updated successfully.');
+    }
+
+    public function updatePrice(Request $request, Course $course)
+    {
+        $request->validate([
+            'price' => 'required|numeric|min:0',
+        ]);
+
+        $course->update(['price' => $request->price]);
+
+        return redirect()->back()->with('success', 'Course price updated successfully.');
+    }
+}
