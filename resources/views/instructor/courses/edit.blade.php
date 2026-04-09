@@ -25,10 +25,24 @@
                     <div class="card-body">
                         <h4 class="card-title mb-4">Course Details</h4>
 
-                        <form action="{{ route('instructor.courses.update', $course->id) }}" method="POST">
+                        <form action="{{ route('instructor.courses.update', $course->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             
+                            <div class="form-group">
+                                <label for="cover_photo">Cover Photo</label>
+                                @if($course->cover_photo)
+                                    <div class="mb-2">
+                                        <img src="{{ asset($course->cover_photo) }}" alt="Cover Photo" class="img-thumbnail" style="max-height: 150px;">
+                                    </div>
+                                @endif
+                                <input type="file" name="cover_photo" id="cover_photo" class="form-control @error('cover_photo') is-invalid @enderror">
+                                <small class="text-muted">Upload a new cover image to replace the current one (Max 2MB, JPG/PNG/GIF).</small>
+                                @error('cover_photo')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                             <div class="form-group">
                                 <label for="title">Course Title <span class="text-danger">*</span></label>
                                 <input type="text" name="title" id="title" class="form-control @error('title') is-invalid @enderror" value="{{ old('title', $course->title) }}" {{ $course->status === 'published' ? 'readonly' : '' }} required>

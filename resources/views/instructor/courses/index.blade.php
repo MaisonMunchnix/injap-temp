@@ -40,6 +40,7 @@
                             <table id="courses-table" class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
+                                        <th>Cover</th>
                                         <th>Title</th>
                                         <th>Suggested Price</th>
                                         <th>Admin Price</th>
@@ -51,6 +52,13 @@
                                 <tbody>
                                     @foreach($courses as $course)
                                     <tr>
+                                        <td>
+                                            @if($course->cover_photo)
+                                                <img src="{{ asset($course->cover_photo) }}" alt="Cover" width="50" class="img-thumbnail">
+                                            @else
+                                                <div class="text-muted"><small>No image</small></div>
+                                            @endif
+                                        </td>
                                         <td>{{ $course->title }}</td>
                                         <td>₱{{ number_format($course->suggested_price, 2) }}</td>
                                         <td>

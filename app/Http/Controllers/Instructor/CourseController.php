@@ -26,15 +26,26 @@ class CourseController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'suggested_price' => 'required|numeric|min:0',
+            'cover_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        Course::create([
+        $courseData = [
             'instructor_id' => Auth::id(),
             'title' => $request->title,
             'description' => $request->description,
             'suggested_price' => $request->suggested_price,
             'status' => 'draft',
-        ]);
+        ];
+
+        if ($request->hasFile('cover_photo')) {
+            $image = $request->file('cover_photo');
+            $name = time() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('/uploads/courses');
+            $image->move($destinationPath, $name);
+            $courseData['cover_photo'] = '/uploads/courses/' . $name;
+        }
+
+        Course::create($courseData);
 
         return redirect()->route('instructor.courses.index')->with('success', 'Course created as draft.');
     }
@@ -57,9 +68,25 @@ class CourseController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'suggested_price' => 'required|numeric|min:0',
+            'cover_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $course->update($request->only(['title', 'description', 'suggested_price']));
+        $updateData = $request->only(['title', 'description', 'suggested_price']);
+
+        if ($request->hasFile('cover_photo')) {
+            // Delete old photo if exists
+            if ($course->cover_photo && file_exists(public_path($course->cover_photo))) {
+                @unlink(public_path($course->cover_photo));
+            }
+
+            $image = $request->file('cover_photo');
+            $name = time() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('/uploads/courses');
+            $image->move($destinationPath, $name);
+            $updateData['cover_photo'] = '/uploads/courses/' . $name;
+        }
+
+        $course->update($updateData);
 
         return redirect()->route('instructor.courses.index')->with('success', 'Course updated.');
     }
