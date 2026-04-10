@@ -141,6 +141,10 @@
                         <a class="{{ request()->is('staff/enrollments*') ? 'active' : '' }}"
                             href="{{ route('admin.courses.enrollments') }}">Manage Enrollments</a>
                     </li>
+                    <li>
+                        <a class="{{ request()->is('staff/materials*') ? 'active' : '' }}"
+                            href="{{ route('admin.courses.materials') }}">Learning Materials</a>
+                    </li>
                 </ul>
             </div>
             @endif

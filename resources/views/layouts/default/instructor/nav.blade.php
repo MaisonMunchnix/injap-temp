@@ -51,6 +51,10 @@
                         <a class="{{ request()->is('instructor/enrollees*') ? 'active' : '' }}"
                             href="{{ route('instructor.courses.enrollees') }}">My Students</a>
                     </li>
+                    <li>
+                        <a class="{{ request()->is('instructor/materials*') ? 'active' : '' }}"
+                            href="{{ route('instructor.materials.index') }}">Learning Materials</a>
+                    </li>
                 </ul>
             </div>
             <div id="pages">

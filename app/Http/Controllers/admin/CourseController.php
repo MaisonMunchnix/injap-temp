@@ -40,6 +40,13 @@ class CourseController extends Controller
 
         $course->update(['status' => $request->status]);
 
+        // Auto-approve pending materials if course is specifically being approved (published)
+        if ($request->status === 'published') {
+            \App\CourseMaterial::where('course_id', $course->id)
+                ->where('status', 'pending')
+                ->update(['status' => 'approved', 'admin_note' => 'Auto-approved alongside course publication.']);
+        }
+
         return redirect()->back()->with('success', 'Course status updated successfully.');
     }
 
@@ -57,5 +64,26 @@ class CourseController extends Controller
     public function show(Course $course)
     {
         return response()->json($course->load('instructor'));
+    }
+
+    public function allMaterials()
+    {
+        $materials = \App\CourseMaterial::with(['course', 'instructor'])->latest()->get();
+        return view('admin.courses.materials', compact('materials'));
+    }
+
+    public function updateMaterialStatus(Request $request, \App\CourseMaterial $material)
+    {
+        $request->validate([
+            'status' => 'required|in:pending,approved,rejected',
+            'admin_note' => 'nullable|string',
+        ]);
+
+        $material->update([
+            'status' => $request->status,
+            'admin_note' => $request->admin_note,
+        ]);
+
+        return redirect()->back()->with('success', 'Material status updated successfully.');
     }
 }

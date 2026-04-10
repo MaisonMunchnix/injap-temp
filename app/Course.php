@@ -41,4 +41,9 @@ class Course extends Model
     {
         return $this->hasMany(Enrollment::class);
     }
+
+    public function materials()
+    {
+        return $this->hasMany(CourseMaterial::class);
+    }
 }

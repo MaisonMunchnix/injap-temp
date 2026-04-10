@@ -584,6 +584,9 @@ Route::group(['prefix' => 'staff',  'middleware' => 'adminMw'], function(){
 
 		Route::get('enrollments', 'admin\CourseController@allEnrollments')->name('admin.courses.enrollments');
 		Route::post('enrollments/{enrollment}/status', 'admin\CourseController@updateEnrollmentStatus')->name('admin.courses.enrollment-status');
+
+		Route::get('materials', 'admin\CourseController@allMaterials')->name('admin.courses.materials');
+		Route::post('materials/{material}/status', 'admin\CourseController@updateMaterialStatus')->name('admin.courses.material-status');
 	});
 
 	//profile
@@ -598,6 +601,11 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'instructor', 'namespace' =>
 	Route::get('dashboard', 'DashboardController@index')->name('instructor.dashboard');
 	Route::resource('courses', 'CourseController', ['as' => 'instructor']);
 	Route::get('enrollees', 'CourseController@enrollees')->name('instructor.courses.enrollees');
+	
+	Route::get('materials', 'CourseMaterialController@index')->name('instructor.materials.index');
+	Route::get('materials/{course}', 'CourseMaterialController@show')->name('instructor.materials.show');
+	Route::post('materials/store', 'CourseMaterialController@store')->name('instructor.materials.store');
+	Route::delete('materials/{material}', 'CourseMaterialController@destroy')->name('instructor.materials.destroy');
 });
 
 
