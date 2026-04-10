@@ -579,6 +579,7 @@ Route::group(['prefix' => 'staff',  'middleware' => 'adminMw'], function(){
 
         // Course Management for Admin
         Route::get('courses', 'admin\CourseController@index')->name('admin.courses.index');
+        Route::get('courses/{course}', 'admin\CourseController@show')->name('admin.courses.show');
         Route::post('courses/{course}/status', 'admin\CourseController@updateStatus')->name('admin.courses.update-status');
         Route::post('courses/{course}/price', 'admin\CourseController@updatePrice')->name('admin.courses.update-price');
 	});

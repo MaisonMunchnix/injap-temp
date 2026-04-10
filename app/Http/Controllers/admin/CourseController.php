@@ -35,4 +35,9 @@ class CourseController extends Controller
 
         return redirect()->back()->with('success', 'Course price updated successfully.');
     }
+
+    public function show(Course $course)
+    {
+        return response()->json($course->load('instructor'));
+    }
 }
