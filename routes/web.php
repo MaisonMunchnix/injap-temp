@@ -851,6 +851,7 @@ Route::name('landing.')->group(function () {
 	Route::get('/recruitment','LandingPageController@recruitment')->name('recruitment');
 	Route::get('/social-obligation','LandingPageController@socialObligation')->name('social-obligation');
 	Route::get('/application','LandingPageController@application')->name('application');
+	Route::get('/education','LandingPageController@education')->name('education');
 	Route::post('/application/submit','ApplicationController@submitApplication')->name('application.submit');
 	Route::get('/check-application-code/{code}','ApplicationController@checkApplicationCode')->name('application.check-code');
 	

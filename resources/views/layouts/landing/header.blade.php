@@ -74,6 +74,7 @@
 
                           
    <li class="nav-item"><a class="nav-link" href="{{ route('landing.benefit')}}">Members Benefit</a></li>
+   <li class="nav-item"><a class="nav-link" href="{{ route('landing.education')}}">Education</a></li>
 
                              
 

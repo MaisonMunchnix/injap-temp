@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use App\Advertisement;
 use App\Currency;
+use App\Course;
 
 class LandingPageController extends Controller
 {
@@ -125,5 +126,10 @@ class LandingPageController extends Controller
     }
     
 
+    public function education()
+    {
+        $courses = Course::where('status', 'published')->with('instructor')->get();
+        return view('landing.education', compact('courses'));
+    }
 
 }
