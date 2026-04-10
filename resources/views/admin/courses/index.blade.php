@@ -229,6 +229,17 @@
                                 </div>
                             </div>
                         </div>
+
+                        <hr>
+
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <h6 class="font-weight-bold text-uppercase small text-muted mb-2">Learning Materials</h6>
+                                <div id="detail-materials">
+                                    <!-- Materials loaded via AJAX -->
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -339,6 +350,32 @@
                         } else {
                             $('#detail-location-wrapper').hide();
                         }
+
+                        // Learning Materials
+                        let materialsHtml = '';
+                        if (course.materials && course.materials.length > 0) {
+                            materialsHtml = '<ul class="list-group list-group-flush border mt-2 rounded">';
+                            course.materials.forEach(function(mat) {
+                                let statusClasses = {
+                                    'approved': 'badge-success',
+                                    'rejected': 'badge-danger',
+                                    'pending': 'badge-warning'
+                                };
+                                let badgeClass = statusClasses[mat.status] || 'badge-secondary';
+                                
+                                materialsHtml += `<li class="list-group-item bg-light p-2 d-flex justify-content-between align-items-center">
+                                    <div class="text-truncate mr-3">
+                                        <i class="ti-file text-primary mr-2"></i>
+                                        <a href="{{ asset('storage') }}/${mat.file_path}" target="_blank" class="font-weight-bold text-dark">${mat.title}</a>
+                                    </div>
+                                    <span class="badge ${badgeClass} badge-pill p-2">${mat.status.toUpperCase()}</span>
+                                </li>`;
+                            });
+                            materialsHtml += '</ul>';
+                        } else {
+                            materialsHtml = '<div class="alert alert-secondary mt-2 px-3 py-2 border-0"><small><i class="ti-info-alt mr-2"></i>No learning materials uploaded for this course yet.</small></div>';
+                        }
+                        $('#detail-materials').html(materialsHtml);
                     },
                     error: function() {
                         alert('Failed to fetch course details. Please try again.');
