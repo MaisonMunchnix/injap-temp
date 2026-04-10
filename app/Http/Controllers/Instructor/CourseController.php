@@ -25,6 +25,19 @@ class CourseController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
+            'level' => 'required|in:beginner,intermediate,advanced',
+            'category' => 'nullable|string|max:255',
+            'min_age' => 'nullable|integer|min:0',
+            'max_age' => 'nullable|integer|min:0',
+            'min_slots' => 'nullable|integer|min:1',
+            'max_slots' => 'nullable|integer|min:1',
+            'schedule_start' => 'nullable|date',
+            'schedule_end' => 'nullable|date|after_or_equal:schedule_start',
+            'session_count' => 'nullable|integer|min:1',
+            'session_duration_mins' => 'nullable|integer|min:1',
+            'recurrence' => 'required|in:once,daily,weekly,custom',
+            'meeting_link' => 'nullable|url',
+            'location' => 'nullable|string|max:255',
             'suggested_price' => 'required|numeric|min:0',
             'cover_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -33,6 +46,19 @@ class CourseController extends Controller
             'instructor_id' => Auth::id(),
             'title' => $request->title,
             'description' => $request->description,
+            'level' => $request->level,
+            'category' => $request->category,
+            'min_age' => $request->min_age,
+            'max_age' => $request->max_age,
+            'min_slots' => $request->min_slots ?? 1,
+            'max_slots' => $request->max_slots,
+            'schedule_start' => $request->schedule_start,
+            'schedule_end' => $request->schedule_end,
+            'session_count' => $request->session_count ?? 1,
+            'session_duration_mins' => $request->session_duration_mins ?? 60,
+            'recurrence' => $request->recurrence,
+            'meeting_link' => $request->meeting_link,
+            'location' => $request->location,
             'suggested_price' => $request->suggested_price,
             'status' => 'draft',
         ];
@@ -71,7 +97,12 @@ class CourseController extends Controller
             'cover_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $updateData = $request->only(['title', 'description', 'suggested_price']);
+        $updateData = $request->only([
+            'title', 'description', 'level', 'category', 'min_age', 'max_age', 
+            'min_slots', 'max_slots', 'schedule_start', 'schedule_end', 
+            'session_count', 'session_duration_mins', 'recurrence', 
+            'meeting_link', 'location', 'suggested_price'
+        ]);
 
         if ($request->hasFile('cover_photo')) {
             // Delete old photo if exists
