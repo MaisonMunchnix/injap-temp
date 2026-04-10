@@ -575,21 +575,29 @@ Route::group(['prefix' => 'staff',  'middleware' => 'adminMw'], function(){
 	Route::middleware(['can_manage_instructors'])->group(function () {
 		Route::get('instructors', 'admin\InstructorController@index')->name('admin.instructors.index');
 		Route::get('instructors/create', 'admin\InstructorController@create')->name('admin.instructors.create');
-		Route::post('instructors', 'admin\InstructorController@store')->name('admin.instructors.store');
+		Route::post('instructors/store', 'admin\InstructorController@store')->name('admin.instructors.store');
 
-        // Course Management for Admin
-        Route::get('courses', 'admin\CourseController@index')->name('admin.courses.index');
-        Route::get('courses/{course}', 'admin\CourseController@show')->name('admin.courses.show');
-        Route::post('courses/{course}/status', 'admin\CourseController@updateStatus')->name('admin.courses.update-status');
-        Route::post('courses/{course}/price', 'admin\CourseController@updatePrice')->name('admin.courses.update-price');
+		Route::get('courses', 'admin\CourseController@index')->name('admin.courses.index');
+		Route::get('courses/{course}', 'admin\CourseController@show')->name('admin.courses.show');
+		Route::post('courses/{course}/status', 'admin\CourseController@updateStatus')->name('admin.courses.update-status');
+		Route::post('courses/{course}/price', 'admin\CourseController@updatePrice')->name('admin.courses.update-price');
+
+		Route::get('enrollments', 'admin\CourseController@allEnrollments')->name('admin.courses.enrollments');
+		Route::post('enrollments/{enrollment}/status', 'admin\CourseController@updateEnrollmentStatus')->name('admin.courses.enrollment-status');
 	});
 
-    //profile
+	//profile
 	Route::get('profile', 'AdminProfileController@viewProfile')->name('admin.profile');
 	Route::post('update-profile', 'AdminProfileController@updateMemberProfile')->name('admin.update-profile');
 	Route::post('update-password', 'AdminProfileController@updateMemberPassword')->name('admin.update-password');
 	Route::post('update-picture', 'AdminProfileController@updateMemberPicture')->name('admin.update-picture');
 	Route::post('update-account', 'AdminProfileController@updateAccountProfile')->name('admin.update-account');
+});
+
+Route::group(['middleware' => ['auth'], 'prefix' => 'instructor', 'namespace' => 'Instructor'], function () {
+	Route::get('dashboard', 'DashboardController@index')->name('instructor.dashboard');
+	Route::resource('courses', 'CourseController', ['as' => 'instructor']);
+	Route::get('enrollees', 'CourseController@enrollees')->name('instructor.courses.enrollees');
 });
 
 
@@ -853,6 +861,8 @@ Route::name('landing.')->group(function () {
 	Route::get('/social-obligation','LandingPageController@socialObligation')->name('social-obligation');
 	Route::get('/application','LandingPageController@application')->name('application');
 	Route::get('/education','LandingPageController@education')->name('education');
+	Route::get('/education/{course}','LandingPageController@courseDetails')->name('education.show');
+	Route::post('/education/{course}/enroll','LandingPageController@enroll')->name('education.enroll');
 	Route::post('/application/submit','ApplicationController@submitApplication')->name('application.submit');
 	Route::get('/check-application-code/{code}','ApplicationController@checkApplicationCode')->name('application.check-code');
 	

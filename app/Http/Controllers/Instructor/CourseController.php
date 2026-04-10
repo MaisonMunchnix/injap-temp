@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Instructor;
  
 use App\Http\Controllers\Controller;
 use App\Course;
+use App\Enrollment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,6 +14,19 @@ class CourseController extends Controller
     {
         $courses = Course::where('instructor_id', Auth::id())->get();
         return view('instructor.courses.index', compact('courses'));
+    }
+
+    public function enrollees()
+    {
+        $courses = Course::where('instructor_id', Auth::id())->get();
+        $courseIds = $courses->pluck('id');
+        
+        $enrollments = Enrollment::whereIn('course_id', $courseIds)
+            ->with('course')
+            ->latest()
+            ->get();
+            
+        return view('instructor.courses.enrollees', compact('enrollments', 'courses'));
     }
 
     public function create()

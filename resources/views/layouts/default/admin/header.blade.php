@@ -17,7 +17,7 @@
     <div class="header-body">
         <div class="header-body-left">
             <div class="page-title">
-                <h4>Admin Dashboard</h4>
+                <h4>{{ auth()->user()->userType === 'instructor' ? 'Instructor Dashboard' : 'Admin Dashboard' }}</h4>
             </div>
         </div>
         <div class="header-body-right">
@@ -28,7 +28,7 @@
                 <!-- begin::user menu -->
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link" title="User menu" data-sidebar-target="#user-menu">
-                        <span class="mr-2 d-sm-inline d-none">@if(!empty($global_user_data->username)) {{$global_user_data->username}} @endif</span>
+                        <span class="mr-2 d-sm-inline d-none">{{ auth()->user()->username ?? (auth()->user()->name ?? 'User') }}</span>
                         <figure class="avatar avatar-sm">
                             <img @if(!empty($global_user_data->profile_picture)) src="{{ asset($global_user_data->profile_picture) }}" @else src="{{ asset('images/users/default_image.png') }}" @endif class="rounded-circle" alt="avatar">
                         </figure>

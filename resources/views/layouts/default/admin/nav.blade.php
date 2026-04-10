@@ -137,6 +137,10 @@
                         <a class="{{ request()->is('staff/courses*') ? 'active' : '' }}"
                             href="{{ route('admin.courses.index') }}">Course Review</a>
                     </li>
+                    <li>
+                        <a class="{{ request()->is('staff/enrollments*') ? 'active' : '' }}"
+                            href="{{ route('admin.courses.enrollments') }}">Manage Enrollments</a>
+                    </li>
                 </ul>
             </div>
             @endif

@@ -1,0 +1,29 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Enrollment extends Model
+{
+    protected $fillable = [
+        'course_id',
+        'full_name',
+        'email',
+        'phone',
+        'age',
+        'guardian_name',
+        'guardian_contact',
+        'payment_status',
+        'enrolled_at'
+    ];
+
+    protected $dates = [
+        'enrolled_at'
+    ];
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
+}

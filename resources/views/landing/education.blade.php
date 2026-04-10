@@ -218,7 +218,7 @@
                                     {!! strip_tags($course->description) !!}
                                 </div>
                                 <div class="course-footer">
-                                    <a href="{{ route('login') }}" class="btn-view-course">Enroll Now</a>
+                                    <a href="{{ route('landing.education.show', $course->id) }}" class="btn-view-course">Enroll Now</a>
                                 </div>
                             </div>
                         </div>
