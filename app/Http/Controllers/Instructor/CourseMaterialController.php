@@ -46,15 +46,22 @@ class CourseMaterialController extends Controller
         $filename = time() . '_' . $file->getClientOriginalName();
         $path = $file->storeAs('course_materials', $filename, 'public');
 
+        $status = $course->status === 'published' ? 'approved' : 'pending';
+
         CourseMaterial::create([
             'course_id' => $request->course_id,
             'instructor_id' => Auth::id(),
             'title' => $request->title,
             'file_path' => $path,
-            'status' => 'pending',
+            'status' => $status,
+            'admin_note' => $status === 'approved' ? 'Auto-approved because course is published.' : null,
         ]);
 
-        return back()->with('success', 'Learning material uploaded successfully and awaiting approval.');
+        $message = $status === 'approved' 
+            ? 'Learning material uploaded and automatically approved.' 
+            : 'Learning material uploaded successfully and awaiting approval.';
+
+        return back()->with('success', $message);
     }
 
     public function destroy($id)
