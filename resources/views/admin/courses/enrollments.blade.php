@@ -21,7 +21,16 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center mb-4">
-                                <h4 class="card-title">Guest Enrollments</h4>
+                                <h4 class="card-title">Course Enrollments</h4>
+                                <div class="d-flex align-items-center">
+                                    <select id="courseFilter" class="form-control form-control-sm" style="min-width: 220px;">
+                                        <option value="">All Courses</option>
+                                        @foreach($courses as $course)
+                                            <option value="{{ $course->title }}">{{ $course->title }}</option>
+                                        @endforeach
+                                    </select>
+                                    <button id="resetCourseFilter" class="btn btn-sm btn-outline-secondary">Reset</button>
+                                </div>
                             </div>
 
                             @if (session('success'))
@@ -143,17 +152,29 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
-            $('#enrollments-table').DataTable({
+            var table = $('#enrollments-table').DataTable({
                 order: [
                     [0, 'desc']
                 ],
                 dom: 'Bfrtip',
                 buttons: [
-                    { extend: 'copy', className: 'btn btn-outline-success' },
-                    { extend: 'csv', className: 'btn btn-outline-success' },
+                    { extend: 'copy',  className: 'btn btn-outline-success' },
+                    { extend: 'csv',   className: 'btn btn-outline-success' },
                     { extend: 'excel', className: 'btn btn-outline-success' },
-                    { extend: 'pdf', className: 'btn btn-outline-success' },
+                    { extend: 'pdf',   className: 'btn btn-outline-success' },
                 ]
+            });
+
+            // Filter by Course (column index 3)
+            $('#courseFilter').on('change', function () {
+                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                table.column(3).search(val ? '^' + val + '$' : '', true, false).draw();
+            });
+
+            // Reset filter
+            $('#resetCourseFilter').on('click', function () {
+                $('#courseFilter').val('');
+                table.column(3).search('').draw();
             });
         });
     </script>

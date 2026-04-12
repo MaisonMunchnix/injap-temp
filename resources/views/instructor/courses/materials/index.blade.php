@@ -22,10 +22,22 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <div class="d-flex justify-content-between mb-4">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
                                 <h6 class="card-title mb-0">Select Course to Manage Materials</h6>
+                                <div class="d-flex align-items-center">
+                                    <label class="mb-0 mr-2 text-nowrap"><strong>Filter by Category:</strong></label>
+                                    <select id="categoryFilter" class="form-control form-control-sm"
+                                        style="min-width: 180px;">
+                                        <option value="">All Categories</option>
+                                        @foreach($courses->pluck('category')->filter()->unique()->sort() as $cat)
+                                            <option value="{{ $cat }}">{{ $cat }}</option>
+                                        @endforeach
+                                    </select>
+                                    <button id="resetCategoryFilter"
+                                        class="btn btn-sm btn-outline-secondary ml-2">Reset</button>
+                                </div>
                             </div>
-                            
+
                             @if(session()->has('error'))
                                 <div class="alert alert-danger mt-2">
                                     {{ session()->get('error') }}
@@ -33,7 +45,7 @@
                             @endif
 
                             <div class="table-responsive">
-                                <table class="table table-striped table-bordered text-center">
+                                <table id="materials-courses-table" class="table table-striped table-bordered text-center">
                                     <thead>
                                         <tr>
                                             <th>Course ID</th>
@@ -50,10 +62,12 @@
                                                 <td>{{ $course->title }}</td>
                                                 <td>{{ $course->category ?? 'General' }}</td>
                                                 <td>
-                                                    <span class="badge badge-primary">{{ $course->materials_count }} Files</span>
+                                                    <span class="badge badge-primary">{{ $course->materials_count }}
+                                                        Files</span>
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('instructor.materials.show', $course->id) }}" class="btn btn-primary btn-sm">
+                                                    <a href="{{ route('instructor.materials.show', $course->id) }}"
+                                                        class="btn btn-primary btn-sm">
                                                         <i class="ti-pencil-alt mr-1"></i> Manage Learning Materials
                                                     </a>
                                                 </td>
@@ -73,4 +87,29 @@
         </div>
     </div>
     <!-- end::page content -->
+@endsection
+
+@section('scripts')
+    <script>
+        $(document).ready(function () {
+            var table = $('#materials-courses-table').DataTable({
+                order: [[1, 'asc']],
+                columnDefs: [
+                    { orderable: false, targets: 4 } // Action column not sortable
+                ]
+            });
+
+            // Filter by Category (column index 2)
+            $('#categoryFilter').on('change', function () {
+                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                table.column(2).search(val ? '^' + val + '$' : '', true, false).draw();
+            });
+
+            // Reset filter
+            $('#resetCategoryFilter').on('click', function () {
+                $('#categoryFilter').val('');
+                table.column(2).search('').draw();
+            });
+        });
+    </script>
 @endsection

@@ -576,6 +576,8 @@ Route::group(['prefix' => 'staff',  'middleware' => 'adminMw'], function(){
 		Route::get('instructors', 'admin\InstructorController@index')->name('admin.instructors.index');
 		Route::get('instructors/create', 'admin\InstructorController@create')->name('admin.instructors.create');
 		Route::post('instructors/store', 'admin\InstructorController@store')->name('admin.instructors.store');
+		Route::put('instructors/{id}', 'admin\InstructorController@update')->name('admin.instructors.update');
+		Route::delete('instructors/{id}', 'admin\InstructorController@destroy')->name('admin.instructors.destroy');
 
 		Route::get('courses', 'admin\CourseController@index')->name('admin.courses.index');
 		Route::get('courses/{course}', 'admin\CourseController@show')->name('admin.courses.show');

@@ -75,10 +75,13 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="level">Level <span class="text-danger">*</span></label>
-                                            <select name="level" id="level" class="form-control @error('level') is-invalid @enderror" required>
-                                                <option value="beginner" {{ old('level') == 'beginner' ? 'selected' : '' }}>Beginner</option>
+                                            <select name="level" id="level"
+                                                class="form-control @error('level') is-invalid @enderror" required>
+                                                <option value="beginner" {{ old('level') == 'beginner' ? 'selected' : '' }}>
+                                                    Beginner</option>
                                                 <option value="intermediate" {{ old('level') == 'intermediate' ? 'selected' : '' }}>Intermediate</option>
-                                                <option value="advanced" {{ old('level') == 'advanced' ? 'selected' : '' }}>Advanced</option>
+                                                <option value="advanced" {{ old('level') == 'advanced' ? 'selected' : '' }}>
+                                                    Advanced</option>
                                             </select>
                                             @error('level')
                                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -142,7 +145,8 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="schedule_start">Schedule Start <span class="text-danger">*</span></label>
+                                            <label for="schedule_start">Schedule Start <span
+                                                    class="text-danger">*</span></label>
                                             <input type="datetime-local" name="schedule_start" id="schedule_start"
                                                 class="form-control @error('schedule_start') is-invalid @enderror"
                                                 value="{{ old('schedule_start') }}" required>
@@ -153,7 +157,8 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="schedule_end">Schedule End <span class="text-danger">*</span></label>
+                                            <label for="schedule_end">Schedule End <span
+                                                    class="text-danger">*</span></label>
                                             <input type="datetime-local" name="schedule_end" id="schedule_end"
                                                 class="form-control @error('schedule_end') is-invalid @enderror"
                                                 value="{{ old('schedule_end') }}" required>
@@ -190,11 +195,16 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="recurrence">Recurrence <span class="text-danger">*</span></label>
-                                            <select name="recurrence" id="recurrence" class="form-control @error('recurrence') is-invalid @enderror" required>
-                                                <option value="once" {{ old('recurrence') == 'once' ? 'selected' : '' }}>Once</option>
-                                                <option value="daily" {{ old('recurrence') == 'daily' ? 'selected' : '' }}>Daily</option>
-                                                <option value="weekly" {{ old('recurrence') == 'weekly' ? 'selected' : '' }}>Weekly</option>
-                                                <option value="custom" {{ old('recurrence') == 'custom' ? 'selected' : '' }}>Custom</option>
+                                            <select name="recurrence" id="recurrence"
+                                                class="form-control @error('recurrence') is-invalid @enderror" required>
+                                                <option value="once" {{ old('recurrence') == 'once' ? 'selected' : '' }}>Once
+                                                </option>
+                                                <option value="daily" {{ old('recurrence') == 'daily' ? 'selected' : '' }}>
+                                                    Daily</option>
+                                                <option value="weekly" {{ old('recurrence') == 'weekly' ? 'selected' : '' }}>
+                                                    Weekly</option>
+                                                <option value="custom" {{ old('recurrence') == 'custom' ? 'selected' : '' }}>
+                                                    Custom</option>
                                             </select>
                                             @error('recurrence')
                                                 <div class="invalid-feedback">{{ $message }}</div>

@@ -18,7 +18,8 @@ class CourseController extends Controller
     public function allEnrollments()
     {
         $enrollments = Enrollment::with('course.instructor')->latest()->get();
-        return view('admin.courses.enrollments', compact('enrollments'));
+        $courses     = Course::orderBy('title')->get(['id', 'title']);
+        return view('admin.courses.enrollments', compact('enrollments', 'courses'));
     }
 
     public function updateEnrollmentStatus(Request $request, Enrollment $enrollment)
@@ -69,7 +70,8 @@ class CourseController extends Controller
     public function allMaterials()
     {
         $materials = \App\CourseMaterial::with(['course', 'instructor'])->latest()->get();
-        return view('admin.courses.materials', compact('materials'));
+        $courses   = Course::orderBy('title')->get(['id', 'title']);
+        return view('admin.courses.materials', compact('materials', 'courses'));
     }
 
     public function updateMaterialStatus(Request $request, \App\CourseMaterial $material)
