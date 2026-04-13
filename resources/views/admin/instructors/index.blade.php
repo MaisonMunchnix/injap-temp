@@ -59,6 +59,16 @@
                                                 <strong>{{ $instructor->username }}</strong>
                                                 <br>
                                                 <small class="text-muted">{{ $instructor->email }}</small>
+                                                <br>
+                                                @if(!empty($instructor->plain_password))
+                                                    <small class="text-muted d-inline-flex align-items-center">
+                                                        Password:
+                                                        <span class="ml-1 js-password" data-password="{{ $instructor->plain_password }}" data-hidden="true">********</span>
+                                                        <button type="button" class="btn btn-link btn-sm p-0 ml-2 js-toggle-password text-danger">Show</button>
+                                                    </small>
+                                                @else
+                                                    <small class="text-muted">Password: N/A</small>
+                                                @endif
                                             </div>
                                             <div class="pl-3 d-flex align-items-center flex-shrink-0">
                                                 <div class="mr-3 text-muted d-none d-md-block">
@@ -192,6 +202,23 @@
         var modal = $(this);
         modal.find('#deleteInstructorName').text(username);
         modal.find('#deleteInstructorForm').attr('action', '/staff/instructors/' + id);
+    });
+
+    // Toggle plain password visibility in instructor list
+    $(document).on('click', '.js-toggle-password', function () {
+        var button = $(this);
+        var passwordElement = button.siblings('.js-password');
+        var isHidden = passwordElement.attr('data-hidden') !== 'false';
+
+        if (isHidden) {
+            passwordElement.text(passwordElement.attr('data-password'));
+            passwordElement.attr('data-hidden', 'false');
+            button.text('Hide');
+        } else {
+            passwordElement.text('********');
+            passwordElement.attr('data-hidden', 'true');
+            button.text('Show');
+        }
     });
 </script>
 @endsection
