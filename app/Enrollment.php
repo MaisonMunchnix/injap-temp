@@ -15,6 +15,7 @@ class Enrollment extends Model
         'guardian_name',
         'guardian_contact',
         'payment_status',
+        'payment_method',
         'enrolled_at'
     ];
 

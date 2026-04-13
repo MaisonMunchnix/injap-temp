@@ -23,6 +23,7 @@ class CreateEnrollmentsTable extends Migration
             $table->string('guardian_name')->nullable();
             $table->string('guardian_contact')->nullable();
             $table->enum('payment_status', ['pending', 'paid', 'refunded'])->default('pending');
+            $table->string('payment_method')->nullable();
             $table->timestamp('enrolled_at')->useCurrent();
             $table->timestamps();
 
