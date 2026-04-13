@@ -33,6 +33,12 @@ class CourseController extends Controller
         return redirect()->back()->with('success', 'Enrollment payment status updated successfully.');
     }
 
+    public function destroyEnrollment(Enrollment $enrollment)
+    {
+        $enrollment->delete();
+        return redirect()->back()->with('success', 'Enrollment deleted successfully.');
+    }
+
     public function updateStatus(Request $request, Course $course)
     {
         $request->validate([

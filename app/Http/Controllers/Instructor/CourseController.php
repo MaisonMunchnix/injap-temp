@@ -144,4 +144,13 @@ class CourseController extends Controller
         $course->delete();
         return redirect()->route('instructor.courses.index')->with('success', 'Course deleted.');
     }
+
+    public function destroyEnrollee(Enrollment $enrollment)
+    {
+        if ($enrollment->course->instructor_id !== Auth::id()) {
+            abort(403);
+        }
+        $enrollment->delete();
+        return redirect()->back()->with('success', 'Enrollment deleted.');
+    }
 }
