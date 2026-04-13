@@ -15,12 +15,15 @@
             display: flex;
             flex-direction: column;
             position: relative;
+            text-decoration: none;
+            color: inherit;
         }
 
         .course-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
             border-color: #e2e8f0;
+            color: inherit;
         }
 
         .course-image-wrapper {
@@ -132,38 +135,6 @@
             flex-grow: 1;
         }
 
-        .course-footer {
-            margin-top: auto;
-            border-top: 1px solid #f7fafc;
-            padding-top: 20px;
-        }
-
-        .btn-view-course {
-            width: 100%;
-            background: var(--accent-color);
-            color: #ffffff;
-            border-radius: 50px;
-            padding: 12px 24px;
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 0.05em;
-            transition: all 0.2s ease;
-            border: 2px solid var(--accent-color);
-            display: inline-block;
-            text-align: center;
-        }
-
-        .btn-view-course:hover {
-            background: transparent;
-            color: var(--accent-color);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        }
-
-        .btn-view-course:active {
-            transform: translateY(0);
-        }
     </style>
 @endsection
 
@@ -198,7 +169,7 @@
             <div class="row">
                 @forelse ($courses as $course)
                     <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="course-card wow fadeInUp" data-wow-delay="0.50s">
+                        <a href="{{ route('landing.education.show', $course->id) }}" class="course-card wow fadeInUp" data-wow-delay="0.50s">
                             <div class="course-image-wrapper">
                                 <div class="course-category">Course</div>
                                 <div class="price-badge">
@@ -217,11 +188,8 @@
                                 <div class="course-description">
                                     {!! strip_tags($course->description) !!}
                                 </div>
-                                <div class="course-footer">
-                                    <a href="{{ route('landing.education.show', $course->id) }}" class="btn-view-course">Enroll Now</a>
-                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 @empty
                     <div class="col-12 text-center">
