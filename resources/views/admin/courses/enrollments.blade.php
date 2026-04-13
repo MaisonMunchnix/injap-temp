@@ -154,6 +154,12 @@
                                                                                     Refunded</option>
                                                                             </select>
                                                                         </div>
+                                                                        <div class="form-group">
+                                                                            <label>Payment Method</label>
+                                                                            <select name="payment_method" class="form-control">
+                                                                                <option value="Cash" {{ $enrollment->payment_method == 'Cash' ? 'selected' : '' }}>Cash</option>
+                                                                            </select>
+                                                                        </div>
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-secondary"

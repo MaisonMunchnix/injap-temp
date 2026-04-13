@@ -26,9 +26,13 @@ class CourseController extends Controller
     {
         $request->validate([
             'status' => 'required|in:pending,paid,refunded',
+            'payment_method' => 'nullable|string',
         ]);
 
-        $enrollment->update(['payment_status' => $request->status]);
+        $enrollment->update([
+            'payment_status' => $request->status,
+            'payment_method' => $request->payment_method
+        ]);
 
         return redirect()->back()->with('success', 'Enrollment payment status updated successfully.');
     }
