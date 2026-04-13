@@ -239,7 +239,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="suggested_price">Price (₱) <span class="text-danger">*</span></label>
+                                    <label for="suggested_price">Price (Peso ₱ or Yen ¥) <span class="text-danger">*</span></label>
                                     <input type="number" step="0.01" name="suggested_price" id="suggested_price"
                                         class="form-control @error('suggested_price') is-invalid @enderror"
                                         value="{{ old('suggested_price', '0.00') }}" required>
