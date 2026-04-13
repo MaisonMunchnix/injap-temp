@@ -87,29 +87,6 @@
 
                         </thead>
 
-                        <tfoot>
-
-                            <tr>
-
-                                <th>Username</th>
-
-                                <th>Email Address</th>
-
-                                <th>First Name</th>
-
-                                <th>Last Name</th>
-
-                                <th>Type</th>
-
-                                <th>Status</th>
-
-                                <th>Date</th>
-
-                                <th>Actions</th>
-
-                            </tr>
-
-                        </tfoot>
 
                     </table>
 
@@ -124,6 +101,8 @@
         @include('admin.users.edit-modal')
 
         @include('admin.users.add-modal')
+
+        @include('admin.users.success-modal')
 
         @include('admin.users.delete-modal')
 
@@ -150,6 +129,8 @@
 <script src="{{asset('js/admin/users.js')}}"></script>
 
 <script>
+    window.deleteUserUrl = "{{ route('delete-user') }}";
+
     $(document).ready(function() {
 
         $('#users_table').DataTable({
@@ -177,45 +158,57 @@
 
             },
 
+            "language": {
+                "emptyTable": "No staff/teller records found",
+                "zeroRecords": "No matching records found"
+            },
+
             "columns": [{
 
-                    "data": "username"
+                    "data": "username",
+                    "defaultContent": "-"
 
                 },
 
                 {
 
-                    "data": "email"
+                    "data": "email",
+                    "defaultContent": "-"
 
                 },
 
                 {
 
-                    "data": "first_name"
+                    "data": "first_name",
+                    "defaultContent": "-"
 
                 },
 
                 {
 
-                    "data": "last_name"
+                    "data": "last_name",
+                    "defaultContent": "-"
 
                 },
 
                 {
 
-                    "data": "type"
+                    "data": "type",
+                    "defaultContent": "-"
 
                 },
 
                 {
 
-                    "data": "status"
+                    "data": "status",
+                    "defaultContent": "-"
 
                 },
 
                 {
 
-                    "data": "created_at"
+                    "data": "created_at",
+                    "defaultContent": "-"
 
                 },
 
@@ -223,12 +216,21 @@
 
                     "data": "options",
 
+                    "defaultContent": "",
+
                     "searchable": false,
 
                     "orderable": false
 
                 }
 
+            ],
+
+            "columnDefs": [
+                {
+                    "targets": [2, 3],
+                    "visible": true
+                }
             ]
 
         });

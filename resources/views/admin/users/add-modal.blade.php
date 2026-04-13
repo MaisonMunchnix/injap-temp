@@ -11,15 +11,21 @@
 				</div> <!-- // END .modal-header -->
 				<div class="modal-body">
 					<div class="row">
-						<div class="col-md-6">
+						<div class="col-md-4">
 							<div class="form-group" data-toggle="tooltip" data-placement="top" title="First Name is required">
-								<label for="name" class="col-form-label">First Name: *</label>
+								<label for="add_first_name" class="col-form-label">First Name: *</label>
 								<input class="form-control req_fields" placeholder="First Name" id="add_first_name" name="add_first_name" type="text" required>
 							</div>
 						</div>
-						<div class="col-md-6">
+						<div class="col-md-4">
+							<div class="form-group" data-toggle="tooltip" data-placement="top">
+								<label for="add_middle_name" class="col-form-label">Middle Name:</label>
+								<input class="form-control" placeholder="Middle Name" id="add_middle_name" name="add_middle_name" type="text">
+							</div>
+						</div>
+						<div class="col-md-4">
 							<div class="form-group" data-toggle="tooltip" data-placement="top" title="Last Name is required">
-								<label for="name" class="col-form-label">Last Name: *</label>
+								<label for="add_last_name" class="col-form-label">Last Name: *</label>
 								<input class="form-control req_fields" placeholder="Last Name" id="add_last_name" name="add_last_name" type="text" required>
 							</div>
 						</div>
@@ -76,6 +82,15 @@
 									@foreach($roles as $role)
 									<option value="{{ $role->code }}">{{ $role->name }}</option>
 									@endforeach
+									@if(!$roles->contains(function ($role) { return $role->code === 'applicationApprover'; }))
+									<option value="applicationApprover">Application Approver</option>
+									@endif
+									@if(!$roles->contains(function ($role) { return $role->code === 'paymentApprover'; }))
+									<option value="paymentApprover">Payment Approver</option>
+									@endif
+									@if(!$roles->contains(function ($role) { return $role->code === 'productApprover'; }))
+									<option value="productApprover">Product Approver</option>
+									@endif
 								</select>
 								<span id="error-role" class="invalid-feedback"></span>
 							</div>
@@ -96,107 +111,16 @@
 					</div>
 					<div class="row" id="access-rights" style="display:none">
 						<div class="col-md-12">
-							<h5 class="text-center">Check Access Rights</h5>
-							<h6>Members</h6>
-                            <div class="checkbox">
-                                <label><input type="checkbox" value="true" id="ar_edit_member" class="check_access" checked> Edit Member</label>
-                            </div>
-							<div class="checkbox">
-                                <label><input type="checkbox" value="false" id="ar_deactivate_member" class="check_access" > Deactivate Member</label>
-                            </div>
-							<br/>
-							<h6>Inventories</h6>
-                            <div class="checkbox">
-                                <label><input type="checkbox" value="false" id="ar_transfer_stocks" class="check_access" > Transfer Stocks</label>
-                            </div>
-							<br/>
-							<h6>E-wallet purchases</h6>
-                            <div class="checkbox">
-                                <label><input type="checkbox" value="false" id="ar_approve_ewallet" class="check_access" > Approve</label>
-                            </div>
-							<div class="checkbox">
-                                <label><input type="checkbox" value="false" id="ar_decline_ewallet" class="check_access" > Decline</label>
-                            </div>
-							<br/>
-							<h6>Products</h6>
-                            <div class="checkbox">
-                                <label><input type="checkbox" value="true" id="ar_add_product" class="check_access" checked> Add</label>
-                            </div>
-							<div class="checkbox">
-                                <label><input type="checkbox" value="true" id="ar_edit_product" class="check_access" checked> Edit</label>
-                            </div>
-							<div class="checkbox">
-                                <label><input type="checkbox" value="false" id="ar_delete_product" class="check_access" > Delete</label>
-                            </div>
-							<br/>
-							<h6>Packages</h6>
-                            <div class="checkbox">
-                                <label><input type="checkbox" value="true" id="ar_add_packages" class="check_access" checked> Add</label>
-                            </div>
-							<div class="checkbox">
-                                <label><input type="checkbox" value="true" id="ar_edit_packages" class="check_access" checked> Edit</label>
-                            </div>
-							<div class="checkbox">
-                                <label><input type="checkbox" value="false" id="ar_delete_packages" class="check_access"> Delete</label>
-                            </div>
-							<br/>
-							<h6>Announcement</h6>
-                            <div class="checkbox">
-                                <label><input type="checkbox" value="true" id="ar_add_announcement" class="check_access" checked> Add</label>
-                            </div>
-							<div class="checkbox">
-                                <label><input type="checkbox" value="true" id="ar_edit_announcement" class="check_access" checked> Edit</label>
-                            </div>
-							<div class="checkbox">
-                                <label><input type="checkbox" value="false" id="ar_delete_announcement" class="check_access" > Delete</label>
-                            </div>
-							<br/>
-							<h6>Encashments</h6>
-                            <div class="checkbox">
-                                <label><input type="checkbox" value="true" id="ar_approve_encash" class="check_access" checked> Approve</label>
-                            </div>
-							<div class="checkbox">
-                                <label><input type="checkbox" value="true" id="ar_process_encash" class="check_access" checked> Process</label>
-                            </div>
-							<div class="checkbox">
-                                <label><input type="checkbox" value="false" id="ar_decline_encash" class="check_access" > Decline</label>
-                            </div>
-							<div class="checkbox">
-                                <label><input type="checkbox" value="false" id="ar_hold_encash" class="check_access" > Hold</label>
-                            </div>
-							<br/>
-							<h6>Branch</h6>
-                            <div class="checkbox">
-                                <label><input type="checkbox" value="true" id="ar_add_branch" class="check_access" checked> Add</label>
-                            </div>
-							<div class="checkbox">
-                                <label><input type="checkbox" value="true" id="ar_edit_branch" class="check_access" checked> Edit</label>
-                            </div>
-							<div class="checkbox">
-                                <label><input type="checkbox" value="false" id="ar_delete_branch" class="check_access"> Delete</label>
-                            </div>
-							<br/>
-							<h6>Supplier</h6>
-                            <div class="checkbox">
-                                <label><input type="checkbox" value="true" id="ar_add_supplier" class="check_access" checked> Add</label>
-                            </div>
-							<div class="checkbox">
-                                <label><input type="checkbox" value="true" id="ar_edit_supplier" class="check_access" checked> Edit</label>
-                            </div>
-							<div class="checkbox">
-                                <label><input type="checkbox" value="false" id="ar_delete_supplier" class="check_access"> Delete</label>
-                            </div>
-							<br/>
-							<h6>Users</h6>
-                            <div class="checkbox">
-                                <label><input type="checkbox" value="true" id="ar_add_user" class="check_access" checked> Add</label>
-                            </div>
-							<div class="checkbox">
-                                <label><input type="checkbox" value="true" id="ar_edit_user" class="check_access" checked> Edit</label>
-                            </div>
-							<div class="checkbox">
-                                <label><input type="checkbox" value="false" id="ar_delete_user" class="check_access"> Delete</label>
-                            </div>
+							<hr>
+							<h5 class="text-center">Staff Scope</h5>
+							<div class="form-group" id="add_scope_wrap" style="display:none;">
+								<label for="add_admin_scope" class="col-form-label">Access Scope:</label>
+								<select name="add_admin_scope" id="add_admin_scope" class="form-control">
+									<option value="full" selected>Full Access</option>
+									<option value="instructors_only">Instructors Only</option>
+								</select>
+								<small class="text-muted">Use Instructors Only for restricted staff who should only access instructor-related pages.</small>
+							</div>
 						</div>
 					</div>
 

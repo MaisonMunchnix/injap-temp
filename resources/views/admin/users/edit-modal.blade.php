@@ -72,6 +72,20 @@
 							</div>
 						</div>
 					</div>
+
+					<div class="row">
+						<div class="col-md-12">
+							<hr>
+							<h6>Staff Scope</h6>
+							<div id="edit_scope_wrap" style="display:none;">
+								<select name="edit_admin_scope" id="edit_admin_scope" class="form-control">
+									<option value="full">Full Access</option>
+									<option value="instructors_only">Instructors Only</option>
+								</select>
+								<small class="text-muted">Instructors Only limits this staff account to instructor-related admin pages.</small>
+							</div>
+						</div>
+					</div>
 				</div> <!-- // END .modal-body -->
 				<div class="modal-footer">
 					<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>

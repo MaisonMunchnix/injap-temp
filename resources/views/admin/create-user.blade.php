@@ -46,6 +46,46 @@
 
                 <form action="{{ route('admin.users.store') }}" method="POST">
                     @csrf
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="first_name" class="form-label">First Name <span style="color: red;">*</span></label>
+                            <input type="text" class="form-control @error('first_name') is-invalid @enderror"
+                                id="first_name" name="first_name" value="{{ old('first_name') }}"
+                                placeholder="Enter first name" required>
+                            @error('first_name')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="middle_name" class="form-label">Middle Name</label>
+                            <input type="text" class="form-control @error('middle_name') is-invalid @enderror"
+                                id="middle_name" name="middle_name" value="{{ old('middle_name') }}"
+                                placeholder="Enter middle name">
+                            @error('middle_name')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="last_name" class="form-label">Last Name <span style="color: red;">*</span></label>
+                            <input type="text" class="form-control @error('last_name') is-invalid @enderror"
+                                id="last_name" name="last_name" value="{{ old('last_name') }}"
+                                placeholder="Enter last name" required>
+                            @error('last_name')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mobile_no" class="form-label">Mobile Number</label>
+                        <input type="text" class="form-control @error('mobile_no') is-invalid @enderror"
+                            id="mobile_no" name="mobile_no" value="{{ old('mobile_no') }}"
+                            placeholder="Enter mobile number">
+                        @error('mobile_no')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
                     <div class="form-group">
                         <label for="username" class="form-label">Username <span style="color: red;">*</span></label>
                         <input type="text" class="form-control @error('username') is-invalid @enderror" 
@@ -97,6 +137,33 @@
                         @enderror
                     </div>
 
+                    <div id="staffPermissions" style="display: none;">
+                        <div class="form-group">
+                            <label for="admin_scope" class="form-label">Staff Access Scope</label>
+                            <select class="form-control @error('admin_scope') is-invalid @enderror"
+                                id="admin_scope" name="admin_scope">
+                                <option value="full" {{ old('admin_scope', 'full') === 'full' ? 'selected' : '' }}>Full Staff Access</option>
+                                <option value="instructors_only" {{ old('admin_scope') === 'instructors_only' ? 'selected' : '' }}>Instructors Management Only</option>
+                            </select>
+                            @error('admin_scope')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input type="hidden" name="can_manage_instructors" value="0">
+                                <input type="checkbox" class="form-check-input"
+                                    id="can_manage_instructors" name="can_manage_instructors" value="1"
+                                    {{ old('can_manage_instructors', 1) ? 'checked' : '' }}>
+                                <label class="form-check-label" for="can_manage_instructors">
+                                    Can manage instructors
+                                </label>
+                            </div>
+                            <small class="text-muted">Required for accessing instructor routes and sidebar.</small>
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Create User</button>
                         <a href="{{ route('admin-dashboard') }}" class="btn btn-secondary">Cancel</a>
@@ -107,4 +174,49 @@
     </div>
     @include('layouts.default.footer')
 </div>
+
+@section('scripts')
+<script>
+    function toggleStaffPermissions() {
+        var userType = document.getElementById('userType').value;
+        var staffPermissions = document.getElementById('staffPermissions');
+        staffPermissions.style.display = userType === 'staff' ? 'block' : 'none';
+    }
+
+    function enforceInstructorsScope() {
+        var adminScope = document.getElementById('admin_scope');
+        var canManageInstructors = document.getElementById('can_manage_instructors');
+
+        if (!adminScope || !canManageInstructors) {
+            return;
+        }
+
+        if (adminScope.value === 'instructors_only') {
+            canManageInstructors.checked = true;
+            canManageInstructors.disabled = true;
+        } else {
+            canManageInstructors.disabled = false;
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var userTypeElement = document.getElementById('userType');
+        var adminScopeElement = document.getElementById('admin_scope');
+
+        toggleStaffPermissions();
+        enforceInstructorsScope();
+
+        if (userTypeElement) {
+            userTypeElement.addEventListener('change', function () {
+                toggleStaffPermissions();
+                enforceInstructorsScope();
+            });
+        }
+
+        if (adminScopeElement) {
+            adminScopeElement.addEventListener('change', enforceInstructorsScope);
+        }
+    });
+</script>
+@endsection
 @endsection

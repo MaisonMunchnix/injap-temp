@@ -86,6 +86,8 @@ class User extends Authenticatable implements InstanceIdentifier
         'plain_password',
         'status',
         'userType',
+        'admin_scope',
+        'can_manage_instructors',
         'account_type',
         'account_extension',
         'account_status',
@@ -112,6 +114,7 @@ class User extends Authenticatable implements InstanceIdentifier
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'can_manage_instructors' => 'boolean',
     ];
 	
 	/**

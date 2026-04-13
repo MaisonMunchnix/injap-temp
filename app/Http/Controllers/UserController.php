@@ -19,6 +19,7 @@ use Illuminate\Http\Update;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Schema;
 use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
@@ -50,22 +51,52 @@ class UserController extends Controller
 	{
 		// Validate request
 		$validated = $request->validate([
+			'first_name' => 'required|string|max:191',
+			'middle_name' => 'nullable|string|max:191',
+			'last_name' => 'required|string|max:191',
+			'mobile_no' => 'nullable|string|max:50',
 			'username' => 'required|string|unique:users,username|min:3|max:191',
 			'email' => 'required|email|unique:users,email|max:191',
 			'password' => 'required|string|min:6|confirmed',
-			'userType' => 'required|in:staff,paymentApprover,productApprover,applicationApprover'
+			'userType' => 'required|in:staff,paymentApprover,productApprover,applicationApprover',
+			'admin_scope' => 'nullable|in:full,instructors_only',
+			'can_manage_instructors' => 'nullable|boolean'
 		]);
+
+		$adminScope = ($validated['userType'] === 'staff')
+			? ($validated['admin_scope'] ?? 'full')
+			: 'full';
+		$canManageInstructors = $request->boolean('can_manage_instructors');
+		if ($adminScope === 'instructors_only') {
+			$canManageInstructors = true;
+		}
 
 		try {
 			// Create the user
-			$user = User::create([
+			$createData = [
 				'username' => $validated['username'],
 				'email' => $validated['email'],
 				'password' => Hash::make($validated['password']),
 				'plain_password' => $validated['password'],
 				'userType' => $validated['userType'],
+				'can_manage_instructors' => $canManageInstructors,
 				'status' => 1,
 				'branch_id' => 1
+			];
+
+			if (Schema::hasColumn('users', 'admin_scope')) {
+				$createData['admin_scope'] = $adminScope;
+			}
+
+			$user = User::create($createData);
+
+			UserInfo::create([
+				'user_id' => $user->id,
+				'first_name' => $validated['first_name'],
+				'middle_name' => $validated['middle_name'] ?? null,
+				'last_name' => $validated['last_name'],
+				'mobile_no' => $validated['mobile_no'] ?? null,
+				'status' => 1,
 			]);
 
 			return redirect()->route('admin.users.create')
@@ -838,46 +869,100 @@ class UserController extends Controller
 			7 => 'id'
 		);
   
-		$totalData = DB::table('users_view')->count();
+		$limit = $request->input('length');
+		$start = $request->input('start');
+		$order = $columns[$request->input('order.0.column')] ?? 'created_at';
+		$dir = $request->input('order.0.dir') ?: 'desc';
+		$search = $request->input('search.value');
 
-        $totalFiltered = $totalData; 
-        $limit = $request->input('length');
-        $start = $request->input('start');
-        $order = $columns[$request->input('order.0.column')];
-		$dir = $request->input('order.0.dir');
-            
-        if(empty($request->input('search.value'))){
-			$users = DB::table('users_view')
-				->offset($start)
-				->limit($limit)
-				->orderBy($order,$dir)
-				->get();
+		try {
+			$totalData = DB::table('users_view')->count();
+			$totalFiltered = $totalData;
 
-        } else {
-            $search = $request->input('search.value');
-            
-			$users = DB::table('users_view')
-				->where('username','LIKE',"%{$search}%")
-				->orWhere('email_address', 'LIKE',"%{$search}%")
-				->orWhere('created_at', 'LIKE',"%{$search}%")
-				->orWhere('first_name', 'LIKE',"%{$search}%")
-				->orWhere('last_name', 'LIKE',"%{$search}%")
-				->orWhere('type', 'LIKE',"%{$search}%")
-				//->orWhere('status', 'LIKE',"%{$status_search}%")
-				->offset($start)
-				->limit($limit)
-				->orderBy($order,$dir)
-				->get();
+			if (empty($search)) {
+				$users = DB::table('users_view')
+					->offset($start)
+					->limit($limit)
+					->orderBy($order, $dir)
+					->get();
+			} else {
+				$users = DB::table('users_view')
+					->where('username', 'LIKE', "%{$search}%")
+					->orWhere('email_address', 'LIKE', "%{$search}%")
+					->orWhere('created_at', 'LIKE', "%{$search}%")
+					->orWhere('first_name', 'LIKE', "%{$search}%")
+					->orWhere('last_name', 'LIKE', "%{$search}%")
+					->orWhere('type', 'LIKE', "%{$search}%")
+					->offset($start)
+					->limit($limit)
+					->orderBy($order, $dir)
+					->get();
 
-			$totalFiltered = DB::table('users_view')
-				->where('username','LIKE',"%{$search}%")
-				->orWhere('email_address', 'LIKE',"%{$search}%")
-				->orWhere('created_at', 'LIKE',"%{$search}%")
-				->orWhere('first_name', 'LIKE',"%{$search}%")
-				->orWhere('last_name', 'LIKE',"%{$search}%")
-				->orWhere('type', 'LIKE',"%{$search}%")
-				//->orWhere('status', 'LIKE',"%{$status_search}%")
-				->count();
+				$totalFiltered = DB::table('users_view')
+					->where('username', 'LIKE', "%{$search}%")
+					->orWhere('email_address', 'LIKE', "%{$search}%")
+					->orWhere('created_at', 'LIKE', "%{$search}%")
+					->orWhere('first_name', 'LIKE', "%{$search}%")
+					->orWhere('last_name', 'LIKE', "%{$search}%")
+					->orWhere('type', 'LIKE', "%{$search}%")
+					->count();
+			}
+		} catch (\Throwable $e) {
+			$fallbackColumns = [
+				0 => 'users.username',
+				1 => 'users.email',
+				2 => 'user_infos.first_name',
+				3 => 'user_infos.last_name',
+				4 => 'users.userType',
+				5 => 'users.status',
+				6 => 'users.created_at',
+				7 => 'users.id'
+			];
+			$order = $fallbackColumns[$request->input('order.0.column')] ?? 'users.created_at';
+
+			$baseQuery = DB::table('users')
+				->leftJoin('user_infos', 'user_infos.user_id', '=', 'users.id')
+				->whereIn('users.userType', ['staff', 'teller', 'tellers', 'paymentApprover', 'productApprover', 'applicationApprover', 'admin'])
+				->where('users.status', '!=', 2)
+				->select(
+					'users.id',
+					'users.username',
+					'users.email as email_address',
+					'user_infos.first_name',
+					'user_infos.last_name',
+					'users.userType as type',
+					'users.status',
+					'users.created_at'
+				);
+
+			$totalData = (clone $baseQuery)->count();
+			$totalFiltered = $totalData;
+
+			if (empty($search)) {
+				$users = (clone $baseQuery)
+					->offset($start)
+					->limit($limit)
+					->orderBy($order, $dir)
+					->get();
+			} else {
+				$filteredQuery = (clone $baseQuery)
+					->where(function ($query) use ($search) {
+						$query->where('users.username', 'LIKE', "%{$search}%")
+							->orWhere('users.email', 'LIKE', "%{$search}%")
+							->orWhere('users.created_at', 'LIKE', "%{$search}%")
+							->orWhere('user_infos.first_name', 'LIKE', "%{$search}%")
+							->orWhere('user_infos.last_name', 'LIKE', "%{$search}%")
+							->orWhere('users.userType', 'LIKE', "%{$search}%");
+					});
+
+				$users = (clone $filteredQuery)
+					->offset($start)
+					->limit($limit)
+					->orderBy($order, $dir)
+					->get();
+
+				$totalFiltered = (clone $filteredQuery)->count();
+			}
 		}
 
 		$data = array();
@@ -919,7 +1004,6 @@ class UserController extends Controller
 				$btn_delete="btn-delete";
 
 				$btn_e_able="";
-				$btn_d_able="";
 
 				$privelege=UserPrivelege::where('user_id',Auth::id())->first();
 				if(!empty($privelege)){
@@ -931,17 +1015,9 @@ class UserController extends Controller
 						$btn_edit="";
 						$btn_e_able="pointer-events:none";
 					}
-
-					if($access_data[0]->user[0]->delete=="true"){
-						$btn_delete="btn-delete";
-						$btn_d_able="";
-					}else{
-						$btn_delete="";
-						$btn_d_able="pointer-events:none";
-					}
 				}
 				
-				$nestedData['options'] = "<div class='dropdown'><button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'>Action </button><div class='dropdown-menu'><a href='#' class='dropdown-item btn-view' data-id='$user->id'>View</a><a href='#' class='dropdown-item $btn_edit' data-id='$user->id' style='$btn_e_able'>Edit</a><a href='#' class='dropdown-item $btn_delete' data-id='$user->id' style='$btn_d_able'>Delete</a></div></div>";
+				$nestedData['options'] = "<div class='dropdown'><button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'>Action </button><div class='dropdown-menu'><a href='#' class='dropdown-item btn-view' data-id='$user->id'>View</a><a href='#' class='dropdown-item $btn_edit' data-id='$user->id' style='$btn_e_able'>Edit</a><a href='#' class='dropdown-item $btn_delete' data-id='$user->id'>Delete</a></div></div>";
 				
                 $data[] = $nestedData;
 
@@ -1197,11 +1273,33 @@ class UserController extends Controller
     // Get Member Datas
     public function memberEdit(Request $request){
 		$id = $request['id'];
-        $users = DB::table('users')
+		$selectColumns = [
+			'users.id AS id',
+			'users.branch_id',
+			'users.username',
+			'users.plain_password',
+			'users.email',
+			'users.userType',
+			'users.can_manage_instructors',
+			'users.can_approve_courses',
+			'users.can_override_price',
+			'user_infos.first_name',
+			'user_infos.middle_name',
+			'user_infos.last_name',
+			'user_infos.mobile_no'
+		];
+
+		if (Schema::hasColumn('users', 'admin_scope')) {
+			$selectColumns[] = 'users.admin_scope';
+		} else {
+			$selectColumns[] = DB::raw("'full' as admin_scope");
+		}
+
+		$users = DB::table('users')
             ->join('user_infos', 'user_infos.user_id', '=', 'users.id')
 			->leftJoin('product_codes','users.id','=','product_codes.user_id')
 			->leftJoin('packages','product_codes.category','=','packages.id')
-			->select('users.id AS id','users.branch_id','users.username','users.plain_password','users.email','users.userType','user_infos.first_name','user_infos.middle_name','user_infos.last_name','user_infos.mobile_no')
+			->select($selectColumns)
 			->where('users.id',$id)
             ->first(); 
         return response()->json($users);
@@ -1263,6 +1361,17 @@ class UserController extends Controller
 
 			if($role){ $user->userType = $role; }
 			if($branch_id){ $user->branch_id = $branch_id; }
+			if ($request->has('admin_scope') && Schema::hasColumn('users', 'admin_scope')) {
+				$targetUserType = $role ?: $user->userType;
+				if (strtolower($targetUserType) === 'staff') {
+					$scope = $request->input('admin_scope') === 'instructors_only' ? 'instructors_only' : 'full';
+					$user->admin_scope = $scope;
+					$user->can_manage_instructors = true;
+				} else {
+					$user->admin_scope = 'full';
+					$user->can_manage_instructors = false;
+				}
+			}
 			
 			$user->save();
 			
@@ -1368,6 +1477,15 @@ class UserController extends Controller
 				$user->password =  bcrypt($password);
 				$user->plain_password =  $password;
 				$user->userType = $request['add_role'];
+				if (Schema::hasColumn('users', 'admin_scope')) {
+					$adminScope = $request['add_admin_scope'] === 'instructors_only' ? 'instructors_only' : 'full';
+					if ($request['add_role'] === 'staff' || $request['add_role'] === 'Staff') {
+						$user->admin_scope = $adminScope;
+					} else {
+						$user->admin_scope = 'full';
+					}
+				}
+				$user->can_manage_instructors = ($request['add_role'] === 'staff' || $request['add_role'] === 'Staff');
 				$user->account_type = 1;
 				$user->status = 1;
 				$user->save();
@@ -1386,6 +1504,7 @@ class UserController extends Controller
 				}
             	$user_info->user_id = $user->id;
             	$user_info->first_name = $request['add_first_name'];
+				$user_info->middle_name = $request['add_middle_name'];
             	$user_info->last_name = $request['add_last_name'];
             	$user_info->mobile_no = $request['add_mobile_number'];
             	$user_info->status = 1;
@@ -1394,7 +1513,61 @@ class UserController extends Controller
 				if($request['add_role']=="staff" || $request['add_role']=="Staff" || $request['add_role']=="admin"){
 					$access = new UserPrivelege();
 					$access->user_id = $user->id;
-					$access->privelege = $request['access_rights'];
+					if (!empty($request['access_rights'])) {
+						$access->privelege = $request['access_rights'];
+					} else {
+						$access->privelege = json_encode([
+							[
+								'member' => [[
+									'edit_member' => 'true',
+									'deactivate_member' => 'true',
+								]],
+								'inventories' => [[
+									'transfer_stocks' => 'true',
+								]],
+								'ewallet_purches' => [[
+									'approve' => 'true',
+									'decline' => 'true',
+								]],
+								'product' => [[
+									'add' => 'true',
+									'edit' => 'true',
+									'delete' => 'true',
+								]],
+								'package' => [[
+									'add' => 'true',
+									'edit' => 'true',
+									'delete' => 'true',
+								]],
+								'announcement' => [[
+									'add' => 'true',
+									'edit' => 'true',
+									'delete' => 'true',
+								]],
+								'encashment' => [[
+									'approve' => 'true',
+									'process' => 'true',
+									'decline' => 'true',
+									'hold' => 'true',
+								]],
+								'branch' => [[
+									'add' => 'true',
+									'edit' => 'true',
+									'delete' => 'true',
+								]],
+								'supplier' => [[
+									'add' => 'true',
+									'edit' => 'true',
+									'delete' => 'true',
+								]],
+								'user' => [[
+									'add' => 'true',
+									'edit' => 'true',
+									'delete' => 'true',
+								]],
+							]
+						]);
+					}
 					$access->save();
 				}
 				DB::commit();
@@ -1479,11 +1652,13 @@ class UserController extends Controller
             $user->status = 2;
 			$user->save();
             
-			$user_info = UserInfo::where('user_id',$user->id)->first();;
-			$user_info->status = $user->status;
-			$user_info->save();
+			$user_info = UserInfo::where('user_id',$user->id)->first();
+            if($user_info) {
+			    $user_info->status = $user->status;
+			    $user_info->save();
+            }
 			DB::commit();
-			return response()->json();
+			return response()->json(['message' => 'ok'], 200);
 		}catch(\Throwable $e){
 			DB::rollback();
 			return response()->json([

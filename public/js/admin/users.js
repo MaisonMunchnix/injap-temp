@@ -18,107 +18,7 @@ $(document).ready(function () {
             });
         } else {        
             var form_data=new FormData(this);
-            //member
-            var ar_edit_member =$('#ar_edit_member').val();
-            var ar_deactivate_member =$('#ar_deactivate_member').val();
-            //Inventories
-            var ar_transfer_stocks =$('#ar_transfer_stocks').val();
-            //E-wallet purchases
-            var ar_approve_ewallet =$('#ar_approve_ewallet').val();
-            var ar_decline_ewallet =$('#ar_decline_ewallet').val();
-            //Products
-            var ar_add_product =$('#ar_add_product').val();
-            var ar_edit_product =$('#ar_edit_product').val();
-            var ar_delete_product =$('#ar_delete_product').val();
-            //Packages
-            var ar_add_packages =$('#ar_add_packages').val();
-            var ar_edit_packages =$('#ar_edit_packages').val();
-            var ar_delete_packages =$('#ar_delete_packages').val();
-            //Announcement
-            var ar_add_announcement =$('#ar_add_announcement').val();
-            var ar_edit_announcement =$('#ar_edit_announcement').val();
-            var ar_delete_announcement =$('#ar_delete_announcement').val();
-            //Encashments
-            var ar_approve_encash =$('#ar_approve_encash').val();
-            var ar_process_encash =$('#ar_process_encash').val();
-            var ar_decline_encash =$('#ar_decline_encash').val();
-            var ar_hold_encash =$('#ar_hold_encash').val();
-            //Branch
-            var ar_add_branch =$('#ar_add_branch').val();
-            var ar_edit_branch =$('#ar_edit_branch').val();
-            var ar_delete_branch =$('#ar_delete_branch').val();
-            //Supplier
-            var ar_add_supplier =$('#ar_add_supplier').val();
-            var ar_edit_supplier =$('#ar_edit_supplier').val();
-            var ar_delete_supplier =$('#ar_delete_supplier').val();
-            //User
-            var ar_add_user =$('#ar_add_user').val();
-            var ar_edit_user =$('#ar_edit_user').val();
-            var ar_delete_user =$('#ar_delete_user').val();
-
-            var access_rights=[
-                {
-                    "member":[
-                        {
-                            "edit_member":ar_edit_member,
-                            "deactivate_member":ar_deactivate_member
-                        }],
-                    "inventories":[
-                        {
-                            "transfer_stocks":ar_transfer_stocks
-                        }],
-                    "ewallet_purches":[
-                        {
-                            "approve":ar_approve_ewallet,
-                            "decline":ar_decline_ewallet
-                        }], 
-                    "product":[
-                        {
-                            "add":ar_add_product,
-                            "edit":ar_edit_product,
-                            "delete":ar_delete_product
-                        }],
-                    "package":[
-                        {
-                            "add":ar_add_packages,
-                            "edit":ar_edit_packages,
-                            "delete":ar_delete_packages
-                        }],
-                    "announcement":[
-                        {
-                            "add":ar_add_announcement,
-                            "edit":ar_edit_announcement,
-                            "delete":ar_delete_announcement
-                        }],
-                    "encashment":[
-                        {
-                            "approve":ar_approve_encash,
-                            "process":ar_process_encash,
-                            "decline":ar_decline_encash,
-                            "hold":ar_hold_encash
-                        }],
-                    "branch":[
-                        {
-                            "add":ar_add_branch,
-                            "edit":ar_edit_branch,
-                            "delete":ar_delete_branch
-                        }],
-                    "supplier":[
-                        {
-                            "add":ar_add_supplier,
-                            "edit":ar_edit_supplier,
-                            "delete":ar_delete_supplier
-                        }],
-                    "user":[
-                        {
-                            "add":ar_add_user,
-                            "edit":ar_edit_user,
-                            "delete":ar_delete_user
-                        }]           
-                }
-            ];
-            access_rights=JSON.stringify(access_rights);
-            form_data.append("access_rights",access_rights);
+            form_data.append('add_admin_scope', $('#add_admin_scope').val());
             $.ajax({
                 url: 'insert-user',
                 type: 'POST',
@@ -131,13 +31,10 @@ $(document).ready(function () {
                 success: function (response) {
                     console.log('User add submitting success...');
                     $('.send-loading').hide();
-                    swal({
-                        title: 'Success!',
-                        text: 'Successfully Added',
-                        type: "success",
-                    }, function () {
-                        window.location.href = 'users';
+                    $('#add-modal').one('hidden.bs.modal', function () {
+                        $('#success-modal').modal('show');
                     });
+                    $('#add-modal').modal('hide');
 
                 },
                 error: function (error) {
@@ -181,8 +78,15 @@ $(document).ready(function () {
                 $('#edit_mobile_number').val(data.mobile_no);
                 $('#edit_username').val(data.username);
                 $('#edit_role').find('option[value="' + data.userType + '"]').attr('selected');
+                $('#edit_admin_scope').val(data.admin_scope || 'full');
                 var user_type = data.userType;
                 console.log(user_type);
+                if (user_type == 'staff' || user_type == 'Staff') {
+                    $('#edit_scope_wrap').show();
+                } else {
+                    $('#edit_scope_wrap').hide();
+                    $('#edit_admin_scope').val('full');
+                }
                 if (user_type == 'tellers') {
                     console.log('Show Branch');
                     $("#branch_edit").show();
@@ -207,12 +111,16 @@ $(document).ready(function () {
         formData.append("id", $("#edit_id").val());
         formData.append("username", $("#edit_username").val());
         formData.append("email_address", $("#edit_email_address").val());
-
         formData.append("first_name", $("#edit_first_name").val());
         formData.append("last_name", $("#edit_last_name").val());
         formData.append("role", $('#edit_role option:selected').val());
         formData.append("branch_id", $('#edit_branch option:selected').val());
         formData.append("mobile_no", $("#edit_mobile_number").val());
+
+        if ($('#edit_role option:selected').val() == 'staff' || $('#edit_role option:selected').val() == 'Staff') {
+            formData.append("admin_scope", $('#edit_admin_scope').val());
+        }
+
         formData.append('_token', token);
 
         if (IsEmail($("#edit_email_address").val()) == false) {
@@ -239,7 +147,7 @@ $(document).ready(function () {
                         text: 'Successfully Updated',
                         timer: 1500,
                         type: "success",
-                    }, function () {
+                    }).then(function () {
                         window.location.href = 'users';
                     });
 
@@ -288,7 +196,7 @@ $(document).ready(function () {
                     text: 'Successfully Modified',
                     timer: 1500,
                     type: "success",
-                }, function () {
+                }).then(function () {
                     window.location.href = 'users';
                 });
 
@@ -376,7 +284,7 @@ $('body').on('submit', '#form_delete', function (event) {
     console.log('Delete Package');
     var user_type = $('#userType').val();
     $.ajax({
-        url: 'delete-user',
+        url: window.deleteUserUrl || '/delete-user',
         type: 'POST',
         data: new FormData(this),
         contentType: false,
@@ -390,7 +298,7 @@ $('body').on('submit', '#form_delete', function (event) {
                 title: "Success!",
                 text: user_type + " successfully Deleted",
                 type: "success",
-            }, function () {
+            }).then(function () {
                 location.reload();
             });
         },
@@ -419,10 +327,19 @@ $('#add_role').change(function () {
         $("#branch").show("slow");
         $("#add_branch").addClass("req_fields");
         $('#access-rights').hide("slow");
+        $('#add_scope_wrap').hide("slow");
+        $('#add_admin_scope').val('full');
     } else {
         $("#branch").hide("slow");
-        $('#access-rights').show("slow");
         $("#add_branch").removeClass("req_fields");
+        if (role == 'staff' || role == 'Staff') {
+            $('#access-rights').show("slow");
+            $('#add_scope_wrap').show("slow");
+        } else {
+            $('#access-rights').hide("slow");
+            $('#add_scope_wrap').hide("slow");
+            $('#add_admin_scope').val('full');
+        }
     }
 });
 
@@ -437,6 +354,13 @@ $('#edit_role').change(function () {
     } else {
         $("#branch_edit").hide("slow");
         $("#edit_branch").removeClass("req_fields");
+    }
+
+    if (role == 'staff' || role == 'Staff') {
+        $('#edit_scope_wrap').show("slow");
+    } else {
+        $('#edit_scope_wrap').hide("slow");
+        $('#edit_admin_scope').val('full');
     }
 });
 

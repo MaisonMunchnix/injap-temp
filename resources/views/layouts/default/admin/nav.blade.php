@@ -1,18 +1,25 @@
 <div class="navigation">
+    @php
+        $isInstructorsOnlyStaff = auth()->check()
+            && auth()->user()->userType === 'staff'
+            && auth()->user()->admin_scope === 'instructors_only';
+    @endphp
     <div class="navigation-menu-tab">
         <ul>
             <!-- Dashboard - Always visible for all approver types -->
+            @if(!$isInstructorsOnlyStaff)
             <li>
                 <a href="#" data-toggle="tooltip" data-placement="right" title="Dashboard"
                     data-nav-target="#ecommerce">
                     <i data-feather="home"></i>
                 </a>
             </li>
+            @endif
 
 
 
             <!-- Application Approver: Show Distributors List tab -->
-            @if(auth()->user() && (auth()->user()->userType === 'staff' || auth()->user()->userType === 'applicationApprover'))
+            @if(!$isInstructorsOnlyStaff && auth()->user() && (auth()->user()->userType === 'staff' || auth()->user()->userType === 'applicationApprover'))
             <li>
                 <a href="#" data-toggle="tooltip" data-placement="right" title="Distributors List"
                     data-nav-target="#user">
@@ -32,7 +39,7 @@
             @endif
 
             <!-- Product Approver: Show Products & Orders tab -->
-            @if(auth()->user() && (auth()->user()->userType === 'staff' || auth()->user()->userType === 'productApprover'))
+            @if(!$isInstructorsOnlyStaff && auth()->user() && (auth()->user()->userType === 'staff' || auth()->user()->userType === 'productApprover'))
             <li>
                 <a href="#" data-toggle="tooltip" data-placement="right" title="Products & Orders"
                     data-nav-target="#products">
@@ -42,7 +49,7 @@
             @endif
 
             <!-- Payment Approver: Show Payments tab -->
-            @if(auth()->user() && (auth()->user()->userType === 'staff' || auth()->user()->userType === 'paymentApprover'))
+            @if(!$isInstructorsOnlyStaff && auth()->user() && (auth()->user()->userType === 'staff' || auth()->user()->userType === 'paymentApprover'))
             <li>
                 <a href="#" data-toggle="tooltip" data-placement="right" title="Payments"
                     data-nav-target="#payments">
@@ -52,7 +59,7 @@
             @endif
 
             <!-- Messages - Staff only -->
-            @if(auth()->user() && auth()->user()->userType === 'staff')
+            @if(!$isInstructorsOnlyStaff && auth()->user() && auth()->user()->userType === 'staff')
             <li>
                 <a href="#" data-toggle="tooltip" data-placement="right" title="Messages"
                     data-nav-target="#messages">
@@ -62,7 +69,7 @@
             @endif
 
             <!-- Top Pairing & Referral - Staff only -->
-            @if(auth()->user() && auth()->user()->userType === 'staff')
+            @if(!$isInstructorsOnlyStaff && auth()->user() && auth()->user()->userType === 'staff')
             <li>
                 <a href="#" data-toggle="tooltip" data-placement="right" title="Top Pairing & Referral"
                     data-nav-target="#top-pairing-referral">
@@ -83,6 +90,7 @@
     <div class="navigation-menu-body">
         <div class="navigation-menu-group">
             <!-- Dashboard Section - Always shown -->
+            @if(!$isInstructorsOnlyStaff)
             <div id="ecommerce">
                 <ul>
                     <li class="navigation-divider d-flex align-items-center">
@@ -94,11 +102,12 @@
                     </li>
                 </ul>
             </div>
+            @endif
 
 
 
             <!-- Application Approver Section - Pending Applications & Members -->
-            @if(auth()->user() && (auth()->user()->userType === 'staff' || auth()->user()->userType === 'applicationApprover'))
+            @if(!$isInstructorsOnlyStaff && auth()->user() && (auth()->user()->userType === 'staff' || auth()->user()->userType === 'applicationApprover'))
             <div id="user">
                 <ul>
                     <li class="navigation-divider d-flex align-items-center">
@@ -150,7 +159,7 @@
             @endif
 
             <!-- Product Approver Section - Products & Orders -->
-            @if(auth()->user() && (auth()->user()->userType === 'staff' || auth()->user()->userType === 'productApprover'))
+            @if(!$isInstructorsOnlyStaff && auth()->user() && (auth()->user()->userType === 'staff' || auth()->user()->userType === 'productApprover'))
             <div id="products">
                 <ul>
                     <li class="navigation-divider d-flex align-items-center">
@@ -173,7 +182,7 @@
             @endif
 
             <!-- Payment Approver Section - Payments -->
-            @if(auth()->user() && (auth()->user()->userType === 'staff' || auth()->user()->userType === 'paymentApprover'))
+            @if(!$isInstructorsOnlyStaff && auth()->user() && (auth()->user()->userType === 'staff' || auth()->user()->userType === 'paymentApprover'))
             <div id="payments">
                 <ul>
                     <li class="navigation-divider d-flex align-items-center">
@@ -188,7 +197,7 @@
             @endif
 
             <!-- Messages Section - Staff only -->
-            @if(auth()->user() && auth()->user()->userType === 'staff')
+            @if(!$isInstructorsOnlyStaff && auth()->user() && auth()->user()->userType === 'staff')
             <div id="messages">
                 <ul>
                     <li class="navigation-divider d-flex align-items-center">
@@ -207,7 +216,7 @@
             @endif
 
             <!-- Top Earners & Recognition - Only for Staff -->
-            @if(auth()->user() && auth()->user()->userType === 'staff')
+            @if(!$isInstructorsOnlyStaff && auth()->user() && auth()->user()->userType === 'staff')
             <div id="recognition">
                 <ul>
                     <li class="navigation-divider d-flex align-items-center">
@@ -243,6 +252,12 @@
                     <li class="navigation-divider d-flex align-items-center">
                         <i class="mr-2" data-feather="settings"></i> Settings
                     </li>
+                    @if(!$isInstructorsOnlyStaff && auth()->user() && auth()->user()->userType === 'staff')
+                    <li>
+                        <a class="{{ request()->is('staff/users') ? 'active' : '' }}"
+                            href="{{ route('users') }}">Staff Management</a>
+                    </li>
+                    @endif
                     <li>
                         <a class="{{ request()->is('staff/profile') || request()->is('profile') ? 'active' : '' }}"
                             href="{{ route('admin.profile') }}">Profile</a>

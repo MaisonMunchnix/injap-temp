@@ -28,6 +28,21 @@ class adminMw
             abort(403, 'Unauthorized access.');
         }
 
+        if (auth()->check() && Auth::user()->userType === 'staff' && Auth::user()->admin_scope === 'instructors_only') {
+            if (
+                !$request->is('staff/instructors*')
+                && !$request->is('staff/courses*')
+                && !$request->is('staff/enrollments*')
+                && !$request->is('staff/materials*')
+            ) {
+                if ($request->is('staff')) {
+                    return redirect('staff/instructors');
+                }
+
+                abort(403, 'Unauthorized access.');
+            }
+        }
+
         $response = $next($request);
         $response->headers->set('Cache-Control','nocache, no-store, max-age=0, must-revalidate');
         $response->headers->set('Pragma','no-cache');
