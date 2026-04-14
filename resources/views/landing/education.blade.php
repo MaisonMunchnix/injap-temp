@@ -173,7 +173,12 @@
                             <div class="course-image-wrapper">
                                 <div class="course-category">Course</div>
                                 <div class="price-badge">
-                                    ₱{{ number_format($course->price ?? $course->suggested_price, 2) }}
+                                    @php
+                                        $displayPrice = ($course->price_source == 'admin' && !is_null($course->price)) 
+                                            ? $course->price 
+                                            : $course->suggested_price;
+                                    @endphp
+                                    {{ ($course->currency ?? 'PHP') == 'JPY' ? '¥' : '₱' }}{{ number_format($displayPrice, 2) }}
                                 </div>
                                 <img src="{{ $course->cover_photo ? asset($course->cover_photo) : asset('new_landing/images/video-placeholder.jpg') }}"
                                     alt="{{ $course->title }}" class="course-image">

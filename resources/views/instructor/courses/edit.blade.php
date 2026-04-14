@@ -73,7 +73,8 @@
                                             <label for="category">Category</label>
                                             <input type="text" name="category" id="category"
                                                 class="form-control @error('category') is-invalid @enderror"
-                                                value="{{ old('category', $course->category) }}" placeholder="e.g. Music, Art, Coding">
+                                                value="{{ old('category', $course->category) }}"
+                                                placeholder="e.g. Music, Art, Coding">
                                             @error('category')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -82,7 +83,8 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="level">Level <span class="text-danger">*</span></label>
-                                            <select name="level" id="level" class="form-control @error('level') is-invalid @enderror" required>
+                                            <select name="level" id="level"
+                                                class="form-control @error('level') is-invalid @enderror" required>
                                                 <option value="beginner" {{ old('level', $course->level) == 'beginner' ? 'selected' : '' }}>Beginner</option>
                                                 <option value="intermediate" {{ old('level', $course->level) == 'intermediate' ? 'selected' : '' }}>Intermediate</option>
                                                 <option value="advanced" {{ old('level', $course->level) == 'advanced' ? 'selected' : '' }}>Advanced</option>
@@ -149,10 +151,12 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="schedule_start">Schedule Start <span class="text-danger">*</span></label>
+                                            <label for="schedule_start">Schedule Start <span
+                                                    class="text-danger">*</span></label>
                                             <input type="datetime-local" name="schedule_start" id="schedule_start"
                                                 class="form-control @error('schedule_start') is-invalid @enderror"
-                                                value="{{ old('schedule_start', $course->schedule_start ? date('Y-m-d\TH:i', strtotime($course->schedule_start)) : '') }}" required>
+                                                value="{{ old('schedule_start', $course->schedule_start ? date('Y-m-d\TH:i', strtotime($course->schedule_start)) : '') }}"
+                                                required>
                                             @error('schedule_start')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -160,10 +164,12 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="schedule_end">Schedule End <span class="text-danger">*</span></label>
+                                            <label for="schedule_end">Schedule End <span
+                                                    class="text-danger">*</span></label>
                                             <input type="datetime-local" name="schedule_end" id="schedule_end"
                                                 class="form-control @error('schedule_end') is-invalid @enderror"
-                                                value="{{ old('schedule_end', $course->schedule_end ? date('Y-m-d\TH:i', strtotime($course->schedule_end)) : '') }}" required>
+                                                value="{{ old('schedule_end', $course->schedule_end ? date('Y-m-d\TH:i', strtotime($course->schedule_end)) : '') }}"
+                                                required>
                                             @error('schedule_end')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -197,7 +203,8 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="recurrence">Recurrence <span class="text-danger">*</span></label>
-                                            <select name="recurrence" id="recurrence" class="form-control @error('recurrence') is-invalid @enderror" required>
+                                            <select name="recurrence" id="recurrence"
+                                                class="form-control @error('recurrence') is-invalid @enderror" required>
                                                 <option value="once" {{ old('recurrence', $course->recurrence) == 'once' ? 'selected' : '' }}>Once</option>
                                                 <option value="daily" {{ old('recurrence', $course->recurrence) == 'daily' ? 'selected' : '' }}>Daily</option>
                                                 <option value="weekly" {{ old('recurrence', $course->recurrence) == 'weekly' ? 'selected' : '' }}>Weekly</option>
@@ -216,7 +223,8 @@
                                             <label for="meeting_link">Meeting Link (for Online)</label>
                                             <input type="url" name="meeting_link" id="meeting_link"
                                                 class="form-control @error('meeting_link') is-invalid @enderror"
-                                                value="{{ old('meeting_link', $course->meeting_link) }}" placeholder="https://zoom.us/j/...">
+                                                value="{{ old('meeting_link', $course->meeting_link) }}"
+                                                placeholder="https://zoom.us/j/...">
                                             @error('meeting_link')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -227,7 +235,8 @@
                                             <label for="location">Location (for In-person)</label>
                                             <input type="text" name="location" id="location"
                                                 class="form-control @error('location') is-invalid @enderror"
-                                                value="{{ old('location', $course->location) }}" placeholder="Building name / Room no.">
+                                                value="{{ old('location', $course->location) }}"
+                                                placeholder="Building name / Room no.">
                                             @error('location')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -236,14 +245,36 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="suggested_price">Price (₱) <span class="text-danger">*</span></label>
-                                    <input type="number" step="0.01" name="suggested_price" id="suggested_price"
-                                        class="form-control @error('suggested_price') is-invalid @enderror"
-                                        value="{{ old('suggested_price', $course->suggested_price) }}" {{ $course->status === 'published' ? 'readonly' : '' }} required>
-                                    <small class="text-muted">Enter the price you want for this course. Admin may override
-                                        this.</small>
+                                    <label for="suggested_price">Suggested Price <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <select name="currency" class="custom-select" style="max-width: 150px;"
+                                                required>
+                                                <option value="PHP" {{ old('currency', $course->currency ?? 'PHP') == 'PHP' ? 'selected' : '' }}>Peso (₱)</option>
+                                                <option value="JPY" {{ old('currency', $course->currency) == 'JPY' ? 'selected' : '' }}>Yen (¥)</option>
+                                            </select>
+                                        </div>
+                                        <input type="number" step="0.01" name="suggested_price" id="suggested_price"
+                                            class="form-control @error('suggested_price') is-invalid @enderror"
+                                            value="{{ old('suggested_price', $course->suggested_price) }}" required>
+                                    </div>
+                                    @if($course->price)
+                                        <div class="mt-2">
+                                            <span class="badge badge-info text-wrap">Current Public Price:
+                                                {{ ($course->currency ?? 'PHP') == 'JPY' ? '¥' : '₱' }}{{ number_format($course->price, 2) }}
+                                                (Set by Admin)</span>
+                                            <small class="text-danger d-block mt-1">Editing the price above will override the
+                                                current public price.</small>
+                                        </div>
+                                    @else
+                                        <small class="text-muted mt-1 d-block">Enter the price you want for this course. Admin
+                                            may override this.</small>
+                                    @endif
                                     @error('suggested_price')
-                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    @enderror
+                                    @error('currency')
+                                        <div class="invalid-feedback d-block">{{ $message }}</div>
                                     @enderror
                                 </div>
 
@@ -264,13 +295,7 @@
                                     </div>
                                 </div>
 
-                                @if($course->price)
-                                    <div class="form-group">
-                                        <label>Admin Set Price</label>
-                                        <div class="form-control-plaintext font-weight-bold">
-                                            ₱{{ number_format($course->price, 2) }}</div>
-                                    </div>
-                                @endif
+
 
                                 <div class="text-right">
                                     <a href="{{ route('instructor.courses.index') }}" class="btn btn-light mr-2">Cancel</a>

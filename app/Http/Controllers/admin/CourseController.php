@@ -67,7 +67,11 @@ class CourseController extends Controller
             'price' => 'required|numeric|min:0',
         ]);
 
-        $course->update(['price' => $request->price]);
+        $course->update([
+            'price' => $request->price,
+            'price_source' => 'admin',
+            'price_updated_at' => now()
+        ]);
 
         return redirect()->back()->with('success', 'Course price updated successfully.');
     }

@@ -298,7 +298,14 @@
                 <div class="col-lg-4">
                     <div class="enrollment-card">
                         <div class="enroll-title">Join this class</div><br>
-                        <div class="enroll-price">₱{{ number_format($course->price ?? $course->suggested_price, 2) }}</div>
+                        <div class="enroll-price">
+                            @php
+                                $displayPrice = ($course->price_source == 'admin' && !is_null($course->price)) 
+                                    ? $course->price 
+                                    : $course->suggested_price;
+                            @endphp
+                            {{ ($course->currency ?? 'PHP') == 'JPY' ? '¥' : '₱' }}{{ number_format($displayPrice, 2) }}
+                        </div>
 
                         @if(session('success'))
                             <div class="alert alert-success border-0 shadow-sm rounded-lg mb-4">

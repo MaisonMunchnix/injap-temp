@@ -27,9 +27,12 @@ class Course extends Model
         'recurrence',
         'meeting_link',
         'location',
+        'currency',
         'suggested_price',
         'price',
         'status',
+        'price_updated_at',
+        'price_source',
     ];
 
     public function instructor()

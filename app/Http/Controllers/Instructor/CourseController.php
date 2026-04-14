@@ -52,6 +52,7 @@ class CourseController extends Controller
             'recurrence' => 'required|in:once,daily,weekly,custom',
             'meeting_link' => 'nullable|url',
             'location' => 'nullable|string|max:255',
+            'currency' => 'required|string|in:PHP,JPY',
             'suggested_price' => 'required|numeric|min:0',
             'cover_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -73,7 +74,10 @@ class CourseController extends Controller
             'recurrence' => $request->recurrence,
             'meeting_link' => $request->meeting_link,
             'location' => $request->location,
+            'currency' => $request->currency,
             'suggested_price' => $request->suggested_price,
+            'price_source' => 'instructor',
+            'price_updated_at' => now(),
             'status' => 'draft',
         ];
 
@@ -107,6 +111,7 @@ class CourseController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
+            'currency' => 'nullable|string|in:PHP,JPY',
             'suggested_price' => 'required|numeric|min:0',
             'cover_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -115,8 +120,13 @@ class CourseController extends Controller
             'title', 'description', 'level', 'category', 'min_age', 'max_age', 
             'min_slots', 'max_slots', 'schedule_start', 'schedule_end', 
             'session_count', 'session_duration_mins', 'recurrence', 
-            'meeting_link', 'location', 'suggested_price'
+            'meeting_link', 'location', 'currency', 'suggested_price'
         ]);
+
+        if ((float)$course->suggested_price != (float)$request->suggested_price || $course->currency != $request->currency) {
+            $updateData['price_source'] = 'instructor';
+            $updateData['price_updated_at'] = now();
+        }
 
         if ($request->hasFile('cover_photo')) {
             // Delete old photo if exists
