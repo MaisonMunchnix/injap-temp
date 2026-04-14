@@ -61,14 +61,16 @@
                                                     <strong>{{ $course->title }}</strong><br>
                                                     <small class="text-muted">{{ Str::limit(strip_tags($course->description), 50) }}</small>
                                                 </td>
-                                                <td data-order="{{ $course->suggested_price }}">₱{{ number_format($course->suggested_price, 2) }}</td>
+                                                <td data-order="{{ $course->suggested_price }}">
+                                                    {{ ($course->currency ?? 'PHP') == 'JPY' ? '¥' : '₱' }}{{ number_format($course->suggested_price, 2) }}
+                                                </td>
                                                 <td data-order="{{ $course->price ?? $course->suggested_price }}">
                                                     <form action="{{ route('admin.courses.update-price', $course->id) }}"
                                                         method="POST" class="form-inline">
                                                         @csrf
                                                         <div class="input-group input-group-sm">
                                                             <div class="input-group-prepend">
-                                                                <span class="input-group-text">₱</span>
+                                                                <span class="input-group-text">{{ ($course->currency ?? 'PHP') == 'JPY' ? '¥' : '₱' }}</span>
                                                             </div>
                                                             <input type="number" step="0.01" name="price"
                                                                 value="{{ $course->price ?? $course->suggested_price }}"
@@ -306,8 +308,9 @@
                         $('#detail-title').text(course.title);
                         $('#detail-category-level').text(`${course.category || 'Uncategorized'} | ${course.level.toUpperCase()}`);
                         $('#detail-status').text(course.status.toUpperCase());
-                        $('#detail-suggested-price').text(`₱${parseFloat(course.suggested_price).toLocaleString(undefined, {minimumFractionDigits: 2})}`);
-                        $('#detail-final-price').text(course.price ? `₱${parseFloat(course.price).toLocaleString(undefined, {minimumFractionDigits: 2})}` : 'Not Set');
+                        const currencySymbol = (course.currency === 'JPY') ? '¥' : '₱';
+                        $('#detail-suggested-price').text(`${currencySymbol}${parseFloat(course.suggested_price).toLocaleString(undefined, {minimumFractionDigits: 2})}`);
+                        $('#detail-final-price').text(course.price ? `${currencySymbol}${parseFloat(course.price).toLocaleString(undefined, {minimumFractionDigits: 2})}` : 'Not Set');
                         
                         // Cover Photo
                         let coverUrl = `{{ asset('new_landing/images/video-placeholder.jpg') }}`;
