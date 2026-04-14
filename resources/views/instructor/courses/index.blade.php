@@ -61,10 +61,10 @@
                                                     @endif
                                                 </td>
                                                 <td>{{ $course->title }}</td>
-                                                <td>₱{{ number_format($course->suggested_price, 2) }}</td>
+                                                <td>{{ ($course->suggested_currency ?? 'PHP') == 'JPY' ? '¥' : '₱' }}{{ number_format($course->suggested_price, 2) }}</td>
                                                 <td>
                                                     @if($course->price)
-                                                        ₱{{ number_format($course->price, 2) }}
+                                                        {{ ($course->currency ?? 'PHP') == 'JPY' ? '¥' : '₱' }}{{ number_format($course->price, 2) }}
                                                     @else
                                                         <span class="text-muted">Not set</span>
                                                     @endif

@@ -28,6 +28,7 @@ class Course extends Model
         'meeting_link',
         'location',
         'currency',
+        'suggested_currency',
         'suggested_price',
         'price',
         'status',

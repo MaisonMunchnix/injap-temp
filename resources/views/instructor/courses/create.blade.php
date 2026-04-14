@@ -242,11 +242,11 @@
                                     <label for="suggested_price">Price <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <select name="currency" class="custom-select" style="max-width: 150px;"
+                                            <select name="suggested_currency" class="custom-select" style="max-width: 150px;"
                                                 required>
-                                                <option value="PHP" {{ old('currency', 'PHP') == 'PHP' ? 'selected' : '' }}>
+                                                <option value="PHP" {{ old('suggested_currency', 'PHP') == 'PHP' ? 'selected' : '' }}>
                                                     Peso (₱)</option>
-                                                <option value="JPY" {{ old('currency') == 'JPY' ? 'selected' : '' }}>Yen (¥)
+                                                <option value="JPY" {{ old('suggested_currency') == 'JPY' ? 'selected' : '' }}>Yen (¥)
                                                 </option>
                                             </select>
                                         </div>
@@ -259,7 +259,7 @@
                                     @error('suggested_price')
                                         <div class="invalid-feedback d-block">{{ $message }}</div>
                                     @enderror
-                                    @error('currency')
+                                    @error('suggested_currency')
                                         <div class="invalid-feedback d-block">{{ $message }}</div>
                                     @enderror
                                 </div>

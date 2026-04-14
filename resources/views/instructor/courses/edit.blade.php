@@ -248,10 +248,10 @@
                                     <label for="suggested_price">Suggested Price <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <select name="currency" class="custom-select" style="max-width: 150px;"
+                                            <select name="suggested_currency" class="custom-select" style="max-width: 150px;"
                                                 required>
-                                                <option value="PHP" {{ old('currency', $course->currency ?? 'PHP') == 'PHP' ? 'selected' : '' }}>Peso (₱)</option>
-                                                <option value="JPY" {{ old('currency', $course->currency) == 'JPY' ? 'selected' : '' }}>Yen (¥)</option>
+                                                <option value="PHP" {{ old('suggested_currency', $course->suggested_currency ?? 'PHP') == 'PHP' ? 'selected' : '' }}>Peso (₱)</option>
+                                                <option value="JPY" {{ old('suggested_currency', $course->suggested_currency) == 'JPY' ? 'selected' : '' }}>Yen (¥)</option>
                                             </select>
                                         </div>
                                         <input type="number" step="0.01" name="suggested_price" id="suggested_price"
@@ -273,7 +273,7 @@
                                     @error('suggested_price')
                                         <div class="invalid-feedback d-block">{{ $message }}</div>
                                     @enderror
-                                    @error('currency')
+                                    @error('suggested_currency')
                                         <div class="invalid-feedback d-block">{{ $message }}</div>
                                     @enderror
                                 </div>

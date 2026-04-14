@@ -62,7 +62,7 @@
                                                     <small class="text-muted">{{ Str::limit(strip_tags($course->description), 50) }}</small>
                                                 </td>
                                                 <td data-order="{{ $course->suggested_price }}">
-                                                    {{ ($course->currency ?? 'PHP') == 'JPY' ? '¥' : '₱' }}{{ number_format($course->suggested_price, 2) }}
+                                                    {{ ($course->suggested_currency ?? 'PHP') == 'JPY' ? '¥' : '₱' }}{{ number_format($course->suggested_price, 2) }}
                                                 </td>
                                                 <td data-order="{{ $course->price ?? $course->suggested_price }}">
                                                     <form action="{{ route('admin.courses.update-price', $course->id) }}"
@@ -311,9 +311,10 @@
                         $('#detail-title').text(course.title);
                         $('#detail-category-level').text(`${course.category || 'Uncategorized'} | ${course.level.toUpperCase()}`);
                         $('#detail-status').text(course.status.toUpperCase());
-                        const currencySymbol = (course.currency === 'JPY') ? '¥' : '₱';
-                        $('#detail-suggested-price').text(`${currencySymbol}${parseFloat(course.suggested_price).toLocaleString(undefined, {minimumFractionDigits: 2})}`);
-                        $('#detail-final-price').text(course.price ? `${currencySymbol}${parseFloat(course.price).toLocaleString(undefined, {minimumFractionDigits: 2})}` : 'Not Set');
+                        const suggestedSymbol = (course.suggested_currency === 'JPY') ? '¥' : '₱';
+                        $('#detail-suggested-price').text(`${suggestedSymbol}${parseFloat(course.suggested_price).toLocaleString(undefined, {minimumFractionDigits: 2})}`);
+                        const finalSymbol = (course.currency === 'JPY') ? '¥' : '₱';
+                        $('#detail-final-price').text(course.price ? `${finalSymbol}${parseFloat(course.price).toLocaleString(undefined, {minimumFractionDigits: 2})}` : 'Not Set');
                         
                         // Cover Photo
                         let coverUrl = `{{ asset('new_landing/images/video-placeholder.jpg') }}`;
