@@ -213,7 +213,7 @@
 
             <div class="row">
                 <div class="col-lg-8">
-                    <img src="{{ $course->cover_photo ? asset($course->cover_photo) : asset('new_landing/images/video-placeholder.jpg') }}"
+                    <img src="{{ $course->cover_photo ? asset($course->cover_photo) : asset('images/course-img.jpeg') }}"
                         alt="{{ $course->title }}" class="course-featured-image">
 
                     <div class="row mb-5">

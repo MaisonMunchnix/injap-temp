@@ -180,7 +180,7 @@
                                     @endphp
                                     {{ ($course->currency ?? 'PHP') == 'JPY' ? '¥' : '₱' }}{{ number_format($displayPrice, 2) }}
                                 </div>
-                                <img src="{{ $course->cover_photo ? asset($course->cover_photo) : asset('new_landing/images/video-placeholder.jpg') }}"
+                                <img src="{{ $course->cover_photo ? asset($course->cover_photo) : asset('images/course-img.jpeg') }}"
                                     alt="{{ $course->title }}" class="course-image">
                                 <div class="course-image-overlay"></div>
                             </div>
