@@ -70,11 +70,14 @@
                                                         @csrf
                                                         <div class="input-group input-group-sm">
                                                             <div class="input-group-prepend">
-                                                                <span class="input-group-text">{{ ($course->currency ?? 'PHP') == 'JPY' ? '¥' : '₱' }}</span>
+                                                                <select name="currency" class="input-group-text py-0" style="padding: 0 5px; font-weight: bold; background: #e9ecef; cursor: pointer;">
+                                                                    <option value="PHP" {{ ($course->currency ?? 'PHP') == 'PHP' ? 'selected' : '' }}>₱</option>
+                                                                    <option value="JPY" {{ ($course->currency ?? 'PHP') == 'JPY' ? 'selected' : '' }}>¥</option>
+                                                                </select>
                                                             </div>
                                                             <input type="number" step="0.01" name="price"
                                                                 value="{{ $course->price ?? $course->suggested_price }}"
-                                                                class="form-control" style="width: 80px;">
+                                                                class="form-control" style="min-width: 80px;">
                                                             <div class="input-group-append">
                                                                 <button type="submit" class="btn btn-primary btn-sm" {{ auth()->user()->can_override_price ? '' : 'disabled' }}>Set</button>
                                                             </div>

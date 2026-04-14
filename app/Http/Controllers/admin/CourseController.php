@@ -65,15 +65,17 @@ class CourseController extends Controller
     {
         $request->validate([
             'price' => 'required|numeric|min:0',
+            'currency' => 'required|in:PHP,JPY',
         ]);
 
         $course->update([
             'price' => $request->price,
+            'currency' => $request->currency,
             'price_source' => 'admin',
             'price_updated_at' => now()
         ]);
 
-        return redirect()->back()->with('success', 'Course price updated successfully.');
+        return redirect()->back()->with('success', 'Course price and currency updated successfully.');
     }
 
     public function show(Course $course)
