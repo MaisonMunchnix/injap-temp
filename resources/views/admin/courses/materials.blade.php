@@ -55,7 +55,6 @@
                                             <th>Course</th>
                                             <th>Material Title</th>
                                             <th>Resource</th>
-                                            <th>Admin Note</th>
                                             <th>Date Submitted</th>
                                             <th>Action</th>
                                         </tr>
@@ -86,9 +85,6 @@
                                                     @else
                                                         <span class="text-muted">Announcement</span>
                                                     @endif
-                                                </td>
-                                                <td>
-                                                    {{ $material->admin_note ? Str::limit($material->admin_note, 30) : '-' }}
                                                 </td>
                                                 <td>{{ $material->created_at->format('M d, Y h:i A') }}</td>
                                                 <td>

@@ -22,7 +22,7 @@ class CourseController extends Controller
     public function allEnrollments()
     {
         $enrollments = Enrollment::with('course.instructor')->latest()->get();
-        $courses     = Course::orderBy('title')->get(['id', 'title']);
+        $courses = Course::orderBy('title')->get(['id', 'title']);
         return view('admin.courses.enrollments', compact('enrollments', 'courses'));
     }
 
@@ -58,10 +58,6 @@ class CourseController extends Controller
                         'guardian_name' => $enrollment->guardian_name,
                         'guardian_contact' => $enrollment->guardian_contact,
                     ]);
-
-                    $msg = "SUCCESS: Provisioned new student account automatically for: " . $user->email . " (User ID: " . $user->id . ")";
-                    \Illuminate\Support\Facades\Log::info($msg);
-                    session()->flash('console_log', $msg);
                 } else {
                     // Force repair for existing testing accounts
                     $user->update([
@@ -70,10 +66,6 @@ class CourseController extends Controller
                         'password' => Hash::make('Student@2026'),
                         'must_change_password' => true
                     ]);
-
-                    $msg = "INFO: Repaired and Linked paid enrollment to existing user account: " . $user->email . " (User ID: " . $user->id . ")";
-                    \Illuminate\Support\Facades\Log::info($msg);
-                    session()->flash('console_log', $msg);
                 }
 
                 $enrollment->update([
@@ -165,7 +157,7 @@ class CourseController extends Controller
     public function allMaterials()
     {
         $materials = \App\CourseMaterial::with(['course', 'instructor'])->latest()->get();
-        $courses   = Course::orderBy('title')->get(['id', 'title']);
+        $courses = Course::orderBy('title')->get(['id', 'title']);
         return view('admin.courses.materials', compact('materials', 'courses'));
     }
 
@@ -189,9 +181,9 @@ class CourseController extends Controller
         if ($material->type !== 'file' || empty($material->file_path)) {
             return back()->with('error', 'Invalid material or no file associated.');
         }
-        
+
         $path = storage_path('app/public/' . $material->file_path);
-        
+
         if (!file_exists($path)) {
             return back()->with('error', 'File not found on server.');
         }

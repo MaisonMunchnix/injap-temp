@@ -158,6 +158,7 @@
                                                                             <label>Payment Method</label>
                                                                             <select name="payment_method" class="form-control">
                                                                                 <option value="Cash" {{ $enrollment->payment_method == 'Cash' ? 'selected' : '' }}>Cash</option>
+                                                                                <option value="Inco Pay" {{ $enrollment->payment_method == 'Inco Pay' ? 'selected' : '' }}>Inco Pay</option>
                                                                             </select>
                                                                         </div>
                                                                     </div>
