@@ -50,6 +50,8 @@ class LoginController extends Controller
             return '/staff/admin/products/submissions/pending';
         } elseif ($user->userType === 'instructor') {
             return '/instructor';
+        } elseif ($user->userType === 'student') {
+            return '/student/dashboard';
         } elseif ($user->userType === 'tellers') {
             return '/tellers';
         } else {
@@ -103,7 +105,7 @@ class LoginController extends Controller
             if($referrer == 'admin-login' && $user_type != 'staff')
                 return $this->sendFailedLoginResponse($request);
 
-            if($referrer == 'member-login' && !in_array($user_type, ['user', 'instructor']))
+            if($referrer == 'member-login' && !in_array($user_type, ['user', 'instructor', 'student']))
                 return $this->sendFailedLoginResponse($request);
 
             if ($this->attemptLogin($request)) {
@@ -146,16 +148,11 @@ class LoginController extends Controller
 	}
 
     public function username(){
-        $loginType=request()->input('username');
-        $this->username=filter_var($loginType, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-        request()->merge([$this->username=>$loginType]);
-		// Insert User Log
-		/*$user_log = new UserLog();
-		$user_log->user_id = Auth::id();
-		$user_log->description = 20; // Description ID
-		$user_log->ip_address = $_SERVER['REMOTE_ADDR'];
-		$user_log->save();*/
-        return property_exists($this,'username') ? $this->username : 'email';
+        $loginType = request()->input('username');
+        $loginField = filter_var($loginType, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        request()->merge([$loginField => $loginType]);
+        
+        return $loginField;
     }
    
 }

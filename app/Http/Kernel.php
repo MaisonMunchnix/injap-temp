@@ -67,6 +67,7 @@ class Kernel extends HttpKernel
         'instructorMw' => \App\Http\Middleware\instructorMw::class,
         'checkApproved' => \App\Http\Middleware\CheckApplicationApproved::class,
         'can_manage_instructors' => \App\Http\Middleware\CanManageInstructors::class,
+        'student.must_change_password' => \App\Http\Middleware\EnsurePasswordChanged::class,
 		'cors' => \App\Http\Middleware\Cors::class, 
     ];
 

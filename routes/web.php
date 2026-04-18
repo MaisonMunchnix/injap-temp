@@ -590,6 +590,7 @@ Route::group(['prefix' => 'staff',  'middleware' => 'adminMw'], function(){
 
 		Route::get('materials', 'admin\CourseController@allMaterials')->name('admin.courses.materials');
 		Route::post('materials/{material}/status', 'admin\CourseController@updateMaterialStatus')->name('admin.courses.material-status');
+		Route::get('materials/{material}/download', 'admin\CourseController@downloadMaterial')->name('admin.courses.material-download');
 	});
 
 	//profile
@@ -610,6 +611,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'instructor', 'namespace' =>
 	Route::get('materials/{course}', 'CourseMaterialController@show')->name('instructor.materials.show');
 	Route::post('materials/store', 'CourseMaterialController@store')->name('instructor.materials.store');
 	Route::delete('materials/{material}', 'CourseMaterialController@destroy')->name('instructor.materials.destroy');
+	Route::get('materials/{material}/download', 'CourseMaterialController@download')->name('instructor.materials.download');
 });
 
 
@@ -845,10 +847,20 @@ Route::group(['prefix' => 'user',  'middleware' => 'userMw'], function(){
 	
 });
 
-/* ******************** Instructor Route ******************** */
 Route::group(['prefix' => 'instructor', 'middleware' => 'instructorMw'], function(){
     Route::get('/', 'Instructor\CourseController@index')->name('instructor.dashboard');
     Route::resource('courses', 'Instructor\CourseController', ['as' => 'instructor']);
+});
+
+Route::group(['prefix' => 'student', 'namespace' => 'Student', 'middleware' => ['auth']], function(){
+    Route::group(['middleware' => ['student.must_change_password']], function(){
+        Route::get('/dashboard', 'DashboardController@index')->name('student.dashboard');
+        Route::get('/courses/{course}', 'CourseController@show')->name('student.courses.show');
+        Route::get('/materials/{material}/download', 'CourseController@downloadMaterial')->name('student.materials.download');
+    });
+
+    Route::get('/change-password', 'ProfileController@showChangePassword')->name('student.change-password');
+    Route::post('/change-password', 'ProfileController@updatePassword')->name('student.change-password.update');
 });
 
 Route::post('/e-walletProcess', 'PaymentController@ewalletProcess')->name('e-walletProcess');

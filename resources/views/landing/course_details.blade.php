@@ -300,8 +300,8 @@
                         <div class="enroll-title">Join this class</div><br>
                         <div class="enroll-price">
                             @php
-                                $displayPrice = ($course->price_source == 'admin' && !is_null($course->price)) 
-                                    ? $course->price 
+                                $displayPrice = ($course->price_source == 'admin' && !is_null($course->price))
+                                    ? $course->price
                                     : $course->suggested_price;
                             @endphp
                             {{ ($course->currency ?? 'PHP') == 'JPY' ? '¥' : '₱' }}{{ number_format($displayPrice, 2) }}
@@ -332,7 +332,10 @@
                             </div>
 
                             <div class="form-group py-2">
-                                <label for="email">Email Address</label>
+                                <label for="email">Student Email Address</label><br>
+                                <small class="text-primary">Use a valid email that isn’t already used by another account.
+
+                                </small>
                                 <input type="email" name="email" id="email" class="form-control" placeholder="Enter email"
                                     value="{{ old('email') }}" required>
                             </div>

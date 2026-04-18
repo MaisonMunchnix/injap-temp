@@ -12,8 +12,11 @@ class CourseMaterial extends Model
     protected $fillable = [
         'course_id',
         'instructor_id',
+        'type',
         'title',
         'file_path',
+        'link_url',
+        'content',
         'status',
         'admin_note',
     ];

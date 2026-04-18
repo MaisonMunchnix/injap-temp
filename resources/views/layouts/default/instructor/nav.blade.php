@@ -2,20 +2,17 @@
     <div class="navigation-menu-tab">
         <ul>
             <li>
-                <a href="#" data-toggle="tooltip" data-placement="right" title="Dashboard"
-                    data-nav-target="#ecommerce">
+                <a href="#" data-toggle="tooltip" data-placement="right" title="Dashboard" data-nav-target="#ecommerce">
                     <i data-feather="home"></i>
                 </a>
             </li>
             <li>
-                <a href="#" data-toggle="tooltip" data-placement="right" title="Courses"
-                    data-nav-target="#instructors">
+                <a href="#" data-toggle="tooltip" data-placement="right" title="Courses" data-nav-target="#instructors">
                     <i data-feather="book"></i>
                 </a>
             </li>
             <li>
-                <a href="#" data-toggle="tooltip" data-placement="right" title="Settings"
-                    data-nav-target="#pages">
+                <a href="#" data-toggle="tooltip" data-placement="right" title="Settings" data-nav-target="#pages">
                     <i data-feather="settings"></i>
                 </a>
             </li>
@@ -53,7 +50,7 @@
                     </li>
                     <li>
                         <a class="{{ request()->is('instructor/materials*') ? 'active' : '' }}"
-                            href="{{ route('instructor.materials.index') }}">Learning Materials</a>
+                            href="{{ route('instructor.materials.index') }}">Classes</a>
                     </li>
                 </ul>
             </div>
@@ -76,21 +73,21 @@
     (function () {
         function initNav() {
             if (typeof $ === 'undefined') return;
-            
+
             // 1. Identify the currently active link
             var $activeLink = $('.navigation-menu-group .active');
             if ($activeLink.length) {
                 // 2. Open the group containing that link
                 var $group = $activeLink.closest('.navigation-menu-group > div');
                 $group.addClass('open');
-                
+
                 // 3. Highlight the corresponding icon in the tab menu
                 var groupId = $group.attr('id');
                 if (groupId) {
                     $('.navigation-menu-tab a[data-nav-target="#' + groupId + '"]').closest('li').addClass('active');
                 }
             }
-            
+
             // 4. Ensure Feather icons are rendered
             if (typeof feather !== 'undefined') {
                 feather.replace();

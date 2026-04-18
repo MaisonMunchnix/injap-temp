@@ -23,7 +23,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center mb-4">
-                                <h6 class="card-title mb-0">Select Course to Manage Materials</h6>
+                                <h6 class="card-title mb-0">Manage Classes</h6>
                                 <div class="d-flex align-items-center">
                                     <label class="mb-0 mr-2 text-nowrap"><strong>Filter by Category:</strong></label>
                                     <select id="categoryFilter" class="form-control form-control-sm"
@@ -68,7 +68,7 @@
                                                 <td>
                                                     <a href="{{ route('instructor.materials.show', $course->id) }}"
                                                         class="btn btn-primary btn-sm">
-                                                        <i class="ti-pencil-alt mr-1"></i> Manage Learning Materials
+                                                        <i class="ti-pencil-alt mr-1"></i> Manage
                                                     </a>
                                                 </td>
                                             </tr>

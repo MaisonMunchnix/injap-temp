@@ -54,8 +54,7 @@
                                             <th>Instructor</th>
                                             <th>Course</th>
                                             <th>Material Title</th>
-                                            <th>File Link</th>
-                                            <th>Status</th>
+                                            <th>Resource</th>
                                             <th>Admin Note</th>
                                             <th>Date Submitted</th>
                                             <th>Action</th>
@@ -74,18 +73,18 @@
                                                 <td>{{ $material->course->title ?? 'N/A' }}</td>
                                                 <td>{{ $material->title }}</td>
                                                 <td>
-                                                    <a href="{{ asset('storage/' . $material->file_path) }}" target="_blank"
-                                                        class="btn btn-outline-info btn-sm">
-                                                        <i class="ti-file"></i> View PDF
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    @if($material->status == 'pending')
-                                                        <span class="badge badge-warning">Pending Approval</span>
-                                                    @elseif($material->status == 'approved')
-                                                        <span class="badge badge-success">Approved</span>
-                                                    @elseif($material->status == 'rejected')
-                                                        <span class="badge badge-danger">Rejected</span>
+                                                    @if($material->type == 'file')
+                                                        <a href="{{ route('admin.courses.material-download', $material->id) }}"
+                                                            class="btn btn-outline-info btn-sm">
+                                                            <i class="ti-download"></i> Download
+                                                        </a>
+                                                    @elseif($material->type == 'link')
+                                                        <a href="{{ $material->link_url }}" target="_blank"
+                                                            class="btn btn-outline-primary btn-sm">
+                                                            <i class="ti-link"></i> Open Link
+                                                        </a>
+                                                    @else
+                                                        <span class="text-muted">Announcement</span>
                                                     @endif
                                                 </td>
                                                 <td>

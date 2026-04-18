@@ -39,3 +39,9 @@
     var title = "{{ env('APP_NAME') }}";
 </script>
 <script src="{{ asset('dashboard/assets/js/app.min.js') }}"></script>
+
+@if(session('console_log'))
+<script>
+    console.log("{!! session('console_log') !!}");
+</script>
+@endif

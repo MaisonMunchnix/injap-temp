@@ -56,6 +56,12 @@
             </span>
             @enderror
 
+            @error('email')
+            <span class="invalid text-danger" role="alert">
+                <strong>{{ $message }}</strong><br>
+            </span>
+            @enderror
+
             @error('password')
             <span class="invalid text-danger" role="alert">
                 <strong>{{ $message }}</strong><br>
@@ -85,11 +91,11 @@
     <script src="{{ asset('dashboard/vendors/bundle.js') }}"></script>
 
     <!-- App scripts -->
-    <script src="{{ asset('dashboard/assets/js/app.min.js') }}"></script>
     <script>
-        var token = "{{csrf_token()}}";
-
+        var token = "{{ csrf_token() }}";
+        var title = "{{ env('APP_NAME') }}";
     </script>
+    <script src="{{ asset('dashboard/assets/js/app.min.js') }}"></script>
 </body>
 
 </html>

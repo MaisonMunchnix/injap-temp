@@ -14,12 +14,20 @@ class User extends Authenticatable implements InstanceIdentifier
 
     protected $with = ['info'];
 
-	public function package() {
+    public function package() {
         return $this->belongsTo(Package::class, 'account_type');
     }
 
     public function info() {
         return $this->hasOne(UserInfo::class);
+    }
+
+    public function studentProfile() {
+        return $this->hasOne(StudentProfile::class);
+    }
+
+    public function enrollments() {
+        return $this->hasMany(Enrollment::class);
     }
 
     public function network() {
@@ -95,7 +103,8 @@ class User extends Authenticatable implements InstanceIdentifier
         'sub_package',
         'is_application_approved',
         'affiliate_link',
-        'sponsor_id'
+        'sponsor_id',
+        'must_change_password'
     ];
 
     /**
