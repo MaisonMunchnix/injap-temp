@@ -188,6 +188,8 @@
             $('#add_form').on('submit', function(e) {
                 e.preventDefault();
                 var formData = new FormData(this);
+                // Manually sync Summernote content into FormData
+                formData.set('description', $('textarea[name="description"]').first().summernote('code'));
                 
                 $.ajax({
                     url: "{{ route('admin.about-gallery.store') }}",
@@ -198,9 +200,13 @@
                     success: function(data) {
                         $('#add_modal').modal('hide');
                         $('#add_form')[0].reset();
-                        $('.rich-text').summernote('code', '');
+                        $('textarea[name="description"]').first().summernote('code', '');
                         table.ajax.reload();
                         swal("Success", "Gallery item added successfully", "success");
+                    },
+                    error: function(xhr) {
+                        var msg = xhr.responseJSON && xhr.responseJSON.message ? xhr.responseJSON.message : 'An error occurred. Please try again.';
+                        swal("Error", msg, "error");
                     }
                 });
             });
@@ -220,6 +226,8 @@
             $('#edit_form').on('submit', function(e) {
                 e.preventDefault();
                 var formData = new FormData(this);
+                // Manually sync Summernote content into FormData
+                formData.set('description', $('#edit_description').summernote('code'));
                 
                 $.ajax({
                     url: "{{ route('admin.about-gallery.update') }}",
@@ -231,6 +239,10 @@
                         $('#edit_modal').modal('hide');
                         table.ajax.reload();
                         swal("Success", "Gallery item updated successfully", "success");
+                    },
+                    error: function(xhr) {
+                        var msg = xhr.responseJSON && xhr.responseJSON.message ? xhr.responseJSON.message : 'An error occurred. Please try again.';
+                        swal("Error", msg, "error");
                     }
                 });
             });

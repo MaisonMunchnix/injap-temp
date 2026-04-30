@@ -3,83 +3,267 @@
 
 @section('stylesheets')
     <style>
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-            padding: 50px 0;
+        /* ── Gallery Section ── */
+        .gallery-section {
+            background: linear-gradient(160deg, #f0f4f8 0%, #e8eef5 100%);
+            padding: 80px 0;
         }
 
+        .gallery-section-header {
+            text-align: center;
+            margin-bottom: 56px;
+        }
+
+        .gallery-section-header .eyebrow {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #4e8fbf;
+            margin-bottom: 12px;
+        }
+
+        .gallery-section-header h2 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: #1a2a3a;
+            margin-bottom: 14px;
+            line-height: 1.2;
+        }
+
+        .gallery-section-header .divider {
+            display: block;
+            width: 56px;
+            height: 4px;
+            border-radius: 2px;
+            background: linear-gradient(90deg, #4e8fbf, #7ab8d9);
+            margin: 0 auto 16px;
+        }
+
+        .gallery-section-header p {
+            color: #6b7c8d;
+            font-size: 1.05rem;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        /* ── Grid ── */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 28px;
+        }
+
+        /* ── Card ── */
         .gallery-item {
-            position: relative;
-            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            background: #ffffff;
+            border-radius: 16px;
             overflow: hidden;
-            aspect-ratio: 1 / 1;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: transform 0.4s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.03);
+            transition: transform 0.4s cubic-bezier(0.25,0.8,0.25,1), box-shadow 0.4s ease;
+            cursor: default;
         }
 
         .gallery-item:hover {
-            transform: translateY(-10px);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1), 0 5px 15px rgba(0,0,0,0.05);
         }
 
-        .gallery-item img {
+        /* ── Card Image Area ── */
+        .gallery-item-image {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            background: #e8eef5; /* fallback for broken images */
+            overflow: hidden;
+        }
+
+        .gallery-item-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: scale 0.6s ease;
+            display: block;
+            transition: transform 0.6s cubic-bezier(0.25,0.8,0.25,1);
         }
 
-        .gallery-item:hover img {
-            scale: 1.1;
+        .gallery-item:hover .gallery-item-image img {
+            transform: scale(1.05);
         }
 
-        .glass-reveal {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 30px;
+        /* ── Card Content Area ── */
+        .gallery-item-content {
+            padding: 24px;
+            flex-grow: 1;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end;
-            transform: translateY(100%);
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border-top: 1px solid rgba(0,0,0,0.03);
         }
 
-        .gallery-item:hover .glass-reveal {
-            transform: translateY(0);
+        /* thin accent line above description */
+        .gallery-item-content::before {
+            content: '';
+            display: block;
+            width: 36px;
+            height: 3px;
+            border-radius: 2px;
+            background: linear-gradient(90deg, #7ab8d9, #4e8fbf);
+            margin-bottom: 16px;
         }
 
-        .glass-reveal .description {
-            color: #fff;
-            font-size: 1rem;
-            line-height: 1.5;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.4s ease 0.2s;
+        /* ── Description typography ── */
+        .gallery-item-content .description {
+            color: #4a5568;
+            font-size: 0.95rem;
+            line-height: 1.6;
         }
 
-        .gallery-item:hover .glass-reveal .description {
-            opacity: 1;
-            transform: translateY(0);
+        /* Style Summernote HTML output inside cards */
+        .gallery-item-content .description p {
+            margin: 0 0 8px;
+            color: #4a5568;
         }
 
-        .section-header {
-            text-align: center;
-            margin-bottom: 40px;
+        .gallery-item-content .description p:last-child {
+            margin-bottom: 0;
+        }
+
+        .gallery-item-content .description ul,
+        .gallery-item-content .description ol {
+            margin: 0 0 8px 0;
+            padding-left: 20px;
+        }
+
+        .gallery-item-content .description li {
+            color: #4a5568;
+            margin-bottom: 4px;
+            font-size: 0.9rem;
+        }
+
+        .gallery-item-content .description strong,
+        .gallery-item-content .description b {
+            color: #1a2a3a;
+            font-weight: 700;
+        }
+
+        .gallery-item-content .description li:first-child {
+            /* Treat the first list item like a title */
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #1a2a3a;
+            letter-spacing: 0.01em;
+            list-style: none;
+            margin-left: -20px;
+            margin-bottom: 8px;
+        }
+
+        /* ── Truncation & See More ── */
+        .gallery-item-content .description-preview {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-bottom: 16px;
         }
         
-        .section-header h2 {
-            font-size: 2.5rem;
+        .see-more-link {
+            font-size: 0.9rem;
             font-weight: 700;
-            color: #333;
+            color: #4e8fbf;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            transition: color 0.3s ease;
+            margin-top: auto;
+        }
+
+        .see-more-link:hover {
+            color: #1a2a3a;
+            text-decoration: underline;
+        }
+
+        /* ── Modal Styling ── */
+        .gallery-modal .modal-content {
+            border: none;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+        
+        .gallery-modal .modal-body {
+            padding: 0;
+        }
+        
+        .gallery-modal-layout {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .gallery-modal-image {
+            flex: 1 1 50%;
+            min-height: 400px;
+            background: #e8eef5;
+            position: relative;
+        }
+        
+        .gallery-modal-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        .gallery-modal-text {
+            flex: 1 1 50%;
+            padding: 48px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .gallery-modal .btn-close-custom {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            line-height: 1;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .gallery-modal .btn-close-custom:hover {
+            transform: scale(1.1);
+            background: #fff;
+        }
+
+        @media (max-width: 992px) {
+            .gallery-modal-image, .gallery-modal-text {
+                flex: 1 1 100%;
+            }
+            .gallery-modal-image {
+                min-height: 300px;
+                position: relative;
+            }
+            .gallery-modal-image img {
+                position: relative;
+            }
+            .gallery-modal-text {
+                padding: 32px;
+                max-height: none;
+            }
         }
     </style>
 @endsection
@@ -137,31 +321,78 @@
 
     @if(count($galleries) > 0)
     <!-- Gallery Section Start -->
-    <div class="gallery-section py-5">
+    <div class="gallery-section">
         <div class="container">
-            <div class="section-header wow fadeInUp" data-wow-delay="0.2s">
+            <div class="gallery-section-header wow fadeInUp" data-wow-delay="0.2s">
+                <span class="eyebrow">Our Community</span>
                 <h2>Our Journey in Pictures</h2>
+                <span class="divider"></span>
                 <p>A glimpse into our dedication and growth.</p>
             </div>
             <div class="gallery-grid">
                 @foreach($galleries as $gallery)
                 <div class="gallery-item wow fadeInUp" data-wow-delay="{{ 0.1 * $loop->iteration }}s">
-                    <img src="{{ asset($gallery->image_path) }}" alt="Gallery Image">
-                    <div class="glass-reveal">
-                        <div class="description">
+                    <div class="gallery-item-image">
+                        <img src="{{ asset($gallery->image_path) }}" alt="Gallery Image" onerror="this.style.opacity='0'">
+                    </div>
+                    <div class="gallery-item-content">
+                        <div class="description description-preview">
                             {!! $gallery->description !!}
                         </div>
+                        <a href="javascript:void(0);" class="see-more-link" data-toggle="modal" data-bs-toggle="modal" data-target="#galleryModal{{ $gallery->id }}" data-bs-target="#galleryModal{{ $gallery->id }}">
+                            See more &rarr;
+                        </a>
                     </div>
                 </div>
                 @endforeach
             </div>
         </div>
     </div>
+    
+    <!-- Gallery Modals -->
+    @foreach($galleries as $gallery)
+    <div class="modal fade gallery-modal" id="galleryModal{{ $gallery->id }}" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <button type="button" class="btn-close-custom" data-dismiss="modal" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+                <div class="modal-body">
+                    <div class="gallery-modal-layout">
+                        <div class="gallery-modal-image">
+                            <img src="{{ asset($gallery->image_path) }}" alt="Gallery Image" onerror="this.style.opacity='0'">
+                        </div>
+                        <div class="gallery-modal-text">
+                            <div class="gallery-item-content" style="border:none; padding:0;">
+                                <div class="description">
+                                    {!! $gallery->description !!}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endforeach
     <!-- Gallery Section End -->
     @endif
 @endsection
 
 
 @section('scripts')
-    {{-- additional scripts here --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var previews = document.querySelectorAll('.description-preview');
+            previews.forEach(function(preview) {
+                // Check if the actual text height is larger than the visible container height
+                // Add a small 2px buffer to account for subpixel rendering differences
+                if (preview.scrollHeight <= preview.clientHeight + 2) {
+                    var link = preview.nextElementSibling;
+                    if (link && link.classList.contains('see-more-link')) {
+                        link.style.display = 'none';
+                        preview.style.marginBottom = '0'; // Remove extra gap if link is hidden
+                    }
+                }
+            });
+        });
+    </script>
 @endsection
