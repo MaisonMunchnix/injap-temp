@@ -102,6 +102,11 @@
                 font-size: 1.5rem;
             }
         }
+
+        /* Hero Slideshow Transition */
+        .hero.parallaxie {
+            transition: background-image 2s ease-in-out !important;
+        }
     </style>
 @endsection
 
@@ -137,8 +142,15 @@
     </div>
     @endif
 
+ @php
+    $heroBgs = glob(public_path('hero-bg/*.{jpg,jpeg,png,webp}'), GLOB_BRACE);
+    $heroBgUrls = array_map(function($path) {
+        return asset('hero-bg/' . basename($path));
+    }, $heroBgs);
+ @endphp
+
  <!-- Hero Section Start -->
-    <div class="hero parallaxie">
+    <div class="hero parallaxie" id="hero-slideshow">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-md-8">
@@ -920,6 +932,31 @@ life.</p>
                     $('#announcementPopup').modal('hide');
                 });
             @endif
+
+            // Hero Background Slideshow
+            const heroBgImages = @json($heroBgUrls);
+            if (heroBgImages.length > 0) {
+                let currentImgIndex = 0;
+                const $hero = $('#hero-slideshow');
+                
+                // Set initial background if needed, but CSS already has one
+                // $hero.css('background-image', 'url(' + heroBgImages[0] + ')');
+
+                function changeHeroBackground() {
+                    currentImgIndex = (currentImgIndex + 1) % heroBgImages.length;
+                    const nextImg = heroBgImages[currentImgIndex];
+                    
+                    // Preload next image to ensure smooth transition
+                    const img = new Image();
+                    img.src = nextImg;
+                    img.onload = function() {
+                        $hero.css('background-image', 'url("' + nextImg + '")');
+                    };
+                }
+                
+                // Start cycling after an initial delay
+                setInterval(changeHeroBackground, 5000); // Change every 5 seconds
+            }
         });
     </script>
 @endsection
