@@ -257,6 +257,10 @@
                         <a class="{{ request()->is('staff/users') ? 'active' : '' }}"
                             href="{{ route('users') }}">Staff Management</a>
                     </li>
+                    <li>
+                        <a class="{{ request()->is('staff/about-gallery*') ? 'active' : '' }}"
+                            href="{{ route('admin.about-gallery.index') }}">About Page Gallery</a>
+                    </li>
                     @endif
                     <li>
                         <a class="{{ request()->is('staff/profile') || request()->is('profile') ? 'active' : '' }}"

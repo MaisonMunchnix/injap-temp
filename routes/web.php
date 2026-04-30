@@ -570,6 +570,15 @@ Route::group(['prefix' => 'staff',  'middleware' => 'adminMw'], function(){
 	Route::post('update-ads', 'admin\AdvertisementController@update')->name('admin.update-ads');
 	Route::post('advertisements/delete', 'admin\AdvertisementController@destroy')->name('admin.delete-ads');
 	Route::post('advertisements/action', 'admin\AdvertisementController@action')->name('admin.ads.action');
+    
+    /************************************ About Page Gallery Routes ************************************/
+    Route::get('about-gallery', 'admin\AboutGalleryController@index')->name('admin.about-gallery.index');
+    Route::get('get-about-gallery-data', 'admin\AboutGalleryController@getGalleryData')->name('admin.about-gallery.data');
+    Route::get('about-gallery-item/{id}', 'admin\AboutGalleryController@getData')->name('admin.about-gallery.get-data');
+    Route::post('about-gallery/store', 'admin\AboutGalleryController@store')->name('admin.about-gallery.store');
+    Route::post('about-gallery/update', 'admin\AboutGalleryController@update')->name('admin.about-gallery.update');
+    Route::post('about-gallery/delete', 'admin\AboutGalleryController@destroy')->name('admin.about-gallery.delete');
+
 
 	// Instructors Management
 	Route::middleware(['can_manage_instructors'])->group(function () {
@@ -890,7 +899,7 @@ Route::name('landing.')->group(function () {
 	Route::post('/application/submit','ApplicationController@submitApplication')->name('application.submit');
 	Route::get('/check-application-code/{code}','ApplicationController@checkApplicationCode')->name('application.check-code');
 	
-	// Route::get('/about','LandingPageController@about')->name('about');
+	Route::get('/about','LandingPageController@about')->name('about');
 
 	// Route::get('/announcements','LandingPageController@announcements')->name('announcements');
 	// Route::get('/announcements/{slug}','LandingPageController@announcement')->name('announcements.page');

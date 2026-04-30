@@ -62,7 +62,8 @@ class LandingPageController extends Controller
 
     public function about()
     {
-        return view('landing.about');
+        $galleries = \App\AboutGallery::where('is_active', true)->orderBy('order', 'asc')->get();
+        return view('landing.about', compact('galleries'));
     }
 
     public function announcements()
