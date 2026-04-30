@@ -18,7 +18,7 @@ class CreateAboutGalleriesTable extends Migration
             $blueprint->string('image_path');
             $blueprint->text('description')->nullable();
             $blueprint->boolean('is_active')->default(true);
-            $blueprint->integer('order')->default(0);
+            $blueprint->integer('sort_order')->default(0);
             $blueprint->timestamps();
         });
     }

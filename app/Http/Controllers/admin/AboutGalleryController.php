@@ -18,7 +18,7 @@ class AboutGalleryController extends Controller
     public function getGalleryData(Request $request)
     {
         if ($request->ajax()) {
-            $galleries = AboutGallery::orderBy('order', 'asc')->get();
+            $galleries = AboutGallery::orderBy('sort_order', 'asc')->get();
             return DataTables::of($galleries)
                 ->editColumn('image_path', function($gallery) {
                     return '<img src="'.asset($gallery->image_path).'" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">';
@@ -56,7 +56,7 @@ class AboutGalleryController extends Controller
 
         $gallery = new AboutGallery();
         $gallery->description = $request->description;
-        $gallery->order = $request->order ?? 0;
+        $gallery->sort_order = $request->order ?? 0;
         $gallery->is_active = $request->has('is_active');
 
         if ($request->hasFile('image')) {
@@ -79,7 +79,7 @@ class AboutGalleryController extends Controller
 
         $gallery = AboutGallery::findOrFail($id);
         $gallery->description = $request->description;
-        $gallery->order = $request->order ?? 0;
+        $gallery->sort_order = $request->order ?? 0;
         $gallery->is_active = $request->has('is_active');
 
         if ($request->hasFile('image')) {

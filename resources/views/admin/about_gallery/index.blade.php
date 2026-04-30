@@ -165,7 +165,7 @@
                 columns: [
                     { data: 'image_path', name: 'image_path' },
                     { data: 'description', name: 'description' },
-                    { data: 'order', name: 'order' },
+                    { data: 'sort_order', name: 'sort_order' },
                     { data: 'is_active', name: 'is_active' },
                     { data: 'action', name: 'action', orderable: false, searchable: false }
                 ]
@@ -207,7 +207,7 @@
                 var id = $(this).data('id');
                 $.get("about-gallery-item/" + id, function(data) {
                     $('#edit_id').val(data.id);
-                    $('#edit_order').val(data.order);
+                    $('#edit_order').val(data.sort_order);
                     $('#is_active_edit').prop('checked', data.is_active == 1);
                     $('#edit_preview').attr('src', "{{ asset('/') }}" + data.image_path).show();
                     $('#edit_description').summernote('code', data.description || '');

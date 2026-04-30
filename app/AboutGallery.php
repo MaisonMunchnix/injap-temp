@@ -10,6 +10,6 @@ class AboutGallery extends Model
         'image_path',
         'description',
         'is_active',
-        'order',
+        'sort_order',
     ];
 }

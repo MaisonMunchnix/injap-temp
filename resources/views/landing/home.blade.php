@@ -9,14 +9,16 @@
             border-radius: 20px;
             overflow: hidden;
             background: #fff;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
             border: none;
         }
+
         .popup-flex-container {
             display: flex;
             flex-direction: row;
             min-height: 400px;
         }
+
         .popup-image-side {
             flex: 1.2;
             background: #f8f9fa;
@@ -25,11 +27,13 @@
             justify-content: center;
             overflow: hidden;
         }
+
         .popup-image-side img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
+
         .popup-content-side {
             flex: 1;
             padding: 40px;
@@ -39,6 +43,7 @@
             text-align: left;
             position: relative;
         }
+
         .popup-title {
             color: #1a2a6c;
             font-weight: 800;
@@ -47,6 +52,7 @@
             font-family: 'Poppins', sans-serif;
             line-height: 1.2;
         }
+
         .popup-desc {
             color: #444;
             font-size: 0.95rem;
@@ -56,18 +62,22 @@
             overflow-y: auto;
             padding-right: 15px;
         }
+
         .popup-desc::-webkit-scrollbar {
             width: 5px;
         }
+
         .popup-desc::-webkit-scrollbar-thumb {
             background: #1a2a6c;
             border-radius: 10px;
         }
+
         .popup-close-btn {
             position: absolute;
             top: 15px;
             right: 15px;
-            z-index: 1051; /* Higher than modal backdrop and content */
+            z-index: 1051;
+            /* Higher than modal backdrop and content */
             background: #fff;
             color: #1a2a6c;
             border: none;
@@ -79,9 +89,10 @@
             justify-content: center;
             font-size: 16px;
             cursor: pointer;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             transition: all 0.3s;
         }
+
         .popup-close-btn:hover {
             background: #1a2a6c;
             color: #fff;
@@ -92,12 +103,15 @@
                 flex-direction: column;
                 min-height: auto;
             }
+
             .popup-image-side {
                 height: 300px;
             }
+
             .popup-content-side {
                 padding: 30px;
             }
+
             .popup-title {
                 font-size: 1.5rem;
             }
@@ -113,58 +127,64 @@
 @section('content')
 
     @if($popup)
-    <!-- Popup Announcement Modal -->
-    <div class="modal fade" id="announcementPopup" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 850px;">
-            <div class="modal-content popup-card">
-                <button type="button" class="popup-close-btn" data-dismiss="modal" aria-label="Close">
-                    &times;
-                </button>
-                <div class="popup-flex-container">
-                    <div class="popup-image-side">
-                        @if($popup->image)
-                            <img src="{{ asset($popup->image) }}" alt="{{ $popup->title }}">
-                        @endif
-                    </div>
-                    
-                    <div class="popup-content-side">
-                        <h2 class="popup-title">{{ $popup->title }}</h2>
-                        <div class="popup-desc">
-                            {!! $popup->description !!}
+        <!-- Popup Announcement Modal -->
+        <div class="modal fade" id="announcementPopup" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 850px;">
+                <div class="modal-content popup-card">
+                    <button type="button" class="popup-close-btn" data-dismiss="modal" aria-label="Close">
+                        &times;
+                    </button>
+                    <div class="popup-flex-container">
+                        <div class="popup-image-side">
+                            @if($popup->image)
+                                <img src="{{ asset($popup->image) }}" alt="{{ $popup->title }}">
+                            @endif
                         </div>
-                        @if($popup->link)
-                            <a href="{{ $popup->link }}" class="btn-default" style="padding: 12px 35px; border-radius: 50px; text-decoration: none; display: inline-block; width: fit-content;">View Details</a>
-                        @endif
+
+                        <div class="popup-content-side">
+                            <h2 class="popup-title">{{ $popup->title }}</h2>
+                            <div class="popup-desc">
+                                {!! $popup->description !!}
+                            </div>
+                            @if($popup->link)
+                                <a href="{{ $popup->link }}" class="btn-default"
+                                    style="padding: 12px 35px; border-radius: 50px; text-decoration: none; display: inline-block; width: fit-content;">View
+                                    Details</a>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     @endif
 
- @php
-    $heroBgs = glob(public_path('hero-bg/*.{jpg,jpeg,png,webp}'), GLOB_BRACE);
-    $heroBgUrls = array_map(function($path) {
-        return asset('hero-bg/' . basename($path));
-    }, $heroBgs);
- @endphp
+    @php
+        $heroBgs = glob(public_path('hero-bg/*.{jpg,jpeg,png,webp}'), GLOB_BRACE);
+        $heroBgUrls = array_map(function ($path) {
+            return asset('hero-bg/' . basename($path));
+        }, $heroBgs);
+     @endphp
 
- <!-- Hero Section Start -->
+    <!-- Hero Section Start -->
     <div class="hero parallaxie" id="hero-slideshow">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-md-8">
                     <!-- Section Title start -->
                     <div class="section-title">
-                        <h3 class="wow fadeInUp" data-wow-delay="0.25s">Let us help each other in times of disaster and hardship</h3>
+                        <h3 class="wow fadeInUp" data-wow-delay="0.25s">Let us help each other in times of disaster and
+                            hardship</h3>
                         <h1 class="text-anime">Innovation Japan call for unity</h1>
                     </div>
                     <!-- Section Title end -->
 
                     <!-- Hero Body start -->
                     <div class="hero-body">
-                        <p class="wow fadeInUp" data-wow-delay="0.50s">Empowering every member to uplift one another through creativity, compassion, and shared purpose. Together, we rise—spreading hope, unity, and opportunity for a better, abundant life.</p>
-                        <a href="{{ route('landing.application') }}" class="btn-default hero-btn wow fadeInUp" data-wow-delay="0.75s">Get Started</a>
+                        <p class="wow fadeInUp" data-wow-delay="0.50s">Empowering every member to uplift one another through
+                            creativity, compassion, and shared purpose. Together, we rise—spreading hope, unity, and
+                            opportunity for a better, abundant life.</p>
+                        <a href="{{ route('landing.application') }}" class="btn-default hero-btn wow fadeInUp"
+                            data-wow-delay="0.75s">Get Started</a>
                     </div>
                     <!-- Hero Body end -->
                 </div>
@@ -184,9 +204,9 @@
                             <img src="{{ asset('new_landing/images/icon-peace-of-mind.svg')}}" alt="">
                         </div>
                         <div class="box-body">
-                            <h3>Vision</h3>  
+                            <h3>Vision</h3>
                             <p>To be the most creative organization in terms of economic in the Country</p>
-                            
+
                         </div>
                     </div>
                     <!-- Information Box Item end -->
@@ -196,12 +216,12 @@
                     <!-- Information Box Item start -->
                     <div class="info-box wow fadeInUp" data-wow-delay="0.75s">
                         <div class="box-icon">
-                           <img src="{{ asset('new_landing/images/icon-peace-of-mind.svg')}}" alt="">
+                            <img src="{{ asset('new_landing/images/icon-peace-of-mind.svg')}}" alt="">
                         </div>
                         <div class="box-body">
                             <h3>Mission</h3>
                             <p>To bring joy, peace and unity to every member</p>
-                           
+
                         </div>
                     </div>
                     <!-- Information Box Item end -->
@@ -211,7 +231,7 @@
                     <!-- Information Box Item start -->
                     <div class="info-box wow fadeInUp" data-wow-delay="1.0s">
                         <div class="box-icon">
-                           <img src="{{ asset('new_landing/images/icon-peace-of-mind.svg')}}" alt="">
+                            <img src="{{ asset('new_landing/images/icon-peace-of-mind.svg')}}" alt="">
                         </div>
                         <div class="box-body">
                             <h3>Goals</h3>
@@ -219,61 +239,62 @@
                         </div>
                     </div>
                     <!-- Information Box Item end -->
-                </div>                
+                </div>
             </div>
         </div>
     </div>
     <!-- Home Inforamtion Section End -->
-        <!-- Currency Exchange Rates Section Start -->
+    <!-- Currency Exchange Rates Section Start -->
 
 
-<div class="about-section">
+    <div class="about-section">
         <div class="container">
             <div class="row align-items-center">
-                
+
 
                 <div class="col-lg-6 col-md-12 order-lg-2 order-2">
                     <div class="about-content">
                         <!-- Section Title start -->
                         <div class="section-title">
-                        
+
                             <h2 class="text-anime">Standing Together in Natural Calamities</h2>
                         </div>
                         <!-- Section Title end -->
 
                         <div class="about-body">
-                            <p class="wow fadeInUp" data-wow-delay="0.50s">Natural calamities test not only our strength but also our unity as people. In these moments of crisis, compassion and cooperation become the foundation of recovery. At Innovation Japan, we believe that helping one another during disasters is a powerful form of innovation—one that brings hope, peace, and healing to affected communities.</p>
-                       
-                       <p>Guided by our mission to create a united future, we stand alongside those facing hardship, empowering communities to rebuild with resilience and purpose. Through shared creativity and support, we help transform loss into opportunity, ensuring that no one stands alone on the path toward recovery and a better tomorrow.</p>
-                       
-                        </div>  
+                            <p class="wow fadeInUp" data-wow-delay="0.50s">Natural calamities test not only our strength but
+                                also our unity as people. In these moments of crisis, compassion and cooperation become the
+                                foundation of recovery. At Innovation Japan, we believe that helping one another during
+                                disasters is a powerful form of innovation—one that brings hope, peace, and healing to
+                                affected communities.</p>
+
+                            <p>Guided by our mission to create a united future, we stand alongside those facing hardship,
+                                empowering communities to rebuild with resilience and purpose. Through shared creativity and
+                                support, we help transform loss into opportunity, ensuring that no one stands alone on the
+                                path toward recovery and a better tomorrow.</p>
+
+                        </div>
 
                         <!-- About Icon Box start -->
-                       
+
                         <!-- About Icon Box end -->
 
-                        
+
                     </div>
                 </div>
-              
-              <div class="col-lg-6 col-md-12 order-lg-1 order-1">
+
+                <div class="col-lg-6 col-md-12 order-lg-1 order-1">
                     <!-- About video start -->
-					<div class="ratio ratio-16x9">
-            <iframe 
-                src="https://www.youtube.com/embed/pLATFqeNsks"
-                    
-                    
-                title="Natural Calamity"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin"
-                allowfullscreen>
-            </iframe>
-        </div>
-					<!-- About video end -->
+                    <div class="ratio ratio-16x9">
+                        <iframe src="https://www.youtube.com/embed/pLATFqeNsks" title="Natural Calamity" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                        </iframe>
+                    </div>
+                    <!-- About video end -->
                 </div>
-              
-              
+
+
             </div>
         </div>
     </div>
@@ -285,13 +306,13 @@
             <div class="row">
                 <div class="col-12">
                     <!-- Section Title start -->
-                  
-                  
+
+
                     <div class="section-title text-center">
-                      
-         
-                      
-                      
+
+
+
+
                         <h3 class="wow fadeInUp" data-wow-delay="0.25s">Exchange Rates</h3>
                         <h2 class="text-anime" style="color:black;">Current Currency Exchange Rates</h2>
                     </div>
@@ -318,12 +339,12 @@
                                         </div>
                                     </div>
                                     <!-- <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="">Sell</label>
-                                            <input type="number" name='sell' step="0.01" class="form-control"
-                                                placeholder="Sell" value="{{ $yen->sell ?? null }}" required>
-                                        </div>
-                                    </div> -->
+                                            <div class="form-group">
+                                                <label for="">Sell</label>
+                                                <input type="number" name='sell' step="0.01" class="form-control"
+                                                    placeholder="Sell" value="{{ $yen->sell ?? null }}" required>
+                                            </div>
+                                        </div> -->
                                 </div>
                             </form>
                         </div>
@@ -342,19 +363,18 @@
                                         <div class="form-group">
                                             <label for="">Exchange Rate</label>
                                             <input type="hidden" name="currency" value="hkd" disabled>
-                                            <input type="number" name='buy' step="0.01"
-                                                class="form-control" placeholder="Buy"
-                                                value="{{ $hkd->buy ?? null }}" disabled>
+                                            <input type="number" name='buy' step="0.01" class="form-control"
+                                                placeholder="Buy" value="{{ $hkd->buy ?? null }}" disabled>
                                         </div>
                                     </div>
                                     <!-- <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="">Sell</label>
-                                            <input type="number" name='sell' step="0.01"
-                                                class="form-control" placeholder="Sell"
-                                                value="{{ $hkd->sell ?? null }}" required>
-                                        </div>
-                                    </div> -->
+                                            <div class="form-group">
+                                                <label for="">Sell</label>
+                                                <input type="number" name='sell' step="0.01"
+                                                    class="form-control" placeholder="Sell"
+                                                    value="{{ $hkd->sell ?? null }}" required>
+                                            </div>
+                                        </div> -->
                                 </div>
                             </form>
                         </div>
@@ -373,19 +393,18 @@
                                         <div class="form-group">
                                             <label for="">Exchange Rate</label>
                                             <input type="hidden" name="currency" value="usd" disabled>
-                                            <input type="number" name='buy' step="0.01"
-                                                class="form-control" placeholder="Buy"
-                                                value="{{ $usd->buy ?? null }}" disabled>
+                                            <input type="number" name='buy' step="0.01" class="form-control"
+                                                placeholder="Buy" value="{{ $usd->buy ?? null }}" disabled>
                                         </div>
                                     </div>
                                     <!-- <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="">Sell</label>
-                                            <input type="number" name='sell' step="0.01"
-                                                class="form-control" placeholder="Sell"
-                                                value="{{ $usd->sell ?? null }}" required>
-                                        </div>
-                                    </div> -->
+                                            <div class="form-group">
+                                                <label for="">Sell</label>
+                                                <input type="number" name='sell' step="0.01"
+                                                    class="form-control" placeholder="Sell"
+                                                    value="{{ $usd->sell ?? null }}" required>
+                                            </div>
+                                        </div> -->
                                 </div>
                             </form>
                         </div>
@@ -402,12 +421,12 @@
             <div class="row align-items-center">
                 <div class="col-lg-6 col-md-12 order-lg-1 order-2">
                     <!-- About video start -->
-					<div class="about-video wow fadeInLeft" data-wow-delay="0.25s">
+                    <div class="about-video wow fadeInLeft" data-wow-delay="0.25s">
                         <figure class="image-anime">
                             <img src="{{ asset('new_landing/images/video-placeholder.jpg')}}" alt="">
                         </figure>
-					</div>
-					<!-- About video end -->
+                    </div>
+                    <!-- About video end -->
                 </div>
 
                 <div class="col-lg-6 col-md-12 order-lg-2 order-1">
@@ -420,19 +439,26 @@
                         <!-- Section Title end -->
 
                         <div class="about-body">
-                            <p class="wow fadeInUp" data-wow-delay="0.50s">Innovation Japan is an organization dedicated to fostering unity, creativity, and progress among individuals and communities. Guided by our mission to bring joy, peace, and harmony to every member, we believe that true innovation begins with compassion and cooperation.</p>
-                       
-                       <p>Our goal is to transform lives—helping people rise from poverty to abundance through shared purpose, creativity, and support for one another. In times of disaster and hardship, we stand together, empowering communities to rebuild with hope, resilience, and a vision for a better tomorrow.</p>
-                       
-                        </div>  
+                            <p class="wow fadeInUp" data-wow-delay="0.50s">Innovation Japan is an organization dedicated to
+                                fostering unity, creativity, and progress among individuals and communities. Guided by our
+                                mission to bring joy, peace, and harmony to every member, we believe that true innovation
+                                begins with compassion and cooperation.</p>
+
+                            <p>Our goal is to transform lives—helping people rise from poverty to abundance through shared
+                                purpose, creativity, and support for one another. In times of disaster and hardship, we
+                                stand together, empowering communities to rebuild with hope, resilience, and a vision for a
+                                better tomorrow.</p>
+
+                        </div>
 
                         <!-- About Icon Box start -->
-                       
+
                         <!-- About Icon Box end -->
 
                         <div class="about-btn">
-                            <a href="{{ route('landing.application') }}" class="btn-default wow fadeInUp" data-wow-delay="1.25s">Be A Member</a>
-                          
+                            <a href="{{ route('landing.application') }}" class="btn-default wow fadeInUp"
+                                data-wow-delay="1.25s">Be A Member</a>
+
                         </div>
                     </div>
                 </div>
@@ -480,11 +506,11 @@
 
                             <h3>Purpose No. 1</h3>
                             <p>To conduct work good manner and right conduct training and
-business strategy seminars to all members so that each member
-will have a peaceful, competitive, and prosperous life style and
-to be more participants in boosting country economy by paying
-individual taxes to government.</p>
-                           
+                                business strategy seminars to all members so that each member
+                                will have a peaceful, competitive, and prosperous life style and
+                                to be more participants in boosting country economy by paying
+                                individual taxes to government.</p>
+
                         </div>
                         <!-- Step Box Body end -->
                     </div>
@@ -515,12 +541,12 @@ individual taxes to government.</p>
 
                             <h3>Purpose No. 2</h3>
                             <p>To assist all members to be more familiar of Japanese Laws and
-customs to be able to become more efficient to work with
-Japanese people and to become more productive in all aspect of
-life.</p>
+                                customs to be able to become more efficient to work with
+                                Japanese people and to become more productive in all aspect of
+                                life.</p>
                             <br>
-                             <br>
-                             <br>
+                            <br>
+                            <br>
                         </div>
                         <!-- Step Box Body end -->
                     </div>
@@ -550,20 +576,21 @@ life.</p>
                             <!-- Step Icon end -->
 
                             <h3>Purpose No. 3</h3>
-                            <p>To conduct project and or livelihood program to be able to assist the day to day lives of in need member.</p>
+                            <p>To conduct project and or livelihood program to be able to assist the day to day lives of in
+                                need member.</p>
                             <br>
                             <br>
-                           <br>
                             <br>
-                             <br>
-                             <br>
-                             <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
                         </div>
                         <!-- Step Box Body end -->
                     </div>
                 </div>
 
-              <hr>
+                <hr>
 
                 <div class="col-lg-6 col-md-12">
                     <div class="step-box wow fadeInUp" data-wow-delay="0.50s">
@@ -588,7 +615,7 @@ life.</p>
 
                             <h3>Purpose No. 4</h3>
                             <p>To assist the community or government in the time of calamity and disaster.</p>
-                           
+
                         </div>
                         <!-- Step Box Body end -->
                     </div>
@@ -616,8 +643,9 @@ life.</p>
                             <!-- Step Icon end -->
 
                             <h3>Purpose No. 5</h3>
-                            <p>To build a Business, Music and English training center for kids, youth and to any interested resident of Japan.</p>
-                           
+                            <p>To build a Business, Music and English training center for kids, youth and to any interested
+                                resident of Japan.</p>
+
                         </div>
                         <!-- Step Box Body end -->
                     </div>
@@ -625,7 +653,7 @@ life.</p>
                 <!-- Services Step Box End -->
             </div>
 
-           
+
         </div>
     </div>
     <!-- Our Services End -->
@@ -653,7 +681,9 @@ life.</p>
 
                         <!-- Consulations Body start -->
                         <div class="consulations-body">
-                            <p class="wow fadeInUp" data-wow-delay="0.50s">Offering trusted legal and translation services to help our members thrive in work, life, and community. Through unity and service, we contribute to a stronger, more prosperous nation.</p>
+                            <p class="wow fadeInUp" data-wow-delay="0.50s">Offering trusted legal and translation services
+                                to help our members thrive in work, life, and community. Through unity and service, we
+                                contribute to a stronger, more prosperous nation.</p>
                         </div>
                         <!-- Consulations Body end -->
 
@@ -662,12 +692,13 @@ life.</p>
                             <ul>
                                 <li><span>01.</span> Legal Assistance</li>
                                 <li><span>02.</span> Translation Service</li>
-                                 <li><span>03.</span> Financial Assistance</li>
+                                <li><span>03.</span> Financial Assistance</li>
                             </ul>
                         </div>
                         <!-- List Icon end -->
 
-                        <a href="{{ route('landing.contact') }}" class="btn-default wow fadeInUp" data-wow-delay="1.0s">Contact Us Now</a>
+                        <a href="{{ route('landing.contact') }}" class="btn-default wow fadeInUp"
+                            data-wow-delay="1.0s">Contact Us Now</a>
 
                     </div>
                 </div>
@@ -676,15 +707,15 @@ life.</p>
     </div>
 
 
-    
+
     <!-- Get Consultations Section End -->
 
     <!-- Counter Section Start -->
- 
+
     <!-- Counter Section End -->
 
     <!-- Our Team Section Start -->
-    
+
     <!-- Our Team Section End -->
 
     <!-- Why Choose Us Section Start -->
@@ -694,7 +725,7 @@ life.</p>
                 <div class="col-lg-5 col-12">
                     <!-- Why Choose Image start -->
                     <div class="why-choose-img">
-                        <figure  class="reveal image-anime">
+                        <figure class="reveal image-anime">
                             <img src="{{ asset('new_landing/images/why-choose-us-img.jpg')}}" alt="">
                         </figure>
                     </div>
@@ -711,13 +742,15 @@ life.</p>
 
                     <!-- Why Choose Body start -->
                     <div class="why-choose-body">
-                        <p class="wow fadeInUp" data-wow-delay="0.50s">Through our medical, food, and burial assistance programs, we stand beside our membershelping them live with dignity, security, and peace of mind.</p>
-                        
+                        <p class="wow fadeInUp" data-wow-delay="0.50s">Through our medical, food, and burial assistance
+                            programs, we stand beside our membershelping them live with dignity, security, and peace of
+                            mind.</p>
+
                         <ul class="why-choose-list wow fadeInUp" data-wow-delay="0.75s">
                             <li>Medical Reimbursement Support</li>
                             <li>Food Reimbursement Support</li>
                             <li>Member Death & Burial Assistance</li>
-      
+
                         </ul>
 
                         <!-- Support Team Section start -->
@@ -727,20 +760,20 @@ life.</p>
                                 <div class="video-section-img">
                                     <figure class="image-anime">
                                         <img src="{{ asset('new_landing/images/why-choose-us-video-img.jpg')}}" alt="">
-                                    </figure>   
+                                    </figure>
                                 </div>
-                               
+
                             </div>
                             <!-- Video Section end -->
 
                             <!-- Support Team Body start -->
                             <div class="support-team-body">
                                 <img src="{{ asset('new_landing/images/icon-support-team.svg')}}" alt="">
-                                <h3>Contact Us</h3>
 
                                 <ul class="support-team-contact">
-                                    <li><a href="tel:1900-05-012089" class="contact-btn">Japan Ministry of Justice Registration #1900-05-012089</a></li>
-                                   
+                                    <li><a href="tel:1900-05-012089" class="contact-btn">Japan Ministry of Justice
+                                            Registration #1900-05-012089</a></li>
+
                                 </ul>
                             </div>
                             <!-- Support Team Body end -->
@@ -750,7 +783,7 @@ life.</p>
                         <br>
                         <br>
                         <br>
-                         <br>
+                        <br>
                         <!-- Support Team Section end -->
                     </div>
                 </div>
@@ -760,24 +793,24 @@ life.</p>
     </div>
 
     <br>
-        <br>
-            <br>
-                <br>
-                    <br>
-                        <br>
-                            <br>
-                                <br>
-                                    <br>
-                                     <br>
-                                     <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
 
-                   
+
     <!-- Why Choose Us Section End -->
 
     <!-- Testimonials Start -->
-   
+
     <!-- Testimonials End -->
-   <div class="our-articles">
+    <div class="our-articles">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -786,7 +819,7 @@ life.</p>
                         <h3 class="wow fadeInUp" data-wow-delay="0.25s">Membership Rules</h3>
                         <h2 class="text-anime">Member Duties and Social Obligations</h2>
                     </div>
-                    <!-- Section Title End -->                    
+                    <!-- Section Title End -->
                 </div>
             </div>
 
@@ -818,12 +851,14 @@ life.</p>
 
                         <!-- Post Content start -->
                         <div class="post-content">
-                            <div class="post-header">   
-                          
+                            <div class="post-header">
 
-                                <p>Each member must invite atlest two (2) person minimum to be come regular member of the association. The purpose of invitation is to boost the population of the association to be able to give more benefits to the members</p>
 
-                        
+                                <p>Each member must invite atlest two (2) person minimum to be come regular member of the
+                                    association. The purpose of invitation is to boost the population of the association to
+                                    be able to give more benefits to the members</p>
+
+
                             </div>
                         </div>
                         <!-- Post Content end -->
@@ -858,14 +893,15 @@ life.</p>
 
                         <!-- Post Content start -->
                         <div class="post-content">
-                            <div class="post-header">   
-                 
+                            <div class="post-header">
 
-                                <p>Every member is compulsory to contribute through dashboard deduction if any of the member will pass away.</p>
+
+                                <p>Every member is compulsory to contribute through dashboard deduction if any of the member
+                                    will pass away.</p>
                                 <br>
                                 <br>
-<br>
-                             
+                                <br>
+
                             </div>
                         </div>
                         <!-- Post Content end -->
@@ -874,86 +910,87 @@ life.</p>
                 <!-- Post item End -->
 
                 <!-- Post item Start -->
-                
+
                 <!-- Post item End -->
             </div>
         </div>
     </div>
     <!-- Our Articles Start -->
-   
+
     <!-- Our Articles End -->
 
     @if($popup)
-    <!-- Popup Announcement Modal -->
-    <div class="modal fade" id="announcementPopup" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content popup-card">
-                <button type="button" class="popup-close-btn" data-dismiss="modal" aria-label="Close">
-                    <i class="fa fa-times"></i>
-                </button>
-                
-                <div class="popup-img-container">
-                    @if($popup->image)
-                        <img src="{{ asset($popup->image) }}" alt="{{ $popup->title }}" class="popup-main-img">
-                    @endif
-                    
-                    <div class="popup-overlay">
-                        <h2 class="popup-title">{{ $popup->title }}</h2>
-                        <div class="popup-desc">
-                            {!! $popup->description !!}
-                        </div>
-                        @if($popup->link)
-                            <a href="{{ $popup->link }}" class="btn-default" style="padding: 12px 40px; border-radius: 50px; text-decoration: none;">Explore Details</a>
+        <!-- Popup Announcement Modal -->
+        <div class="modal fade" id="announcementPopup" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content popup-card">
+                    <button type="button" class="popup-close-btn" data-dismiss="modal" aria-label="Close">
+                        <i class="fa fa-times"></i>
+                    </button>
+
+                    <div class="popup-img-container">
+                        @if($popup->image)
+                            <img src="{{ asset($popup->image) }}" alt="{{ $popup->title }}" class="popup-main-img">
                         @endif
+
+                        <div class="popup-overlay">
+                            <h2 class="popup-title">{{ $popup->title }}</h2>
+                            <div class="popup-desc">
+                                {!! $popup->description !!}
+                            </div>
+                            @if($popup->link)
+                                <a href="{{ $popup->link }}" class="btn-default"
+                                    style="padding: 12px 40px; border-radius: 50px; text-decoration: none;">Explore Details</a>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     @endif
 @endsection
 
 @section('scripts')
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             @if($popup)
                 var popupId = "{{ $popup->id }}";
                 var hasSeenPopup = sessionStorage.getItem('announcement_seen_' + popupId);
 
                 if (!hasSeenPopup) {
-                    setTimeout(function() {
+                    setTimeout(function () {
                         $('#announcementPopup').modal('show');
                         sessionStorage.setItem('announcement_seen_' + popupId, 'true');
-                    }, 1500); 
+                    }, 1500);
                 }
 
                 // Manual close trigger to ensure it works
-                $(document).on('click', '.popup-close-btn', function() {
+                $(document).on('click', '.popup-close-btn', function () {
                     $('#announcementPopup').modal('hide');
                 });
             @endif
 
-            // Hero Background Slideshow
-            const heroBgImages = @json($heroBgUrls);
+                // Hero Background Slideshow
+                const heroBgImages = @json($heroBgUrls);
             if (heroBgImages.length > 0) {
                 let currentImgIndex = 0;
                 const $hero = $('#hero-slideshow');
-                
+
                 // Set initial background if needed, but CSS already has one
                 // $hero.css('background-image', 'url(' + heroBgImages[0] + ')');
 
                 function changeHeroBackground() {
                     currentImgIndex = (currentImgIndex + 1) % heroBgImages.length;
                     const nextImg = heroBgImages[currentImgIndex];
-                    
+
                     // Preload next image to ensure smooth transition
                     const img = new Image();
                     img.src = nextImg;
-                    img.onload = function() {
+                    img.onload = function () {
                         $hero.css('background-image', 'url("' + nextImg + '")');
                     };
                 }
-                
+
                 // Start cycling after an initial delay
                 setInterval(changeHeroBackground, 5000); // Change every 5 seconds
             }
