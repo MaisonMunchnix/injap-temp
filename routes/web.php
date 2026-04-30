@@ -579,6 +579,14 @@ Route::group(['prefix' => 'staff',  'middleware' => 'adminMw'], function(){
     Route::post('about-gallery/update', 'admin\AboutGalleryController@update')->name('admin.about-gallery.update');
     Route::post('about-gallery/delete', 'admin\AboutGalleryController@destroy')->name('admin.about-gallery.delete');
 
+    /************************************ Popup Announcement Routes ************************************/
+    Route::get('popup-announcements', 'admin\PopupAnnouncementController@index')->name('admin.popup-announcements.index');
+    Route::get('get-popup-announcements-data', 'admin\PopupAnnouncementController@getData')->name('admin.popup-announcements.data');
+    Route::get('popup-announcement-item/{id}', 'admin\PopupAnnouncementController@getSpecificData')->name('admin.popup-announcements.get-data');
+    Route::post('popup-announcement/store', 'admin\PopupAnnouncementController@store')->name('admin.popup-announcements.store');
+    Route::post('popup-announcement/update', 'admin\PopupAnnouncementController@update')->name('admin.popup-announcements.update');
+    Route::post('popup-announcement/delete', 'admin\PopupAnnouncementController@destroy')->name('admin.popup-announcements.delete');
+
 
 	// Instructors Management
 	Route::middleware(['can_manage_instructors'])->group(function () {

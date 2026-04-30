@@ -3,10 +3,140 @@
 @section('page-title', 'INJAP - Innovation Japan | Home')
 
 @section('stylesheets')
-    {{-- additional style here --}}
+    <style>
+        /* Side-by-Side Popup Styles */
+        .popup-card {
+            border-radius: 20px;
+            overflow: hidden;
+            background: #fff;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+            border: none;
+        }
+        .popup-flex-container {
+            display: flex;
+            flex-direction: row;
+            min-height: 400px;
+        }
+        .popup-image-side {
+            flex: 1.2;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .popup-image-side img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .popup-content-side {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: left;
+            position: relative;
+        }
+        .popup-title {
+            color: #1a2a6c;
+            font-weight: 800;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.2;
+        }
+        .popup-desc {
+            color: #444;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            max-height: 250px;
+            overflow-y: auto;
+            padding-right: 15px;
+        }
+        .popup-desc::-webkit-scrollbar {
+            width: 5px;
+        }
+        .popup-desc::-webkit-scrollbar-thumb {
+            background: #1a2a6c;
+            border-radius: 10px;
+        }
+        .popup-close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 1051; /* Higher than modal backdrop and content */
+            background: #fff;
+            color: #1a2a6c;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        .popup-close-btn:hover {
+            background: #1a2a6c;
+            color: #fff;
+        }
+
+        @media (max-width: 991px) {
+            .popup-flex-container {
+                flex-direction: column;
+                min-height: auto;
+            }
+            .popup-image-side {
+                height: 300px;
+            }
+            .popup-content-side {
+                padding: 30px;
+            }
+            .popup-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
 @endsection
 
 @section('content')
+
+    @if($popup)
+    <!-- Popup Announcement Modal -->
+    <div class="modal fade" id="announcementPopup" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 850px;">
+            <div class="modal-content popup-card">
+                <button type="button" class="popup-close-btn" data-dismiss="modal" aria-label="Close">
+                    &times;
+                </button>
+                <div class="popup-flex-container">
+                    <div class="popup-image-side">
+                        @if($popup->image)
+                            <img src="{{ asset($popup->image) }}" alt="{{ $popup->title }}">
+                        @endif
+                    </div>
+                    
+                    <div class="popup-content-side">
+                        <h2 class="popup-title">{{ $popup->title }}</h2>
+                        <div class="popup-desc">
+                            {!! $popup->description !!}
+                        </div>
+                        @if($popup->link)
+                            <a href="{{ $popup->link }}" class="btn-default" style="padding: 12px 35px; border-radius: 50px; text-decoration: none; display: inline-block; width: fit-content;">View Details</a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+
  <!-- Hero Section Start -->
     <div class="hero parallaxie">
         <div class="container">
@@ -740,8 +870,56 @@ life.</p>
     <!-- Our Articles Start -->
    
     <!-- Our Articles End -->
+
+    @if($popup)
+    <!-- Popup Announcement Modal -->
+    <div class="modal fade" id="announcementPopup" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content popup-card">
+                <button type="button" class="popup-close-btn" data-dismiss="modal" aria-label="Close">
+                    <i class="fa fa-times"></i>
+                </button>
+                
+                <div class="popup-img-container">
+                    @if($popup->image)
+                        <img src="{{ asset($popup->image) }}" alt="{{ $popup->title }}" class="popup-main-img">
+                    @endif
+                    
+                    <div class="popup-overlay">
+                        <h2 class="popup-title">{{ $popup->title }}</h2>
+                        <div class="popup-desc">
+                            {!! $popup->description !!}
+                        </div>
+                        @if($popup->link)
+                            <a href="{{ $popup->link }}" class="btn-default" style="padding: 12px 40px; border-radius: 50px; text-decoration: none;">Explore Details</a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
 @endsection
 
 @section('scripts')
-    {{-- additional scripts here --}}
+    <script>
+        $(document).ready(function() {
+            @if($popup)
+                var popupId = "{{ $popup->id }}";
+                var hasSeenPopup = sessionStorage.getItem('announcement_seen_' + popupId);
+
+                if (!hasSeenPopup) {
+                    setTimeout(function() {
+                        $('#announcementPopup').modal('show');
+                        sessionStorage.setItem('announcement_seen_' + popupId, 'true');
+                    }, 1500); 
+                }
+
+                // Manual close trigger to ensure it works
+                $(document).on('click', '.popup-close-btn', function() {
+                    $('#announcementPopup').modal('hide');
+                });
+            @endif
+        });
+    </script>
 @endsection

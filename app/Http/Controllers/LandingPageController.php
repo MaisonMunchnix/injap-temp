@@ -6,6 +6,7 @@ use App\Advertisement;
 use App\Currency;
 use App\Course;
 use App\Enrollment;
+use App\PopupAnnouncement;
 
 class LandingPageController extends Controller
 {
@@ -16,7 +17,9 @@ class LandingPageController extends Controller
         $hkd = $currencies->where('id', 2)->first();
         $usd = $currencies->where('id', 3)->first();
 
-        return view('landing.home', compact('yen', 'hkd', 'usd'));
+        $popup = PopupAnnouncement::where('is_active', true)->latest()->first();
+
+        return view('landing.home', compact('yen', 'hkd', 'usd', 'popup'));
     }
 
     public function legalAssistance()
