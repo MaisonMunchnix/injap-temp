@@ -47,6 +47,7 @@
                                 <th>Order</th>
                                 <th>Status</th>
                                 <th>Action</th>
+                                <th class="d-none"></th>
                             </tr>
                         </thead>
                     </table>
@@ -167,7 +168,8 @@
                     { data: 'description', name: 'description' },
                     { data: 'sort_order', name: 'sort_order' },
                     { data: 'is_active', name: 'is_active' },
-                    { data: 'action', name: 'action', orderable: false, searchable: false }
+                    { data: 'action', name: 'action', orderable: false, searchable: false },
+                    { data: 'id', name: 'id', visible: false, searchable: false }
                 ]
             });
 
